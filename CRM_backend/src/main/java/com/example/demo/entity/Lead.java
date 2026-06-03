@@ -1,9 +1,9 @@
-package com.example.entity;
+package com.example.demo.entity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import com.example.entity.enums.LeadStatus;
+import com.example.demo.entity.enums.LeadStatus;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

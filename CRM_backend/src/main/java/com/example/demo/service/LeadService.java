@@ -1,11 +1,11 @@
-package com.example.service;
+package com.example.demo.service;
 
 
 
 import java.util.List;
 import java.util.UUID;
 
-import com.example.entity.Lead;
+import com.example.demo.entity.Lead;
 
 public interface LeadService  {
 	

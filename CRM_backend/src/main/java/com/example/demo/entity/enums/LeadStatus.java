@@ -1,4 +1,4 @@
-package com.example.entity.enums;
+package com.example.demo.entity.enums;
 
 public enum LeadStatus {
 

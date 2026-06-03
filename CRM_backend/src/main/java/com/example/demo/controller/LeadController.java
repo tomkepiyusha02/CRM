@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.demo.controller;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entity.Lead;
-import com.example.service.LeadService;
+import com.example.demo.entity.Lead;
+import com.example.demo.service.LeadService;
 
 @RestController
 @RequestMapping("/Lead")
@@ -36,6 +36,7 @@ public class LeadController {
         return ls.getAllLeads();
     }
 
+    
     @GetMapping("/{id}")
     public Lead getLeadById(
             @PathVariable UUID id) {
@@ -43,6 +44,7 @@ public class LeadController {
         return ls.getLeadById(id);
     }
 
+    
     @PutMapping("/update/{id}")
     public Lead updateCustomer(
             @PathVariable UUID id,
@@ -51,6 +53,7 @@ public class LeadController {
         return ls.updateLead(id, l);
     }
 
+    
     @DeleteMapping("/delete/{id}")
     public String deleteCustomer(
             @PathVariable UUID id) {
