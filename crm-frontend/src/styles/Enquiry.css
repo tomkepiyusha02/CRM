@@ -1,0 +1,65 @@
+.enquiry-page{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #0d6efd,
+        #6610f2
+    );
+    padding:40px;
+}
+
+.enquiry-container{
+    width:100%;
+    max-width:700px;
+    background:white;
+    padding:30px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+}
+
+.title{
+    text-align:center;
+    margin-bottom:10px;
+    color:#333;
+}
+
+.subtitle{
+    text-align:center;
+    margin-bottom:25px;
+    color:gray;
+}
+
+.form-control{
+    margin-bottom:5px;
+}
+
+.form-control:focus{
+    border-color:#0d6efd;
+    box-shadow:0 0 5px rgba(13,110,253,.3);
+}
+
+.text-danger{
+    display:block;
+    margin-bottom:10px;
+    font-size:14px;
+}
+
+.btn-primary{
+    width:100%;
+    padding:12px;
+    font-size:18px;
+    font-weight:600;
+}
+
+.is-invalid{
+    border:2px solid red !important;
+}
+
+.invalid-feedback{
+    display:block;
+    color:red;
+    font-size:13px;
+}
