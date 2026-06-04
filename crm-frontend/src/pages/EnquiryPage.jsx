@@ -9,19 +9,14 @@ function EnquiryPage() {
 
       <div className="container">
 
-        <div className="text-center mb-5">
+        <div className="hero-section">
 
-          <h1 className="display-5 fw-bold">
-
+          <h1>
             Find Your Dream Property
-
           </h1>
 
-          <p className="lead">
-
-            Submit your enquiry and
-            our team will contact you.
-
+          <p>
+            Fill out the enquiry form and our experts will contact you shortly.
           </p>
 
         </div>

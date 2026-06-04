@@ -1,78 +1,193 @@
-.enquiry-page{
+/* Full Page Background */
 
-    min-height:100vh;
+.enquiry-page {
+
+    min-height: 100vh;
 
     background:
     linear-gradient(
-    135deg,
-    #0d6efd,
-    #6610f2
-    );
+        135deg,
+        rgba(13,110,253,0.9),
+        rgba(102,16,242,0.9)
+    ),
+    url("https://images.unsplash.com/photo-1560518883-ce09059eeffa");
 
-    padding-top:50px;
+    background-size: cover;
+    background-position: center;
 
-    padding-bottom:50px;
+    padding: 50px 20px;
 }
 
-.enquiry-page h1{
+/* Heading Section */
 
-    color:white;
+.hero-section {
+
+    text-align: center;
+
+    margin-bottom: 40px;
 }
 
-.enquiry-page p{
+.hero-section h1 {
 
-    color:white;
+    color: white;
+
+    font-size: 3rem;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
 }
 
-.enquiry-card{
+.hero-section p {
 
-    max-width:900px;
+    color: white;
 
-    margin:auto;
+    font-size: 1.2rem;
+}
 
-    border:none;
+/* Form Card */
 
-    border-radius:20px;
+.enquiry-card {
 
-    overflow:hidden;
+    max-width: 950px;
+
+    margin: auto;
+
+    border: none;
+
+    border-radius: 25px;
+
+    overflow: hidden;
+
+    background: rgba(255,255,255,0.95);
+
+    backdrop-filter: blur(10px);
 
     box-shadow:
-    0 10px 30px rgba(0,0,0,.2);
+        0 20px 40px rgba(0,0,0,0.25);
 }
 
-.enquiry-card .card-body{
+/* Card Body */
 
-    padding:40px;
+.enquiry-card .card-body {
+
+    padding: 40px;
 }
+
+/* Labels */
+
+.enquiry-card label {
+
+    font-weight: 600;
+
+    margin-bottom: 8px;
+
+    color: #333;
+}
+
+/* Inputs */
 
 .form-control,
-.form-select{
+.form-select {
 
-    height:50px;
+    height: 52px;
 
-    border-radius:10px;
+    border-radius: 12px;
+
+    border: 1px solid #ddd;
+
+    transition: all .3s ease;
 }
 
-textarea.form-control{
+/* Textarea */
 
-    height:auto;
+textarea.form-control {
+
+    min-height: 120px;
+
+    resize: none;
 }
 
-.btn-primary{
+/* Input Focus */
 
-    border-radius:10px;
+.form-control:focus,
+.form-select:focus {
 
-    padding:12px;
+    border-color: #0d6efd;
+
+    box-shadow:
+    0 0 10px rgba(13,110,253,.25);
 }
 
-.invalid-feedback{
+/* Validation */
 
-    display:block;
+.invalid-feedback {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: 500;
 }
 
-label{
+/* Submit Button */
 
-    margin-bottom:8px;
+.btn-submit {
 
-    font-weight:600;
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+    linear-gradient(
+        90deg,
+        #0d6efd,
+        #6610f2
+    );
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    transition: .3s;
+}
+
+.btn-submit:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+    0 10px 20px rgba(13,110,253,.3);
+}
+
+/* Property Icons */
+
+.property-icon {
+
+    font-size: 35px;
+
+    color: #0d6efd;
+
+    margin-bottom: 15px;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .hero-section h1{
+
+        font-size: 2rem;
+    }
+
+    .enquiry-card .card-body{
+
+        padding: 20px;
+    }
 }
