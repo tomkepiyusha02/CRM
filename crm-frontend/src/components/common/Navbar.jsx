@@ -19,7 +19,7 @@ function Navbar() {
         >
           <i className="bi bi-buildings-fill"></i>
 
-          &nbsp; Dream CRM
+          &nbsp; Real Estate
         </Link>
 
         <button
