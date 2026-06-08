@@ -1,5 +1,5 @@
 package com.example.demo.service;
 
-public class PropertyServiceImpl {
+public class PropertyServiceImpl implements PropertyService {
 
 }
