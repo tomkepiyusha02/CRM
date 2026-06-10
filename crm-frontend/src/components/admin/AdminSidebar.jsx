@@ -1,47 +1,47 @@
-import React from "react";
-import { Link } from "react-router-dom";
+// import React from "react";
+// import { Link } from "react-router-dom";
 
-function AdminSidebar() {
+// function AdminSidebar() {
 
-    return (
+//     return (
 
-        <div className="admin-sidebar">
+//         <div className="admin-sidebar">
 
-            <h3 className="logo">
-                CRM Admin
-            </h3>
+//             <h3 className="logo">
+//                 CRM Admin
+//             </h3>
 
-            <ul>
+//             <ul>
 
-                <li>
-                    <Link to="/admin/dashboard">
-                        Dashboard
-                    </Link>
-                </li>
+//                 <li>
+//                     <Link to="/admin/dashboard">
+//                         Dashboard
+//                     </Link>
+//                 </li>
 
-                <li>
-                    <Link to="/admin/managers">
-                        Managers
-                    </Link>
-                </li>
+//                 <li>
+//                     <Link to="/admin/managers">
+//                         Managers
+//                     </Link>
+//                 </li>
 
-                <li>
-                    <Link to="/admin/agents">
-                        Agents
-                    </Link>
-                </li>
+//                 <li>
+//                     <Link to="/admin/agents">
+//                         Agents
+//                     </Link>
+//                 </li>
 
-                <li>
-                    <Link to="/admin/properties">
-                        Properties
-                    </Link>
-                </li>
+//                 <li>
+//                     <Link to="/admin/properties">
+//                         Properties
+//                     </Link>
+//                 </li>
 
-            </ul>
+//             </ul>
 
-        </div>
+//         </div>
 
-    );
-}
+//     );
+// }
 
-export default AdminSidebar;
+// export default AdminSidebar;
