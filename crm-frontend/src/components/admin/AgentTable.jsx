@@ -7,6 +7,7 @@ from "react";
 
 import UserService
 from "../../services/UserService";
+import Swal from "sweetalert2";
 
 function AgentTable() {
 
@@ -32,16 +33,26 @@ function AgentTable() {
 
     const deleteAgent = async (id) => {
 
-        if (
-            window.confirm(
-                "Delete Agent?"
-            )
-        ) {
-
-            await UserService.deleteUser(id);
-
-            loadAgents();
-        }
+        Swal.fire({
+            title: "Delete Agent?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545"
+        }).then(async (result) => {
+    
+            if(result.isConfirmed){
+    
+                await UserService.deleteUser(id);
+    
+                Swal.fire(
+                    "Deleted!",
+                    "Agent Removed",
+                    "success"
+                );
+    
+                loadAgents();
+            }
+        });
     };
 
     const filteredAgents =

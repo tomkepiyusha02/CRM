@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./AxiosInterceptor";
 
 const API_URL =
 "http://localhost:8080/Lead";
@@ -6,33 +6,33 @@ const API_URL =
 class LeadService {
 
   addLead(lead) {
-    return axios.post(
+    return api.post(
       `${API_URL}/add`,
       lead
     );
   }
 
   getAllLeads() {
-    return axios.get(
+    return api.get(
       `${API_URL}/displayAll`
     );
   }
 
   getLeadById(id) {
-    return axios.get(
+    return api.get(
       `${API_URL}/${id}`
     );
   }
 
   updateLead(id, lead) {
-    return axios.put(
+    return api.put(
         `${API_URL}/update/${id}`,
         lead
     );
 }
 
 deleteLead(id) {
-    return axios.delete(
+    return api.delete(
         `${API_URL}/delete/${id}`
     );
 }

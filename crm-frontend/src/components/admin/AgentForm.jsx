@@ -1,5 +1,14 @@
+
 import React, { useEffect, useState } from "react";
 import UserService from "../../services/UserService";
+import Swal
+from "sweetalert2";
+
+import { cities }
+from "../../data/cities";
+
+import { areaMap }
+from "../../data/areaMap";
 
 function AgentForm({ loadAgents }) {
 
@@ -31,9 +40,35 @@ function AgentForm({ loadAgents }) {
 
     const handleChange = (e) => {
 
+        const {
+            name,
+            value
+        } = e.target;
+    
+        if (
+            name === "assignedCity"
+        ) {
+    
+            setAgent({
+    
+                ...agent,
+    
+                assignedCity:
+                value,
+    
+                assignedArea: ""
+    
+            });
+    
+            return;
+        }
+    
         setAgent({
+    
             ...agent,
-            [e.target.name]: e.target.value
+    
+            [name]: value
+    
         });
     };
 
@@ -45,7 +80,20 @@ function AgentForm({ loadAgents }) {
 
             await UserService.addUser(agent);
 
-            alert("Agent Added Successfully");
+            Swal.fire({
+
+                icon: "success",
+            
+                title: "Success",
+            
+                text:
+                "Agent Added Successfully",
+            
+                timer: 1500,
+            
+                showConfirmButton: false
+            
+            });
 
             setAgent({
                 name: "",
@@ -58,15 +106,23 @@ function AgentForm({ loadAgents }) {
                 assignedManagerId: "",
                 role: "AGENT"
             });
-
-            loadAgents();
+            if (loadAgents) {
+                loadAgents();
+            }
 
         } catch (error) {
 
-            alert(
-                error.response?.data ||
-                "Error"
-            );
+            Swal.fire({
+
+                icon: "error",
+            
+                title: "Error",
+            
+                text:
+                error.response?.data
+                || "Something Went Wrong"
+            
+            });
         }
     };
 
@@ -143,25 +199,61 @@ function AgentForm({ loadAgents }) {
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <input
-                            type="text"
-                            name="assignedCity"
-                            className="form-control"
-                            placeholder="Assigned City"
-                            value={agent.assignedCity}
-                            onChange={handleChange}
-                        />
+                    <select
+    name="assignedCity"
+    className="form-select"
+    value={agent.assignedCity}
+    onChange={handleChange}
+>
+
+    <option value="">
+        Select City
+    </option>
+
+    {
+        cities.map(city => (
+
+            <option
+                key={city}
+                value={city}
+            >
+                {city}
+            </option>
+
+        ))
+    }
+
+</select>
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <input
-                            type="text"
-                            name="assignedArea"
-                            className="form-control"
-                            placeholder="Assigned Area"
-                            value={agent.assignedArea}
-                            onChange={handleChange}
-                        />
+                    <select
+    name="assignedArea"
+    className="form-select"
+    value={agent.assignedArea}
+    onChange={handleChange}
+>
+
+    <option value="">
+        Select Area
+    </option>
+
+    {
+        areaMap[
+            agent.assignedCity
+        ]?.map(area => (
+
+            <option
+                key={area}
+                value={area}
+            >
+                {area}
+            </option>
+
+        ))
+    }
+
+</select>
                     </div>
 
                     <div className="col-md-6 mb-3">

@@ -1,0 +1,212 @@
+.login-page{
+    min-height:100vh;
+    display:flex;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.login-left{
+    flex:1;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #1e3a5f
+    );
+    color:white;
+    padding:80px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    overflow:hidden;
+}
+
+.login-left::before{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,.1);
+    top:50px;
+    right:50px;
+}
+
+.login-left::after{
+    content:"";
+    position:absolute;
+    width:200px;
+    height:200px;
+    background:rgba(255,255,255,.08);
+    border-radius:50%;
+    bottom:80px;
+    left:80px;
+}
+
+.brand{
+    margin-bottom:40px;
+}
+
+.brand-icon{
+    font-size:60px;
+    color:#fbbf24;
+}
+
+.brand h2{
+    margin-top:10px;
+    font-weight:700;
+}
+
+.login-left h1{
+    font-size:58px;
+    line-height:1.2;
+    font-weight:800;
+    margin-bottom:25px;
+}
+
+.login-left p{
+    max-width:500px;
+    font-size:18px;
+    opacity:.9;
+}
+
+.login-right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#f5f7fb;
+}
+
+.login-card{
+    width:480px;
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.08);
+}
+
+.login-card h2{
+    text-align:center;
+    font-weight:700;
+}
+
+.login-card p{
+    text-align:center;
+    color:#666;
+}
+
+.login-card input{
+    width:100%;
+    height:55px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    padding:0 15px;
+    margin-top:15px;
+}
+
+.login-card input:focus{
+    outline:none;
+    border-color:#0d6efd;
+}
+
+.login-btn{
+    width:100%;
+    height:55px;
+    border:none;
+    margin-top:20px;
+    border-radius:10px;
+    background:#163c69;
+    color:white;
+    font-weight:600;
+    font-size:18px;
+}
+
+.login-btn:hover{
+    background:#0f2f55;
+}
+
+.enquiry-btn{
+    width:100%;
+    height:55px;
+    border:none;
+    margin-top:15px;
+    border-radius:10px;
+    background:#fbbf24;
+    color:black;
+    font-weight:600;
+}
+
+.roles-box{
+    margin-top:30px;
+    border:1px solid #eee;
+    border-radius:15px;
+    padding:20px;
+}
+
+.roles-box h6{
+    color:#888;
+    margin-bottom:15px;
+}
+
+.roles-box p{
+    text-align:left;
+    margin-bottom:10px;
+}
+
+.role{
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:600;
+    margin-right:10px;
+}
+
+.admin{
+    background:#ffe7c2;
+    color:#d97706;
+}
+
+.manager{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.agent{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+@media(max-width:900px){
+
+    .login-page{
+        flex-direction:column;
+    }
+
+    .login-left{
+        display:none;
+    }
+
+    .login-card{
+        width:95%;
+    }
+}
+.login-switch{
+    display:flex;
+    margin-bottom:20px;
+    gap:10px;
+    }
+    
+    .login-switch button{
+    flex:1;
+    border:none;
+    padding:12px;
+    border-radius:10px;
+    background:#e9ecef;
+    font-weight:600;
+    }
+    
+    .login-switch button.active{
+    background:#0d6efd;
+    color:white;
+    }

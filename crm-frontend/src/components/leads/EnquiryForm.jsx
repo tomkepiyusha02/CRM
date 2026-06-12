@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import LeadService from "../../services/LeadService";
-
+import Swal from "sweetalert2";
 function EnquiryForm() {
 
     const [formData, setFormData] = useState({
@@ -90,7 +90,18 @@ function EnquiryForm() {
 
             await LeadService.addLead(formData);
 
-            alert("Enquiry Submitted Successfully");
+            Swal.fire({
+
+                icon:"success",
+            
+                title:"Enquiry Submitted",
+            
+                text:
+                "Our Team Will Contact You Soon",
+            
+                confirmButtonColor:"#0d6efd"
+            
+            });
 
             setFormData({
                 name: "",

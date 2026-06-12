@@ -1,5 +1,10 @@
+
 import React, { useState } from "react";
 import UserService from "../../services/UserService";
+import Swal from "sweetalert2";
+
+import { cities }
+from "../../data/cities";
 
 function ManagerForm({ loadManagers }) {
 
@@ -29,7 +34,20 @@ function ManagerForm({ loadManagers }) {
 
             await UserService.addUser(manager);
 
-            alert("Manager Added Successfully");
+            Swal.fire({
+
+                icon: "success",
+            
+                title: "Success",
+            
+                text:
+                "Manager Added Successfully",
+            
+                timer: 1500,
+            
+                showConfirmButton: false
+            
+            });
 
             setManager({
                 name: "",
@@ -41,11 +59,23 @@ function ManagerForm({ loadManagers }) {
                 role: "MANAGER"
             });
 
-            loadManagers();
+            if (loadManagers) {
+                loadManagers();
+            }
 
         } catch (error) {
 
-            alert(error.response?.data || "Error");
+            Swal.fire({
+
+                icon: "error",
+            
+                title: "Error",
+            
+                text:
+                error.response?.data
+                || "Something Went Wrong"
+            
+            });
         }
     };
 
@@ -124,14 +154,31 @@ function ManagerForm({ loadManagers }) {
                     </div>
 
                     <div className="col-md-6 mb-3">
-                        <input
-                            type="text"
-                            name="assignedCity"
-                            placeholder="Assigned City"
-                            className="form-control"
-                            value={manager.assignedCity}
-                            onChange={handleChange}
-                        />
+                    <select
+    name="assignedCity"
+    className="form-select"
+    value={manager.assignedCity}
+    onChange={handleChange}
+>
+
+    <option value="">
+        Select City
+    </option>
+
+    {
+        cities.map(city => (
+
+            <option
+                key={city}
+                value={city}
+            >
+                {city}
+            </option>
+
+        ))
+    }
+
+</select>
                     </div>
 
                 </div>

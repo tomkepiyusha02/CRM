@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import PropertyService from "../../services/PropertyService";
+import Swal from "sweetalert2";
 
 function PropertyForm({ loadProperties }) {
 
@@ -30,7 +31,13 @@ function PropertyForm({ loadProperties }) {
 
             await PropertyService.addProperty(property);
 
-            alert("Property Added Successfully");
+            Swal.fire({
+                icon: "success",
+                title: "Success",
+                text: "Property Added Successfully",
+                timer: 1500,
+                showConfirmButton: false
+            });
 
             setProperty({
                 name: "",
@@ -49,7 +56,11 @@ function PropertyForm({ loadProperties }) {
 
         } catch (error) {
 
-            alert("Error Adding Property");
+            Swal.fire({
+                icon: "error",
+                title: "Error",
+                text: "Error Adding Property"
+            });
         }
     };
 

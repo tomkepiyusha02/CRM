@@ -1,86 +1,154 @@
 import React from "react";
+
 import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
+BrowserRouter,
+Routes,
+Route
+}
+from "react-router-dom";
 
-import Navbar from "./components/common/Navbar";
-import AdminDashboardPage from "./pages/AdminDashboardPage";
-import ManagersPage from "./pages/ManagersPage";
-import AgentsPage from "./pages/AgentsPage";
-import PropertiesPage from "./pages/PropertiesPage";
 
-import EnquiryPage from "./pages/EnquiryPage";
-import DashboardPage from "./pages/DashboardPage";
+import LoginPage
+from "./pages/LoginPage";
 
-import { ToastContainer } from "react-toastify";
+import EnquiryPage
+from "./pages/EnquiryPage";
+
+import DashboardPage
+from "./pages/DashboardPage";
+
+import AdminDashboardPage
+from "./pages/AdminDashboardPage";
+
+import ManagersPage
+from "./pages/ManagersPage";
+
+import AgentsPage
+from "./pages/AgentsPage";
+
+import PropertiesPage
+from "./pages/PropertiesPage";
+
+import AgentDashboardPage
+from "./pages/AgentDashboardPage";
+
+import ProtectedRoute
+from "./components/common/ProtectedRoute";
+
+import {
+ToastContainer
+}
+from "react-toastify";
 
 import "bootstrap/dist/css/bootstrap.min.css";
+
 import "bootstrap-icons/font/bootstrap-icons.css";
+
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
 
-  return (
+return (
 
-    <BrowserRouter>
+<BrowserRouter>
 
-      {/* Navbar */}
+<Routes>
 
-      <Navbar />
-
-      {/* Routes */}
-
-      <Routes>
-
-        <Route
-          path="/"
-          element={<EnquiryPage />}
-        />
-
-        <Route
-          path="/dashboard"
-          element={<DashboardPage />}
-        />
-        <Route
-    path="/admin/dashboard"
-    element={<AdminDashboardPage />}
+<Route
+path="/"
+element={<LoginPage />}
 />
 
 <Route
-    path="/admin/managers"
-    element={<ManagersPage />}
+path="/enquiry"
+element={<EnquiryPage />}
 />
 
 <Route
-    path="/admin/agents"
-    element={<AgentsPage />}
+path="/dashboard"
+element={
+<ProtectedRoute
+role="MANAGER"
+>
+<DashboardPage />
+</ProtectedRoute>
+}
 />
+
+
 
 <Route
-    path="/admin/properties"
-    element={<PropertiesPage />}
+path="/admin/dashboard"
+element={
+<ProtectedRoute
+role="ADMIN"
+>
+<AdminDashboardPage />
+</ProtectedRoute>
+}
 />
 
-      </Routes>
 
-      {/* Toast Notifications */}
 
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={true}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="colored"
-      />
+<Route
+path="/admin/managers"
+element={
+<ProtectedRoute
+role="ADMIN"
+>
+<ManagersPage />
+</ProtectedRoute>
+}
+/>
 
-    </BrowserRouter>
 
-  );
+
+<Route
+path="/admin/agents"
+element={
+<ProtectedRoute
+role="ADMIN"
+>
+<AgentsPage />
+</ProtectedRoute>
+}
+/>
+
+
+
+<Route
+path="/admin/properties"
+element={
+<ProtectedRoute
+role="ADMIN"
+>
+<PropertiesPage />
+</ProtectedRoute>
+}
+/>
+
+
+
+<Route
+path="/agent/dashboard"
+element={
+<ProtectedRoute
+role="AGENT"
+>
+<AgentDashboardPage />
+</ProtectedRoute>
+}
+/>
+
+
+
+</Routes>
+
+<ToastContainer />
+
+</BrowserRouter>
+
+);
 }
 
 export default App;

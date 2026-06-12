@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.User;
@@ -15,6 +16,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserRepository userRepo;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User addUser(User user) {
@@ -26,6 +30,11 @@ public class UserServiceImpl implements UserService {
         if(userRepo.existsByMobile(user.getMobile())) {
             throw new RuntimeException("Mobile Already Exists");
         }
+        user.setPassword(
+                passwordEncoder.encode(
+                        user.getPassword()
+                )
+        );
 
         return userRepo.save(user);
     }
@@ -40,7 +49,15 @@ public class UserServiceImpl implements UserService {
             old.setName(user.getName());
             old.setEmail(user.getEmail());
             old.setMobile(user.getMobile());
-            old.setPassword(user.getPassword());
+            if(user.getPassword()!=null
+                    && !user.getPassword().isBlank()) {
+
+                old.setPassword(
+                        passwordEncoder.encode(
+                                user.getPassword()
+                        )
+                );
+            }
             old.setLocation(user.getLocation());
             old.setAssignedCity(user.getAssignedCity());
             old.setAssignedArea(user.getAssignedArea());

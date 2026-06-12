@@ -5,6 +5,7 @@ import React, {
 
 import UserService
 from "../../services/UserService";
+import Swal from "sweetalert2";
 
 function ManagerTable() {
 
@@ -30,16 +31,26 @@ function ManagerTable() {
 
     const deleteManager = async (id) => {
 
-        if (
-            window.confirm(
-                "Delete Manager?"
-            )
-        ) {
-
-            await UserService.deleteUser(id);
-
-            loadManagers();
-        }
+        Swal.fire({
+            title: "Delete Manager?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545"
+        }).then(async (result) => {
+    
+            if(result.isConfirmed){
+    
+                await UserService.deleteUser(id);
+    
+                Swal.fire(
+                    "Deleted!",
+                    "Manager Removed",
+                    "success"
+                );
+    
+                loadManagers();
+            }
+        });
     };
 
     const filteredManagers =

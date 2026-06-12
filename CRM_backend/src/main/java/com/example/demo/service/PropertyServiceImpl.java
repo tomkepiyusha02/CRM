@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Property;
@@ -17,6 +18,9 @@ public class PropertyServiceImpl
 
     @Autowired
     PropertyRepository propertyRepo;
+    
+ 
+    
 
     @Override
     public Property addProperty(

@@ -7,6 +7,7 @@ import NewLeads from "./NewLeads";
 import AssignedLeads from "./AssignedLeads";
 import LeadDetails from "../leads/LeadDetails";
 
+
 function ManagerDashboard() {
 
     const [leads, setLeads] = useState([]);
@@ -76,6 +77,22 @@ function ManagerDashboard() {
     return (
 
         <div className="container-fluid mt-4">
+            <div className="card shadow-sm mb-4">
+
+{/* <div className="card-body">
+
+    <h4>
+        Welcome,
+        {localStorage.getItem("name")}
+    </h4>
+
+    <p className="mb-0">
+        Manage Assigned Leads and Follow Ups
+    </p>
+
+</div> */}
+
+</div>
 
             {/* Statistics Cards */}
 

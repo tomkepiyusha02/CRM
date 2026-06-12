@@ -7,6 +7,7 @@ from "react";
 
 import PropertyService
 from "../../services/PropertyService";
+import Swal from "sweetalert2";
 
 function PropertyTable() {
 
@@ -32,16 +33,26 @@ function PropertyTable() {
 
     const deleteProperty = async (id) => {
 
-        if (
-            window.confirm(
-                "Delete Property?"
-            )
-        ) {
-
-            await PropertyService.deleteProperty(id);
-
-            loadProperties();
-        }
+        Swal.fire({
+            title: "Delete Property?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#dc3545"
+        }).then(async (result) => {
+    
+            if(result.isConfirmed){
+    
+                await PropertyService.deleteProperty(id);
+    
+                Swal.fire(
+                    "Deleted!",
+                    "Property Removed",
+                    "success"
+                );
+    
+                loadProperties();
+            }
+        });
     };
 
     const filteredProperties =
