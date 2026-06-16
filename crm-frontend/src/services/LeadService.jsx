@@ -36,6 +36,13 @@ deleteLead(id) {
         `${API_URL}/delete/${id}`
     );
 }
+getLeadsByCity(city){
+
+    return api.get(
+        `${API_URL}/city/${city}`
+    );
+
+}
 }
 
 export default new LeadService();

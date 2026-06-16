@@ -60,7 +60,6 @@ function ManagerDashboard({
     const loadLeads = () => {
 
         LeadService.getAllLeads()
-
             .then((res) => {
 
                 const allLeads =
