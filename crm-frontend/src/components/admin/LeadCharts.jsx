@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
     PieChart,
@@ -7,33 +7,70 @@ import {
     ResponsiveContainer,
     Cell,
     Legend
-}
-from "recharts";
+} from "recharts";
+
+import LeadService from "../../services/LeadService";
 
 function LeadCharts() {
 
-    const data = [
+    const [data, setData] = useState([]);
 
-        {
-            name: "New Leads",
-            value: 45
-        },
+    useEffect(() => {
+        loadLeadData();
+    }, []);
 
-        {
-            name: "Follow Up",
-            value: 25
-        },
+    const loadLeadData = async () => {
 
-        {
-            name: "Closed",
-            value: 15
-        },
+        try {
 
-        {
-            name: "Lost",
-            value: 10
+            const response =
+                await LeadService.getAllLeads();
+
+            const leads =
+                response.data;
+
+            const statusCount = {
+
+                NEW: 0,
+                CONTACTED: 0,
+                INTERESTED: 0,
+                BOOKING: 0
+
+            };
+
+            leads.forEach(lead => {
+
+                if (statusCount[lead.status] !== undefined) {
+
+                    statusCount[lead.status]++;
+                }
+
+            });
+
+            setData([
+                {
+                    name: "New",
+                    value: statusCount.NEW
+                },
+                {
+                    name: "Contacted",
+                    value: statusCount.CONTACTED
+                },
+                {
+                    name: "Interested",
+                    value: statusCount.INTERESTED
+                },
+                {
+                    name: "Booking",
+                    value: statusCount.BOOKING
+                }
+            ]);
+
+        } catch (error) {
+
+            console.log(error);
         }
-    ];
+    };
 
     const COLORS = [
         "#4f46e5",
@@ -63,25 +100,18 @@ function LeadCharts() {
                         outerRadius={100}
                     >
 
-                        {
-                            data.map(
-                                (entry, index) => (
+                        {data.map((entry, index) => (
 
-                                    <Cell
-                                        key={index}
-                                        fill={
-                                            COLORS[index]
-                                        }
-                                    />
+                            <Cell
+                                key={index}
+                                fill={COLORS[index]}
+                            />
 
-                                )
-                            )
-                        }
+                        ))}
 
                     </Pie>
 
                     <Tooltip />
-
                     <Legend />
 
                 </PieChart>

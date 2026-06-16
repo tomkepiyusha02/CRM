@@ -1,9 +1,7 @@
-import React,
-{
+import React, {
     useEffect,
     useState
-}
-from "react";
+} from "react";
 
 import UserService
 from "../../services/UserService";
@@ -13,6 +11,7 @@ import {
     Button
 }
 from "react-bootstrap";
+
 import "../../styles/viewPages.css";
 
 function ManagersViewPage() {
@@ -42,12 +41,21 @@ function ManagersViewPage() {
     const loadManagers =
         async () => {
 
-            const response =
-                await UserService.getManagers();
+            try {
 
-            setManagers(
-                response.data
-            );
+                const response =
+                    await UserService.getManagers();
+
+                setManagers(
+                    response.data
+                );
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
+            }
         };
 
     const filteredManagers =
@@ -62,43 +70,74 @@ function ManagersViewPage() {
 
     return (
 
-        <div className="container mt-4">
+        <div className="view-page">
 
-            <h2 className="mb-4">
-                Managers Overview
-            </h2>
+            {/* Header */}
 
-            <input
-                type="text"
-                className="form-control mb-4"
-                placeholder="Search By City"
-                value={searchCity}
-                onChange={(e) =>
-                    setSearchCity(
-                        e.target.value
-                    )
-                }
-            />
+            <div className="page-header">
+
+                <div>
+
+                    <h1 className="page-title">
+                        👨‍💼 Managers Overview
+                    </h1>
+
+                    <p className="page-subtitle">
+                        Monitor and manage all managers across cities
+                    </p>
+
+                </div>
+
+                <div className="header-count">
+
+                    {filteredManagers.length}
+
+                    <span>
+                        Managers
+                    </span>
+
+                </div>
+
+            </div>
+
+            {/* Search */}
+
+            <div className="search-wrapper mb-4">
+
+                <i className="bi bi-search search-icon"></i>
+
+                <input
+                    type="text"
+                    className="form-control search-box"
+                    placeholder="Search Managers By City..."
+                    value={searchCity}
+                    onChange={(e) =>
+                        setSearchCity(
+                            e.target.value
+                        )
+                    }
+                />
+
+            </div>
+
+            {/* Cards */}
 
             <div className="row">
 
                 {
+
                     filteredManagers.map(
                         manager => (
 
                             <div
-                                className="col-md-4 mb-4"
+                                className="col-lg-4 col-md-6 mb-4"
                                 key={
                                     manager.userId
                                 }
                             >
 
                                 <div
-                                    className="crm-card h-100"
-                                    style={{
-                                        cursor:
-                                            "pointer"
-                                    }}
+                                    className="manager-card h-100"
                                     onClick={() => {
 
                                         setSelectedManager(
@@ -111,44 +150,75 @@ function ManagersViewPage() {
                                     }}
                                 >
 
-                                    <div className="card-body text-center">
+                                    <div className="manager-banner"></div>
+
+                                    <div className="manager-avatar">
 
                                         <img
-                                            src={`https://ui-avatars.com/api/?name=${manager.name}`}
+                                            src={`https://ui-avatars.com/api/?name=${manager.name}&background=2563eb&color=ffffff&size=256`}
                                             alt=""
-                                            className="crm-avatar"
                                         />
 
-<h5 className="crm-name">
-    {manager.name}
-</h5>
-<div className="crm-city">
-    {manager.assignedCity}
-</div>
+                                    </div>
 
-<p className="crm-email">
-    {manager.email}
-</p>   
+                                    <div className="manager-content">
 
-<button
-    className="details-btn"
->
-    View Details
-</button>
+                                        <h4>
+                                            {manager.name}
+                                        </h4>
+
+                                        <div className="city-badge">
+
+                                            {
+                                                manager.assignedCity
+                                            }
+
+                                        </div>
+
+                                        <p>
+
+                                            {
+                                                manager.email
+                                            }
+
+                                        </p>
+
+                                        <div className="d-flex justify-content-center gap-2 mt-3">
+
+                                            <span className="badge bg-success">
+                                                Active
+                                            </span>
+
+                                            <span className="badge bg-primary">
+                                                Manager
+                                            </span>
+
+                                        </div>
+
+                                        <button
+                                            className="view-btn mt-4"
+                                        >
+                                            View Details
+                                        </button>
 
                                     </div>
 
                                 </div>
 
                             </div>
+
                         )
                     )
+
                 }
 
             </div>
 
+            {/* Modal */}
+
             <Modal
                 show={show}
+                centered
                 onHide={() =>
                     setShow(false)
                 }
@@ -157,7 +227,9 @@ function ManagersViewPage() {
                 <Modal.Header closeButton>
 
                     <Modal.Title>
-                        Manager Details
+
+                        👨‍💼 Manager Details
+
                     </Modal.Title>
 
                 </Modal.Header>
@@ -165,48 +237,93 @@ function ManagersViewPage() {
                 <Modal.Body>
 
                     {
+
                         selectedManager &&
 
                         <>
 
+                            <div className="text-center mb-4">
+
+                                <img
+                                    src={`https://ui-avatars.com/api/?name=${selectedManager.name}&background=2563eb&color=ffffff&size=256`}
+                                    alt=""
+                                    style={{
+                                        width: "100px",
+                                        height: "100px",
+                                        borderRadius: "50%"
+                                    }}
+                                />
+
+                            </div>
+
                             <p>
-                                <b>Name :</b>
+
+                                <strong>
+                                    Name :
+                                </strong>
+
                                 {" "}
+
                                 {
                                     selectedManager.name
                                 }
+
                             </p>
 
                             <p>
-                                <b>Email :</b>
+
+                                <strong>
+                                    Email :
+                                </strong>
+
                                 {" "}
+
                                 {
                                     selectedManager.email
                                 }
+
                             </p>
 
                             <p>
-                                <b>Mobile :</b>
+
+                                <strong>
+                                    Mobile :
+                                </strong>
+
                                 {" "}
+
                                 {
                                     selectedManager.mobile
                                 }
+
                             </p>
 
                             <p>
-                                <b>City :</b>
+
+                                <strong>
+                                    Assigned City :
+                                </strong>
+
                                 {" "}
+
                                 {
                                     selectedManager.assignedCity
                                 }
+
                             </p>
 
                             <p>
-                                <b>Location :</b>
+
+                                <strong>
+                                    Location :
+                                </strong>
+
                                 {" "}
+
                                 {
                                     selectedManager.location
                                 }
+
                             </p>
 
                         </>
@@ -231,7 +348,8 @@ function ManagersViewPage() {
             </Modal>
 
         </div>
+
     );
 }
 
-export default ManagersViewPage;
+export default ManagersViewPage; 

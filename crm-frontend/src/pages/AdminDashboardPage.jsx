@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import AdminCards from "../components/admin/AdminCards";
 import LeadCharts from "../components/admin/LeadCharts";
 import PropertyChart from "../components/admin/PropertyChart";
-import ManagerChart from "../components/admin/ManagerChart";
+import AdminInsights from "../components/admin/AdminInsights";
 
 function AdminDashboardPage() {
 
@@ -40,26 +40,28 @@ function AdminDashboardPage() {
 
             {/* Header */}
 
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className="dashboard-header-card">
 
                 <div>
 
-                    <h2>
-                        Admin Dashboard
+                    <h2 className="dashboard-title">
+                        🏢 Admin Dashboard
                     </h2>
 
-                    <h5 className="text-muted">
-                        Welcome, {localStorage.getItem("name")}
+                    <h5 className="dashboard-user">
+                        Welcome,
+                        {" "}
+                        {localStorage.getItem("name")}
                     </h5>
 
-                    <p className="mb-0">
+                    <p className="dashboard-subtitle">
                         Real Estate CRM Analytics Overview
                     </p>
 
                 </div>
 
                 <button
-                    className="btn btn-danger"
+                    className="btn btn-danger logout-btn"
                     onClick={handleLogout}
                 >
                     <i className="bi bi-box-arrow-right me-2"></i>
@@ -68,10 +70,9 @@ function AdminDashboardPage() {
 
             </div>
 
-            {/* Dashboard Cards */}
+            {/* Statistics Cards */}
 
             <AdminCards />
-        
 
             {/* Quick Actions */}
 
@@ -81,9 +82,10 @@ function AdminDashboardPage() {
 
                     <Link
                         to="/admin/managers"
-                        className="btn btn-primary w-100"
+                        className="btn btn-primary w-100 quick-action-btn"
                     >
                         <i className="bi bi-people-fill me-2"></i>
+
                         Manage Managers
                     </Link>
 
@@ -93,9 +95,10 @@ function AdminDashboardPage() {
 
                     <Link
                         to="/admin/agents"
-                        className="btn btn-success w-100"
+                        className="btn btn-success w-100 quick-action-btn"
                     >
                         <i className="bi bi-person-badge-fill me-2"></i>
+
                         Manage Agents
                     </Link>
 
@@ -105,9 +108,10 @@ function AdminDashboardPage() {
 
                     <Link
                         to="/admin/properties"
-                        className="btn btn-warning w-100"
+                        className="btn btn-warning w-100 quick-action-btn"
                     >
                         <i className="bi bi-building-fill me-2"></i>
+
                         Manage Properties
                     </Link>
 
@@ -115,7 +119,7 @@ function AdminDashboardPage() {
 
             </div>
 
-            {/* Charts */}
+            {/* Charts Section */}
 
             <div className="row mt-4">
 
@@ -133,13 +137,15 @@ function AdminDashboardPage() {
 
             </div>
 
-            <div className="row">
+            {/* Business Analytics */}
 
-                <div className="col-lg-12">
+            <div className="mt-4">
 
-                    <ManagerChart />
+                <h4 className="section-title">
+                    📊 Business Insights
+                </h4>
 
-                </div>
+                <AdminInsights />
 
             </div>
 

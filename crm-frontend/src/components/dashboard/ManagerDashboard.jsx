@@ -7,7 +7,6 @@ import NewLeads from "./NewLeads";
 import AssignedLeads from "./AssignedLeads";
 import LeadDetails from "../leads/LeadDetails";
 
-
 function ManagerDashboard() {
 
     const [leads, setLeads] = useState([]);
@@ -21,7 +20,9 @@ function ManagerDashboard() {
         loadLeads();
 
         const interval = setInterval(() => {
+
             loadLeads();
+
         }, 10000);
 
         return () => clearInterval(interval);
@@ -31,110 +32,175 @@ function ManagerDashboard() {
     const loadLeads = () => {
 
         LeadService.getAllLeads()
+
             .then((res) => {
 
-                const allLeads = res.data;
+                const allLeads =
+                    res.data;
 
                 setLeads(allLeads);
 
                 const currentCount =
                     allLeads.filter(
-                        lead => lead.status === "NEW"
+                        lead =>
+                            lead.status ===
+                            "NEW"
                     ).length;
 
                 if (
                     previousCount > 0 &&
-                    currentCount > previousCount
+                    currentCount >
+                    previousCount
                 ) {
-                    toast.info("🔔 New Lead Arrived");
+
+                    toast.info(
+                        "🔔 New Lead Arrived"
+                    );
                 }
 
-                setPreviousCount(currentCount);
+                setPreviousCount(
+                    currentCount
+                );
 
             })
+
             .catch((err) => {
+
                 console.log(err);
+
             });
     };
 
-    const filteredLeads = leads.filter(
-        lead =>
+    const filteredLeads =
+        leads.filter((lead) =>
             lead.name
-                .toLowerCase()
-                .includes(search.toLowerCase())
-    );
+                ?.toLowerCase()
+                .includes(
+                    search.toLowerCase()
+                )
+        );
 
     const newLeadCount =
         leads.filter(
-            lead => lead.status === "NEW"
+            lead =>
+                lead.status ===
+                "NEW"
         ).length;
 
-    const assignedLeadCount =
+    const contactedCount =
         leads.filter(
-            lead => lead.status !== "NEW"
+            lead =>
+                lead.status ===
+                "CONTACTED"
+        ).length;
+
+    const interestedCount =
+        leads.filter(
+            lead =>
+                lead.status ===
+                "INTERESTED"
+        ).length;
+
+    const bookingCount =
+        leads.filter(
+            lead =>
+                lead.status ===
+                "BOOKING"
         ).length;
 
     return (
 
-        <div className="container-fluid mt-4">
-            <div className="card shadow-sm mb-4">
+        <div className="container-fluid manager-dashboard">
 
-{/* <div className="card-body">
+            {/* HEADER */}
 
-    <h4>
-        Welcome,
-        {localStorage.getItem("name")}
-    </h4>
+            <div className="manager-header">
 
-    <p className="mb-0">
-        Manage Assigned Leads and Follow Ups
-    </p>
+                <div>
 
-</div> */}
+                    <h2>
+                        👋 Welcome,
+                        {" "}
+                        {
+                            localStorage.getItem(
+                                "name"
+                            )
+                        }
+                    </h2>
 
-</div>
+                    <p>
+                        Manage Leads,
+                        Follow-Ups and
+                        Customer Conversions
+                    </p>
 
-            {/* Statistics Cards */}
+                </div>
+
+            </div>
+
+            {/* STATS */}
 
             <div className="row mb-4">
 
-                <div className="col-md-4">
+                <div className="col-lg-3 col-md-6 mb-3">
 
-                    <div className="stat-card">
+                    <div className="manager-stat total">
 
-                        <h3>
+                        <h2>
                             {leads.length}
-                        </h3>
+                        </h2>
 
-                        <p>Total Leads</p>
+                        <p>
+                            Total Leads
+                        </p>
 
                     </div>
 
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-lg-3 col-md-6 mb-3">
 
-                    <div className="stat-card stat-new">
+                    <div className="manager-stat new">
 
-                        <h3>
+                        <h2>
                             {newLeadCount}
-                        </h3>
+                        </h2>
 
-                        <p>New Leads</p>
+                        <p>
+                            New Leads
+                        </p>
 
                     </div>
 
                 </div>
 
-                <div className="col-md-4">
+                <div className="col-lg-3 col-md-6 mb-3">
 
-                    <div className="stat-card stat-assigned">
+                    <div className="manager-stat interested">
 
-                        <h3>
-                            {assignedLeadCount}
-                        </h3>
+                        <h2>
+                            {interestedCount}
+                        </h2>
 
-                        <p>Assigned Leads</p>
+                        <p>
+                            Interested
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div className="col-lg-3 col-md-6 mb-3">
+
+                    <div className="manager-stat booking">
+
+                        <h2>
+                            {bookingCount}
+                        </h2>
+
+                        <p>
+                            Booking
+                        </p>
 
                     </div>
 
@@ -142,57 +208,104 @@ function ManagerDashboard() {
 
             </div>
 
-            {/* Search */}
+            {/* LEAD SUMMARY */}
 
-            <div className="mb-3">
+            <div className="lead-summary">
+
+                <div>
+                    🟡 Contacted:
+                    {" "}
+                    {contactedCount}
+                </div>
+
+                <div>
+                    🟢 Interested:
+                    {" "}
+                    {interestedCount}
+                </div>
+
+                <div>
+                    🤝 Booking:
+                    {" "}
+                    {bookingCount}
+                </div>
+
+            </div>
+
+            {/* SEARCH */}
+
+            <div className="search-section">
 
                 <input
                     type="text"
-                    className="form-control"
-                    placeholder="Search Lead By Name..."
+                    className="form-control search-input"
+                    placeholder="🔍 Search Lead By Name..."
                     value={search}
                     onChange={(e) =>
-                        setSearch(e.target.value)
+                        setSearch(
+                            e.target.value
+                        )
                     }
                 />
 
             </div>
 
-            {/* Notification */}
+            {/* ALERT */}
 
-            <div className="alert alert-warning">
+            <div className="new-lead-alert">
 
-                🔔 {newLeadCount} New Leads
+                🔔 You currently have
+                {" "}
+                <strong>
+                    {newLeadCount}
+                </strong>
+                {" "}
+                new leads waiting
+                for follow-up
 
             </div>
 
+            {/* MAIN LAYOUT */}
+
             <div className="row">
 
-                <div className="col-md-4">
+                {/* LEFT */}
+
+                <div className="col-lg-3">
 
                     <div className="lead-sidebar">
 
                         <NewLeads
                             leads={filteredLeads}
-                            onSelect={setSelectedLead}
+                            onSelect={
+                                setSelectedLead
+                            }
                         />
 
                         <AssignedLeads
                             leads={filteredLeads}
-                            onSelect={setSelectedLead}
+                            onSelect={
+                                setSelectedLead
+                            }
                         />
 
                     </div>
 
                 </div>
 
-                <div className="col-md-8">
+                {/* RIGHT */}
+
+                <div className="col-lg-9">
 
                     <LeadDetails
                         lead={selectedLead}
-                        refreshLeads={loadLeads}
+                        refreshLeads={
+                            loadLeads
+                        }
                         clearLead={() =>
-                            setSelectedLead(null)
+                            setSelectedLead(
+                                null
+                            )
                         }
                     />
 

@@ -49,17 +49,13 @@ function DashboardPage() {
 
           <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
 
-            <div>
+          <div>
 
-              <h4 className="mb-1">
-                Welcome, {localStorage.getItem("name")}
-              </h4>
+<h4 className="mb-0">
+  Manager Dashboard
+</h4>
 
-              <p className="text-muted mb-0">
-                Manage Assigned Leads and Customer Follow-ups
-              </p>
-
-            </div>
+</div>
 
             <button
               className="btn btn-danger"

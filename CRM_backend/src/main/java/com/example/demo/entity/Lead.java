@@ -43,6 +43,9 @@ public class Lead {
 	private String property_type;
 	@Column
 	private double budget;
+	private UUID assignedAgentId;
+
+	private String assignedAgentName;
 	@Column(length = 1000)
 	private String Additional_requirement;
 	

@@ -187,3 +187,96 @@
     box-shadow:
     0 2px 10px rgba(0,0,0,.05);
 }
+
+.dashboard-header-card {
+
+    background:
+    linear-gradient(
+        135deg,
+        #4f46e5,
+        #6366f1
+    );
+
+    color: white;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    margin-bottom: 30px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    box-shadow:
+    0 15px 35px rgba(
+        79,
+        70,
+        229,
+        0.25
+    );
+}
+
+.dashboard-title {
+
+    font-size: 32px;
+
+    font-weight: 700;
+
+    margin-bottom: 8px;
+}
+
+.dashboard-user {
+
+    color: rgba(
+        255,
+        255,
+        255,
+        0.9
+    );
+
+    margin-bottom: 5px;
+}
+
+.dashboard-subtitle {
+
+    margin-bottom: 0;
+
+    opacity: 0.9;
+}
+
+.logout-btn {
+
+    padding: 12px 25px;
+
+    font-weight: 600;
+}
+
+.quick-action-btn {
+
+    padding: 14px;
+
+    font-weight: 600;
+
+    border-radius: 12px;
+
+    transition: .3s;
+}
+
+.quick-action-btn:hover {
+
+    transform:
+    translateY(-3px);
+}
+
+.section-title {
+
+    font-weight: 700;
+
+    color: #1f2937;
+
+    margin-bottom: 20px;
+}     

@@ -45,24 +45,28 @@ public class LeadServiceImpl implements LeadService {
 
 	@Override
 	
-	 public Lead updateLead(UUID id, Lead l) {
+	public Lead updateLead(UUID id, Lead l) {
 
-        Lead oldLead =
-                leadRepo.findById(id)
-                  .orElse(null);
+	    Lead oldLead =
+	            leadRepo.findById(id)
+	            .orElse(null);
 
-        if (oldLead != null) {
+	    if(oldLead != null) {
 
-            oldLead.setStatus(
-                    l.getStatus()
-            );
+	        oldLead.setStatus(
+	                l.getStatus());
 
-            return leadRepo.save(oldLead);
-        }
+	        oldLead.setAssignedAgentId(
+	                l.getAssignedAgentId());
 
-        return null;
-    }
+	        oldLead.setAssignedAgentName(
+	                l.getAssignedAgentName());
 
+	        return leadRepo.save(oldLead);
+	    }
+
+	    return null;
+	}
 
 	@Override
 	public String deleteLead(UUID id) {

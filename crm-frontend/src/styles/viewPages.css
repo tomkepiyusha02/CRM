@@ -1,148 +1,513 @@
-/* Page Background */
+/* ===========================
+   PAGE BACKGROUND
+=========================== */
 
 .view-page {
+
     min-height: 100vh;
-    background: linear-gradient(
+
+    padding: 35px;
+
+    background:
+    linear-gradient(
         135deg,
+        #f8fafc,
         #eef2ff,
-        #f8fafc
+        #f1f5f9
     );
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
     padding: 30px;
-}
 
-/* Page Heading */
+    border-radius: 30px;
 
-.view-title {
-    font-size: 32px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 25px;
-}
+    margin-bottom: 30px;
 
-/* Search Box */
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
 
-.search-box {
-    border-radius: 15px;
-    border: none;
-    padding: 12px 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    margin-bottom: 25px;
-}
-
-/* Cards */
-
-.crm-card {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    background: white;
-    transition: all .3s ease;
-    box-shadow:
-        0 10px 25px rgba(0,0,0,.08);
-}
-
-.crm-card:hover {
-
-    transform: translateY(-8px);
+    color: white;
 
     box-shadow:
-        0 20px 40px rgba(0,0,0,.15);
+    0 15px 40px rgba(
+        37,
+        99,
+        235,
+        .30
+    );
 }
 
-/* Avatar */
+.page-title {
 
-.crm-avatar {
+    font-size: 34px;
 
-    width: 90px;
-    height: 90px;
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.page-subtitle {
+
+    font-size: 15px;
+
+    opacity: .9;
+
+    margin-bottom: 0;
+}
+
+.header-count {
+
+    width: 110px;
+
+    height: 110px;
 
     border-radius: 50%;
 
-    border: 4px solid #2563eb;
+    background:
+    rgba(
+        255,
+        255,
+        255,
+        .15
+    );
 
-    margin: 15px auto;
-}
+    backdrop-filter: blur(10px);
 
-/* Card Name */
+    display: flex;
 
-.crm-name {
+    flex-direction: column;
 
-    font-size: 20px;
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 30px;
 
     font-weight: 700;
 
-    color: #1e293b;
+    border:
+    2px solid rgba(
+        255,
+        255,
+        255,
+        .25
+    );
 }
 
-/* City Badge */
+.header-count span {
 
-.crm-city {
+    font-size: 12px;
+
+    font-weight: 500;
+
+    margin-top: 3px;
+}
+
+/* ===========================
+   SEARCH BOX
+=========================== */
+
+.search-wrapper {
+
+    position: relative;
+
+    margin-bottom: 30px;
+}
+
+.search-icon {
+
+    position: absolute;
+
+    top: 17px;
+
+    left: 18px;
+
+    color: #64748b;
+
+    font-size: 18px;
+
+    z-index: 5;
+}
+
+.search-box {
+
+    border: none !important;
+
+    border-radius: 16px !important;
+
+    padding: 15px 20px 15px 50px !important;
+
+    background: white !important;
+
+    box-shadow:
+    0 10px 25px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+
+    transition: .3s;
+}
+
+.search-box:focus {
+
+    box-shadow:
+    0 15px 35px rgba(
+        37,
+        99,
+        235,
+        .20
+    ) !important;
+}
+
+/* ===========================
+   MANAGER CARD
+=========================== */
+
+.manager-card {
+
+    background: white;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: .4s;
+
+    position: relative;
+
+    box-shadow:
+    0 10px 35px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+
+    min-height: 470px;
+}
+
+.manager-card:hover {
+
+    transform:
+    translateY(-12px);
+
+    box-shadow:
+    0 25px 60px rgba(
+        0,
+        0,
+        0,
+        .18
+    );
+}
+
+/* ===========================
+   TOP BANNER
+=========================== */
+
+.manager-banner {
+
+    height: 130px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    position: relative;
+
+    overflow: visible;
+}
+
+.manager-banner::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    border-radius: 50%;
+
+    background:
+    rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+
+    top: -80px;
+
+    right: -60px;
+}
+
+/* ===========================
+   AVATAR
+=========================== */
+.manager-avatar {
+
+    display: flex;
+
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 10;
+
+    margin-top: -65px;
+}
+.manager-avatar img {
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    border: 6px solid #ffffff;
+
+    object-fit: cover;
+
+    background: white;
+
+    box-shadow:
+    0 15px 35px rgba(
+        0,
+        0,
+        0,
+        .18
+    );
+}
+
+/* ===========================
+   CONTENT
+=========================== */
+
+.manager-content {
+
+    text-align: center;
+
+    padding:
+    15px
+    25px
+    30px;
+}
+
+.manager-content h4 {
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+
+    margin-bottom: 10px;
+}
+
+.manager-content p {
+
+    color: #64748b;
+
+    margin-top: 12px;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+}
+
+/* ===========================
+   CITY BADGE
+=========================== */
+
+.city-badge {
 
     display: inline-block;
 
-    background: #dbeafe;
-
-    color: #2563eb;
-
-    padding: 6px 15px;
+    padding: 8px 18px;
 
     border-radius: 30px;
 
     font-size: 13px;
 
-    font-weight: 600;
+    font-weight: 700;
 
-    margin-top: 8px;
-}
+    background:
+    linear-gradient(
+        135deg,
+        #dbeafe,
+        #bfdbfe
+    );
 
-/* Email */
-
-.crm-email {
-
-    color: #64748b;
-
-    font-size: 14px;
+    color: #2563eb;
 
     margin-top: 10px;
 }
 
-/* Details Button */
+/* ===========================
+   VIEW BUTTON
+=========================== */
 
-.details-btn {
+.view-btn {
 
     width: 100%;
 
     border: none;
 
-    background:
-        linear-gradient(
-            90deg,
-            #2563eb,
-            #3b82f6
-        );
+    padding: 14px;
+
+    border-radius: 15px;
+
+    font-size: 16px;
+
+    font-weight: 700;
 
     color: white;
 
-    padding: 12px;
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
 
-    border-radius: 12px;
-
-    margin-top: 15px;
-
-    font-weight: 600;
+    transition: .3s;
 }
 
-.details-btn:hover {
+.view-btn:hover {
+
+    transform: scale(1.02);
 
     background:
-        linear-gradient(
-            90deg,
-            #1d4ed8,
-            #2563eb
-        );
+    linear-gradient(
+        135deg,
+        #1d4ed8,
+        #4338ca
+    );
 }
 
-/* Property Image */
+/* ===========================
+   MODAL
+=========================== */
+
+.modal-content {
+
+    border: none !important;
+
+    border-radius: 25px !important;
+
+    overflow: hidden;
+
+    box-shadow:
+    0 20px 50px rgba(
+        0,
+        0,
+        0,
+        .20
+    );
+}
+
+.modal-header {
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    border-bottom: none;
+}
+
+.modal-title {
+
+    font-weight: 700;
+}
+
+.modal-body {
+
+    padding: 30px;
+}
+
+.modal-body p {
+
+    font-size: 15px;
+
+    margin-bottom: 14px;
+}
+
+/* ===========================
+   BOOTSTRAP BADGES
+=========================== */
+
+.badge {
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    .page-header{
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 20px;
+    }
+
+    .page-title{
+
+        font-size: 28px;
+    }
+
+    .header-count{
+
+        width: 90px;
+
+        height: 90px;
+
+        font-size: 24px;
+    }
+
+    .manager-content h4{
+
+        font-size: 20px;
+    }
+}
 
 .property-img {
 
@@ -151,76 +516,6 @@
     height: 220px;
 
     object-fit: cover;
-}
 
-/* Modal */
-
-.modal-content {
-
-    border-radius: 20px !important;
-
-    border: none !important;
-
-    overflow: hidden;
-}
-
-.modal-header {
-
-    background:
-        linear-gradient(
-            90deg,
-            #2563eb,
-            #3b82f6
-        );
-
-    color: white;
-}
-
-.modal-body {
-
-    padding: 25px;
-}
-
-.modal-body p {
-
-    margin-bottom: 12px;
-
-    font-size: 15px;
-}
-
-/* Status */
-
-.status-badge {
-
-    padding: 6px 15px;
-
-    border-radius: 30px;
-
-    font-size: 12px;
-
-    font-weight: 600;
-}
-
-.NEW {
-
-    background: #dbeafe;
-    color: #2563eb;
-}
-
-.CONTACTED {
-
-    background: #fef3c7;
-    color: #d97706;
-}
-
-.INTERESTED {
-
-    background: #dcfce7;
-    color: #16a34a;
-}
-
-.BOOKING {
-
-    background: #fee2e2;
-    color: #dc2626;
+    border-radius: 15px;
 }

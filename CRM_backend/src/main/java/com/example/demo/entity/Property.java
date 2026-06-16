@@ -41,6 +41,10 @@ public class Property {
     private double areaSqft;
 
     private String builderName;
+    
+    
+    private String imageUrl;
+    
 
     @Enumerated(EnumType.STRING)
     private PropertyStatus propertyStatus;

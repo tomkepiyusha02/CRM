@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 function PropertyForm({ loadProperties }) {
 
     const [property, setProperty] = useState({
-
         name: "",
         price: "",
         type: "APARTMENT",
@@ -13,10 +12,8 @@ function PropertyForm({ loadProperties }) {
         areaSqft: "",
         builderName: "",
         propertyStatus: "AVAILABLE",
-        description: "",
-        latitude: "",
-        longitude: ""
-
+        imageUrl: "",
+        description: ""
     });
 
     const handleChange = (e) => {
@@ -203,6 +200,19 @@ function PropertyForm({ loadProperties }) {
                         />
 
                     </div>
+
+                    <div className="col-md-12 mb-3">
+
+    <input
+        type="text"
+        name="imageUrl"
+        className="form-control"
+        placeholder="Property Image URL"
+        value={property.imageUrl}
+        onChange={handleChange}
+    />
+
+</div>
 
                     <div className="col-md-6 mb-3">
 

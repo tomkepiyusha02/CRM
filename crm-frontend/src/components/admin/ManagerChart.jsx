@@ -1,53 +1,86 @@
-import React from "react";
+import React,
+{
+    useEffect,
+    useState
+}
+from "react";
 
 import {
-
-    LineChart,
-    Line,
+    BarChart,
+    Bar,
     XAxis,
     YAxis,
     Tooltip,
-    ResponsiveContainer
-
+    ResponsiveContainer,
+    CartesianGrid
 }
 from "recharts";
 
+import UserService
+from "../../services/UserService";
+
 function ManagerChart() {
 
-    const data = [
+    const [data,
+        setData] =
+        useState([]);
 
-        {
-            month: "Jan",
-            leads: 20
-        },
+    useEffect(() => {
 
-        {
-            month: "Feb",
-            leads: 35
-        },
+        loadManagers();
 
-        {
-            month: "Mar",
-            leads: 50
-        },
+    }, []);
 
-        {
-            month: "Apr",
-            leads: 65
-        },
+    const loadManagers =
+        async () => {
 
-        {
-            month: "May",
-            leads: 80
-        }
-    ];
+            try {
+
+                const response =
+                    await UserService.getManagers();
+
+                const managers =
+                    response.data;
+
+                const cityCount = {};
+
+                managers.forEach(manager => {
+
+                    cityCount[
+                        manager.assignedCity
+                    ] =
+                        (cityCount[
+                            manager.assignedCity
+                        ] || 0) + 1;
+                });
+
+                const chartData =
+                    Object.keys(cityCount)
+                        .map(city => ({
+
+                            city,
+
+                            managers:
+                                cityCount[
+                                city
+                                ]
+
+                        }));
+
+                setData(chartData);
+
+            } catch(error) {
+
+                console.log(error);
+            }
+        };
 
     return (
 
         <div className="chart-card">
 
             <h5>
-                Monthly Lead Growth
+                Managers By City
             </h5>
 
             <ResponsiveContainer
@@ -55,26 +88,34 @@ function ManagerChart() {
                 height={350}
             >
 
-                <LineChart
+                <BarChart
                     data={data}
                 >
 
+                    <CartesianGrid
+                        strokeDasharray="3 3"
+                    />
+
                     <XAxis
-                        dataKey="month"
+                        dataKey="city"
                     />
 
                     <YAxis />
 
                     <Tooltip />
 
-                    <Line
-                        type="monotone"
-                        dataKey="leads"
-                        stroke="#10b981"
-                        strokeWidth={3}
+                    <Bar
+                        dataKey="managers"
+                        fill="#10b981"
+                        radius={[
+                            10,
+                            10,
+                            0,
+                            0
+                        ]}
                     />
 
-                </LineChart>
+                </BarChart>
 
             </ResponsiveContainer>
 
