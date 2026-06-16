@@ -1,41 +1,250 @@
-.sidebar{
+/* ===========================
+   SIDEBAR
+=========================== */
 
-    min-height:100vh;
+.sidebar {
 
-    background:#1e293b;
+    min-height: 100vh;
 
-    padding:20px;
+    background:
+        linear-gradient(
+            180deg,
+            #111827,
+            #1e293b
+        );
 
-    color:white;
+    padding: 25px 15px;
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    box-shadow:
+        5px 0 25px rgba(0,0,0,.15);
 }
 
-.sidebar-title{
+/* ===========================
+   HEADER
+=========================== */
 
-    text-align:center;
+.sidebar-header {
 
-    margin-bottom:30px;
+    text-align: center;
+
+    margin-bottom: 40px;
 }
 
-.sidebar-link{
+.sidebar-logo {
 
-    display:block;
+    width: 70px;
 
-    color:white;
+    height: 70px;
 
-    text-decoration:none;
+    margin: auto;
 
-    padding:12px;
+    display: flex;
 
-    margin-bottom:10px;
+    align-items: center;
 
-    border-radius:10px;
+    justify-content: center;
 
-    transition:0.3s;
+    font-size: 32px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 10px 25px rgba(124,58,237,.35);
+
+    margin-bottom: 15px;
 }
 
-.sidebar-link:hover{
+.sidebar-title {
 
-    background:#0d6efd;
+    margin-bottom: 5px;
 
-    color:white;
+    font-weight: 700;
+
+    color: white;
+}
+
+.sidebar-subtitle {
+
+    color: #94a3b8;
+
+    font-size: 13px;
+}
+
+/* ===========================
+   MENU
+=========================== */
+
+.sidebar-menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+.sidebar-link {
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    color: #cbd5e1;
+
+    text-align: left;
+
+    padding: 14px 18px;
+
+    border-radius: 14px;
+
+    transition: all .3s ease;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    display: flex;
+
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.sidebar-link i {
+
+    font-size: 18px;
+
+    margin-right: 10px;
+}
+
+.sidebar-link:hover {
+
+    background:
+        rgba(79,70,229,.20);
+
+    color: white;
+
+    transform:
+        translateX(5px);
+}
+
+.sidebar-link.active {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    box-shadow:
+        0 8px 20px rgba(79,70,229,.35);
+}
+
+/* ===========================
+   PROFILE CARD
+=========================== */
+
+.sidebar-footer {
+
+    margin-top: 40px;
+}
+
+.manager-profile {
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter: blur(10px);
+
+    border-radius: 18px;
+
+    padding: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+}
+
+.manager-avatar {
+
+    width: 50px;
+
+    height: 50px;
+
+    border-radius: 50%;
+
+    border: 3px solid rgba(255,255,255,.15);
+}
+
+.manager-profile h6 {
+
+    margin: 0;
+
+    color: white;
+
+    font-weight: 600;
+}
+
+.manager-profile small {
+
+    color: #94a3b8;
+}
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+.sidebar::-webkit-scrollbar {
+
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+
+    background: #475569;
+
+    border-radius: 20px;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    .sidebar {
+
+        min-height: auto;
+    }
+
+    .sidebar-footer {
+
+        display: none;
+    }
+
 }

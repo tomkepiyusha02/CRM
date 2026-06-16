@@ -19,7 +19,7 @@ function Navbar() {
         >
           <i className="bi bi-buildings-fill"></i>
 
-          &nbsp; Real Estate
+          &nbsp; Real Estate CRM
         </Link>
 
         <button
@@ -55,6 +55,17 @@ function Navbar() {
                 to="/dashboard"
               >
                 Manager Dashboard
+              </Link>
+
+            </li>
+
+            <li className="nav-item">
+
+              <Link
+                className="nav-link"
+                to="/admin/dashboard"
+              >
+                Admin Dashboard
               </Link>
 
             </li>

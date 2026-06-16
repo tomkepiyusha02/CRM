@@ -13,52 +13,71 @@ import com.example.demo.repository.LeadRepository;
 public class LeadServiceImpl implements LeadService {
 
 	@Autowired
-	LeadRepository lr;
+	LeadRepository leadRepo;
 	
 	@Override
 	public Lead addlead(Lead l) {
 		
-		return lr.save(l);
+		if(leadRepo.existsByEmail(l.getEmail())) {
+
+	        throw new RuntimeException(
+	            "Email already exists"
+	        );
+	    }
+
+		if(leadRepo.existsByMobileNo(l.getMobileNo())) 
+		{
+		    throw new RuntimeException("Mobile Already Exists");
+		 
+		}
+	       
+	    
+
+	    return leadRepo.save(l);
 	}
 
 	@Override
 	public List<Lead> getAllLeads() {
 	
-		return lr.findAll();
+		return leadRepo.findAll();
 	}
 
 
 	@Override
 	
-	 public Lead updateLead(UUID id, Lead l) {
+	public Lead updateLead(UUID id, Lead l) {
 
-        Lead oldLead =
-                lr.findById(id)
-                  .orElse(null);
+	    Lead oldLead =
+	            leadRepo.findById(id)
+	            .orElse(null);
 
-        if (oldLead != null) {
+	    if(oldLead != null) {
 
-            oldLead.setStatus(
-                    l.getStatus()
-            );
+	        oldLead.setStatus(
+	                l.getStatus());
 
-            return lr.save(oldLead);
-        }
+	        oldLead.setAssignedAgentId(
+	                l.getAssignedAgentId());
 
-        return null;
-    }
+	        oldLead.setAssignedAgentName(
+	                l.getAssignedAgentName());
 
+	        return leadRepo.save(oldLead);
+	    }
+
+	    return null;
+	}
 
 	@Override
 	public String deleteLead(UUID id) {
-		lr.deleteById(id);
+		leadRepo.deleteById(id);
 		return "Lead Deleted";
 	}
 
 	@Override
 	public Lead getLeadById(UUID id) {
 		
-		return lr.findById(id).orElse(null);
+		return leadRepo.findById(id).orElse(null);
 	}
 
 }

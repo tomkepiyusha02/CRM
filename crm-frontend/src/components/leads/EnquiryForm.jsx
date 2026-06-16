@@ -1,332 +1,367 @@
 import React, { useState } from "react";
 import LeadService from "../../services/LeadService";
-
+import Swal from "sweetalert2";
 function EnquiryForm() {
 
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile_no: "",
-    location: "",
-    property_type: "",
-    budget: "",
-    Additional_requirement: ""
-  });
-
-  const [errors, setErrors] = useState({});
-
-  const handleChange = (e) => {
-
-    const { name, value } = e.target;
-
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-
-    setErrors({
-      ...errors,
-      [name]: ""
-    });
-  };
-
-  const validate = () => {
-
-    let temp = {};
-
-    if (!formData.name.trim()) {
-      temp.name = "Name is required";
-    }
-    else if (formData.name.length < 3) {
-      temp.name = "Minimum 3 characters required";
-    }
-
-    if (!formData.email.trim()) {
-      temp.email = "Email is required";
-    }
-    else if (
-      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-        formData.email
-      )
-    ) {
-      temp.email = "Invalid Email";
-    }
-
-    if (!formData.mobile_no.trim()) {
-      temp.mobile_no = "Mobile Number is required";
-    }
-    else if (
-      !/^[0-9]{10}$/.test(
-        formData.mobile_no
-      )
-    ) {
-      temp.mobile_no = "Enter valid 10 digit number";
-    }
-
-    if (!formData.location.trim()) {
-      temp.location = "Location required";
-    }
-
-    if (!formData.property_type.trim()) {
-      temp.property_type = "Select property type";
-    }
-
-    if (!formData.budget) {
-      temp.budget = "Budget required";
-    }
-
-    setErrors(temp);
-
-    return Object.keys(temp).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-
-    e.preventDefault();
-
-    if (!validate()) {
-      return;
-    }
-
-    try {
-
-      await LeadService.addLead(formData);
-
-      alert("Enquiry Submitted Successfully");
-
-      setFormData({
+    const [formData, setFormData] = useState({
         name: "",
         email: "",
-        mobile_no: "",
+        mobileNo: "",
         location: "",
         property_type: "",
         budget: "",
         Additional_requirement: ""
-      });
+    });
 
-    } catch (error) {
+    const [errors, setErrors] = useState({});
+    const [serverError, setServerError] = useState("");
 
-      alert("Something went wrong");
+    const handleChange = (e) => {
 
-      console.log(error);
+        const { name, value } = e.target;
 
-    }
-  };
+        setFormData({
+            ...formData,
+            [name]: value
+        });
 
-  return (
+        setErrors({
+            ...errors,
+            [name]: ""
+        });
 
-    <div className="card enquiry-card">
+        setServerError("");
+    };
 
-      <div className="card-body">
+    const validate = () => {
 
-        <form onSubmit={handleSubmit}>
+        let temp = {};
 
-          <div className="row">
+        if (!formData.name.trim()) {
+            temp.name = "Name is required";
+        }
 
-            {/* Name */}
+        if (!formData.email.trim()) {
+            temp.email = "Email is required";
+        } else if (
+            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(formData.email)
+        ) {
+            temp.email = "Invalid Email";
+        }
 
-            <div className="col-md-6 mb-3">
+        if (!formData.mobileNo.trim()) {
+            temp.mobileNo = "Mobile Number is required";
+        } else if (
+            !/^[0-9]{10}$/.test(formData.mobileNo)
+        ) {
+            temp.mobileNo = "Enter Valid 10 Digit Number";
+        }
 
-              <label>Name</label>
+        if (!formData.location.trim()) {
+            temp.location = "Location is required";
+        }
 
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className={`form-control ${
-                  errors.name
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
+        if (!formData.property_type.trim()) {
+            temp.property_type = "Property Type is required";
+        }
 
-              <div className="invalid-feedback">
-                {errors.name}
-              </div>
+        if (!formData.budget) {
+            temp.budget = "Budget is required";
+        }
 
-            </div>
+        setErrors(temp);
 
-            {/* Email */}
+        return Object.keys(temp).length === 0;
+    };
 
-            <div className="col-md-6 mb-3">
+    const handleSubmit = async (e) => {
 
-              <label>Email</label>
+        e.preventDefault();
 
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className={`form-control ${
-                  errors.email
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
+        setServerError("");
 
-              <div className="invalid-feedback">
-                {errors.email}
-              </div>
+        if (!validate()) {
+            return;
+        }
 
-            </div>
+        try {
 
-            {/* Mobile */}
+            console.log(formData);
 
-            <div className="col-md-6 mb-3">
+            await LeadService.addLead(formData);
 
-              <label>Mobile Number</label>
+            Swal.fire({
 
-              <input
-                type="text"
-                name="mobile_no"
-                value={formData.mobile_no}
-                onChange={handleChange}
-                className={`form-control ${
-                  errors.mobile_no
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
+                icon:"success",
+            
+                title:"Enquiry Submitted",
+            
+                text:
+                "Our Team Will Contact You Soon",
+            
+                confirmButtonColor:"#0d6efd"
+            
+            });
 
-              <div className="invalid-feedback">
-                {errors.mobile_no}
-              </div>
+            setFormData({
+                name: "",
+                email: "",
+                mobileNo: "",
+                location: "",
+                property_type: "",
+                budget: "",
+                Additional_requirement: ""
+            });
 
-            </div>
+            setErrors({});
 
-            {/* Location */}
+        } catch (error) {
 
-            <div className="col-md-6 mb-3">
+            if (error.response) {
 
-              <label>Location</label>
+                const message = error.response.data;
 
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                className={`form-control ${
-                  errors.location
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
+                if (message.includes("Email")) {
 
-              <div className="invalid-feedback">
-                {errors.location}
-              </div>
+                    setErrors((prev) => ({
+                        ...prev,
+                        email: message
+                    }));
 
-            </div>
+                } else if (message.includes("Mobile")) {
 
-            {/* Property Type */}
+                    setErrors((prev) => ({
+                        ...prev,
+                        mobileNo: message
+                    }));
 
-            <div className="col-md-6 mb-3">
+                } else {
 
-              <label>Property Type</label>
-
-              <select
-                name="property_type"
-                value={formData.property_type}
-                onChange={handleChange}
-                className={`form-select ${
-                  errors.property_type
-                    ? "is-invalid"
-                    : ""
-                }`}
-              >
-
-                <option value="">
-                  Select Property
-                </option>
-
-                <option value="1 BHK">
-                  1 BHK
-                </option>
-
-                <option value="2 BHK">
-                  2 BHK
-                </option>
-
-                <option value="3 BHK">
-                  3 BHK
-                </option>
-
-                <option value="Villa">
-                  Villa
-                </option>
-
-                <option value="Plot">
-                  Plot
-                </option>
-
-              </select>
-
-              <div className="invalid-feedback">
-                {errors.property_type}
-              </div>
-
-            </div>
-
-            {/* Budget */}
-
-            <div className="col-md-6 mb-3">
-
-              <label>Budget</label>
-
-              <input
-                type="number"
-                name="budget"
-                value={formData.budget}
-                onChange={handleChange}
-                className={`form-control ${
-                  errors.budget
-                    ? "is-invalid"
-                    : ""
-                }`}
-              />
-
-              <div className="invalid-feedback">
-                {errors.budget}
-              </div>
-
-            </div>
-
-            {/* Requirement */}
-
-            <div className="col-md-12 mb-3">
-
-              <label>
-                Additional Requirement
-              </label>
-
-              <textarea
-                rows="4"
-                name="Additional_requirement"
-                value={
-                  formData.Additional_requirement
+                    setServerError(message);
                 }
-                onChange={handleChange}
-                className="form-control"
-              />
+
+            } else {
+
+                setServerError(
+                    "Something went wrong. Please try again."
+                );
+            }
+        }
+    };
+
+    return (
+
+        <div className="card enquiry-card">
+
+            <div className="card-body">
+
+                <form onSubmit={handleSubmit}>
+
+                    <div className="row">
+
+                        {/* Name */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Name</label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                className={
+                                    errors.name
+                                        ? "form-control is-invalid"
+                                        : "form-control"
+                                }
+                                value={formData.name}
+                                onChange={handleChange}
+                            />
+
+                            <div className="invalid-feedback">
+                                {errors.name}
+                            </div>
+
+                        </div>
+
+                        {/* Email */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                className={
+                                    errors.email
+                                        ? "form-control is-invalid"
+                                        : "form-control"
+                                }
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+
+                            <div className="invalid-feedback">
+                                {errors.email}
+                            </div>
+
+                        </div>
+
+                        {/* Mobile */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Mobile Number</label>
+
+                            <input
+                                type="text"
+                                name="mobileNo"
+                                className={
+                                    errors.mobileNo
+                                        ? "form-control is-invalid"
+                                        : "form-control"
+                                }
+                                value={formData.mobileNo}
+                                onChange={handleChange}
+                            />
+
+                            <div className="invalid-feedback">
+                                {errors.mobileNo}
+                            </div>
+
+                        </div>
+
+                        {/* Location */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Location</label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                className={
+                                    errors.location
+                                        ? "form-control is-invalid"
+                                        : "form-control"
+                                }
+                                value={formData.location}
+                                onChange={handleChange}
+                            />
+
+                            <div className="invalid-feedback">
+                                {errors.location}
+                            </div>
+
+                        </div>
+
+                        {/* Property Type */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Property Type</label>
+
+                            <select
+                                name="property_type"
+                                className={
+                                    errors.property_type
+                                        ? "form-select is-invalid"
+                                        : "form-select"
+                                }
+                                value={formData.property_type}
+                                onChange={handleChange}
+                            >
+
+                                <option value="">
+                                    Select Property Type
+                                </option>
+
+                                <option value="1 BHK">1 BHK</option>
+                                <option value="2 BHK">2 BHK</option>
+                                <option value="3 BHK">3 BHK</option>
+                                <option value="Villa">Villa</option>
+                                <option value="Plot">Plot</option>
+
+                            </select>
+
+                            <div className="invalid-feedback">
+                                {errors.property_type}
+                            </div>
+
+                        </div>
+
+                        {/* Budget */}
+
+                        <div className="col-md-6 mb-3">
+
+                            <label>Budget</label>
+
+                            <input
+                                type="number"
+                                name="budget"
+                                className={
+                                    errors.budget
+                                        ? "form-control is-invalid"
+                                        : "form-control"
+                                }
+                                value={formData.budget}
+                                onChange={handleChange}
+                            />
+
+                            <div className="invalid-feedback">
+                                {errors.budget}
+                            </div>
+
+                        </div>
+
+                        {/* Additional Requirement */}
+
+                        <div className="col-md-12 mb-3">
+
+                            <label>
+                                Additional Requirement
+                            </label>
+
+                            <textarea
+                                rows="4"
+                                name="Additional_requirement"
+                                className="form-control"
+                                value={formData.Additional_requirement}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                    </div>
+
+                    {serverError && (
+
+                        <div className="alert alert-danger">
+
+                            {serverError}
+
+                        </div>
+
+                    )}
+
+                    <button
+                        type="submit"
+                        className="btn-submit"
+                    >
+                        Submit Enquiry
+                    </button>
+
+                </form>
 
             </div>
 
-          </div>
 
-          <button
- type="submit"
- className="btn-submit"
->
- Submit Enquiry
-</button>
+   
 
-        </form>
 
-      </div>
-
-    </div>
+</div>
   );
+
 }
 
 export default EnquiryForm;

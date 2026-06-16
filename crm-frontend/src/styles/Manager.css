@@ -1,0 +1,94 @@
+.manager-page{
+
+    background:#f4f7fc;
+
+    min-height:100vh;
+
+    padding:25px;
+}
+
+.manager-form-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+
+    margin-bottom:25px;
+}
+
+.manager-form-card h4{
+
+    font-weight:600;
+
+    margin-bottom:20px;
+}
+
+.manager-btn{
+
+    background:#4f46e5;
+
+    border:none;
+
+    color:white;
+
+    padding:10px 25px;
+
+    border-radius:8px;
+}
+
+.manager-btn:hover{
+
+    background:#4338ca;
+}
+
+.manager-table-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.manager-search{
+
+    width:250px;
+}
+
+.manager-table thead{
+
+    background:#4f46e5;
+
+    color:white;
+}
+
+.manager-table{
+
+    margin-top:15px;
+}
+
+.manager-delete-btn{
+
+    background:#ef4444;
+
+    border:none;
+
+    color:white;
+
+    padding:6px 12px;
+
+    border-radius:6px;
+}
+
+.manager-delete-btn:hover{
+
+    background:#dc2626;
+}

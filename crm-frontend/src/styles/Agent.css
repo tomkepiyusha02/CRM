@@ -1,0 +1,65 @@
+.agent-page{
+    background:#f4f7fc;
+    min-height:100vh;
+    padding:25px;
+}
+
+.agent-form-card,
+.agent-table-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.08);
+}
+
+.agent-form-card{
+    margin-bottom:25px;
+}
+
+.agent-btn{
+
+    background:#10b981;
+
+    color:white;
+
+    border:none;
+
+    padding:10px 25px;
+
+    border-radius:8px;
+}
+
+.agent-btn:hover{
+
+    background:#059669;
+}
+
+.agent-search{
+
+    width:250px;
+}
+
+.agent-table-card thead{
+
+    background:#10b981;
+
+    color:white;
+}
+
+.agent-delete-btn{
+
+    background:#ef4444;
+
+    color:white;
+
+    border:none;
+
+    padding:6px 12px;
+
+    border-radius:6px;
+}

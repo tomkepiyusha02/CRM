@@ -1,56 +1,155 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
 
-import '../../styles/Sidebar.css';
+import "../../styles/Sidebar.css";
 
-function Sidebar() {
+function Sidebar({
+    activeTab,
+    setActiveTab
+}) {
 
-  return (
+    return (
 
-    <div className="sidebar">
+        <div className="sidebar">
 
-      <h4 className="sidebar-title">
+            <div className="sidebar-header">
 
-        CRM Panel
+                <div className="sidebar-logo">
 
-      </h4>
+                    🏢
 
-      <Link
-        to="/dashboard"
-        className="sidebar-link"
-      >
+                </div>
 
-        <i className="bi bi-speedometer2"></i>
+                <h4 className="sidebar-title">
 
-        Dashboard
+                    CRM Panel
 
-      </Link>
+                </h4>
 
-      <Link
-        to="/dashboard"
-        className="sidebar-link"
-      >
+                <small className="sidebar-subtitle">
 
-        <i className="bi bi-bell-fill"></i>
+                    Manager Portal
 
-        New Leads
+                </small>
 
-      </Link>
+            </div>
 
-      <Link
-        to="/dashboard"
-        className="sidebar-link"
-      >
+            <div className="sidebar-menu">
 
-        <i className="bi bi-person-check-fill"></i>
+                <button
+                    className={`sidebar-link ${
+                        activeTab === "dashboard"
+                            ? "active"
+                            : ""
+                    }`}
+                    onClick={() =>
+                        setActiveTab(
+                            "dashboard"
+                        )
+                    }
+                >
 
-        Assigned Leads
+                    <i className="bi bi-grid-fill me-2"></i>
 
-      </Link>
+                    Dashboard
 
-    </div>
+                </button>
 
-  );
+                <button
+                    className={`sidebar-link ${
+                        activeTab === "new"
+                            ? "active"
+                            : ""
+                    }`}
+                    onClick={() =>
+                        setActiveTab(
+                            "new"
+                        )
+                    }
+                >
+
+                    <i className="bi bi-bell-fill me-2"></i>
+
+                    New Leads
+
+                </button>
+
+                <button
+                    className={`sidebar-link ${
+                        activeTab === "assigned"
+                            ? "active"
+                            : ""
+                    }`}
+                    onClick={() =>
+                        setActiveTab(
+                            "assigned"
+                        )
+                    }
+                >
+
+                    <i className="bi bi-person-check-fill me-2"></i>
+
+                    Assigned Leads
+
+                </button>
+
+                <button
+                    className={`sidebar-link ${
+                        activeTab === "stats"
+                            ? "active"
+                            : ""
+                    }`}
+                    onClick={() =>
+                        setActiveTab(
+                            "stats"
+                        )
+                    }
+                >
+
+                    <i className="bi bi-bar-chart-fill me-2"></i>
+
+                    Statistics
+
+                </button>
+
+            </div>
+
+            <div className="sidebar-footer">
+
+                <div className="manager-profile">
+
+                    <img
+                        src={`https://ui-avatars.com/api/?name=${localStorage.getItem("name")}&background=4f46e5&color=fff`}
+                        alt=""
+                        className="manager-avatar"
+                    />
+
+                    <div>
+
+                        <h6>
+
+                            {
+                                localStorage.getItem(
+                                    "name"
+                                )
+                            }
+
+                        </h6>
+
+                        <small>
+
+                            Manager
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    );
 }
 
 export default Sidebar;

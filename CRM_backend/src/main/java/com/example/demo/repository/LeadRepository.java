@@ -9,6 +9,8 @@ import com.example.demo.entity.Lead;
 
 @Repository
 public interface LeadRepository extends JpaRepository<Lead, UUID> {
+	 boolean existsByEmail(String email);
 
+	 boolean existsByMobileNo(String mobileNo);
 	
 }

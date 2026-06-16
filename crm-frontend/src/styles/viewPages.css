@@ -1,0 +1,521 @@
+/* ===========================
+   PAGE BACKGROUND
+=========================== */
+
+.view-page {
+
+    min-height: 100vh;
+
+    padding: 35px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #f8fafc,
+        #eef2ff,
+        #f1f5f9
+    );
+}
+
+/* ===========================
+   HEADER
+=========================== */
+
+.page-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 30px;
+
+    border-radius: 30px;
+
+    margin-bottom: 30px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    box-shadow:
+    0 15px 40px rgba(
+        37,
+        99,
+        235,
+        .30
+    );
+}
+
+.page-title {
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    margin-bottom: 8px;
+}
+
+.page-subtitle {
+
+    font-size: 15px;
+
+    opacity: .9;
+
+    margin-bottom: 0;
+}
+
+.header-count {
+
+    width: 110px;
+
+    height: 110px;
+
+    border-radius: 50%;
+
+    background:
+    rgba(
+        255,
+        255,
+        255,
+        .15
+    );
+
+    backdrop-filter: blur(10px);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    border:
+    2px solid rgba(
+        255,
+        255,
+        255,
+        .25
+    );
+}
+
+.header-count span {
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    margin-top: 3px;
+}
+
+/* ===========================
+   SEARCH BOX
+=========================== */
+
+.search-wrapper {
+
+    position: relative;
+
+    margin-bottom: 30px;
+}
+
+.search-icon {
+
+    position: absolute;
+
+    top: 17px;
+
+    left: 18px;
+
+    color: #64748b;
+
+    font-size: 18px;
+
+    z-index: 5;
+}
+
+.search-box {
+
+    border: none !important;
+
+    border-radius: 16px !important;
+
+    padding: 15px 20px 15px 50px !important;
+
+    background: white !important;
+
+    box-shadow:
+    0 10px 25px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+
+    transition: .3s;
+}
+
+.search-box:focus {
+
+    box-shadow:
+    0 15px 35px rgba(
+        37,
+        99,
+        235,
+        .20
+    ) !important;
+}
+
+/* ===========================
+   MANAGER CARD
+=========================== */
+
+.manager-card {
+
+    background: white;
+
+    border-radius: 28px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition: .4s;
+
+    position: relative;
+
+    box-shadow:
+    0 10px 35px rgba(
+        0,
+        0,
+        0,
+        .08
+    );
+
+    min-height: 470px;
+}
+
+.manager-card:hover {
+
+    transform:
+    translateY(-12px);
+
+    box-shadow:
+    0 25px 60px rgba(
+        0,
+        0,
+        0,
+        .18
+    );
+}
+
+/* ===========================
+   TOP BANNER
+=========================== */
+
+.manager-banner {
+
+    height: 130px;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    position: relative;
+
+    overflow: visible;
+}
+
+.manager-banner::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+
+    height: 180px;
+
+    border-radius: 50%;
+
+    background:
+    rgba(
+        255,
+        255,
+        255,
+        .08
+    );
+
+    top: -80px;
+
+    right: -60px;
+}
+
+/* ===========================
+   AVATAR
+=========================== */
+.manager-avatar {
+
+    display: flex;
+
+    justify-content: center;
+
+    position: relative;
+
+    z-index: 10;
+
+    margin-top: -65px;
+}
+.manager-avatar img {
+
+    width: 120px;
+
+    height: 120px;
+
+    border-radius: 50%;
+
+    border: 6px solid #ffffff;
+
+    object-fit: cover;
+
+    background: white;
+
+    box-shadow:
+    0 15px 35px rgba(
+        0,
+        0,
+        0,
+        .18
+    );
+}
+
+/* ===========================
+   CONTENT
+=========================== */
+
+.manager-content {
+
+    text-align: center;
+
+    padding:
+    15px
+    25px
+    30px;
+}
+
+.manager-content h4 {
+
+    font-size: 24px;
+
+    font-weight: 700;
+
+    color: #0f172a;
+
+    margin-bottom: 10px;
+}
+
+.manager-content p {
+
+    color: #64748b;
+
+    margin-top: 12px;
+
+    margin-bottom: 10px;
+
+    font-size: 15px;
+}
+
+/* ===========================
+   CITY BADGE
+=========================== */
+
+.city-badge {
+
+    display: inline-block;
+
+    padding: 8px 18px;
+
+    border-radius: 30px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    background:
+    linear-gradient(
+        135deg,
+        #dbeafe,
+        #bfdbfe
+    );
+
+    color: #2563eb;
+
+    margin-top: 10px;
+}
+
+/* ===========================
+   VIEW BUTTON
+=========================== */
+
+.view-btn {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 14px;
+
+    border-radius: 15px;
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: white;
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    transition: .3s;
+}
+
+.view-btn:hover {
+
+    transform: scale(1.02);
+
+    background:
+    linear-gradient(
+        135deg,
+        #1d4ed8,
+        #4338ca
+    );
+}
+
+/* ===========================
+   MODAL
+=========================== */
+
+.modal-content {
+
+    border: none !important;
+
+    border-radius: 25px !important;
+
+    overflow: hidden;
+
+    box-shadow:
+    0 20px 50px rgba(
+        0,
+        0,
+        0,
+        .20
+    );
+}
+
+.modal-header {
+
+    background:
+    linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+
+    color: white;
+
+    border-bottom: none;
+}
+
+.modal-title {
+
+    font-weight: 700;
+}
+
+.modal-body {
+
+    padding: 30px;
+}
+
+.modal-body p {
+
+    font-size: 15px;
+
+    margin-bottom: 14px;
+}
+
+/* ===========================
+   BOOTSTRAP BADGES
+=========================== */
+
+.badge {
+
+    padding: 8px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+}
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+    .page-header{
+
+        flex-direction: column;
+
+        text-align: center;
+
+        gap: 20px;
+    }
+
+    .page-title{
+
+        font-size: 28px;
+    }
+
+    .header-count{
+
+        width: 90px;
+
+        height: 90px;
+
+        font-size: 24px;
+    }
+
+    .manager-content h4{
+
+        font-size: 20px;
+    }
+}
+
+.property-img {
+
+    width: 100%;
+
+    height: 220px;
+
+    object-fit: cover;
+
+    border-radius: 15px;
+}

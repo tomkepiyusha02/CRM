@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,19 +24,35 @@ import com.example.demo.service.LeadService;
 public class LeadController {
 	
 	@Autowired
-       LeadService ls;
+       LeadService Service;
 	
-	@PostMapping("/add")
-    public Lead saveLead(
-            @RequestBody Lead l) {
 
-        return ls.addlead(l);
-    }
+	@PostMapping("/add")
+	public ResponseEntity<?> saveLead(
+	        @RequestBody Lead l) {
+
+	    try {
+
+	        Lead lead = Service.addlead(l);
+
+	        return ResponseEntity
+	                .ok(lead);
+
+	    }
+	    catch(Exception e) {
+
+	        return ResponseEntity
+	                .badRequest()
+	                .body(
+	                 e.getMessage()
+	                );
+	    }
+	}
 
     @GetMapping("/displayAll")
     public List<Lead> getAllLead() {
 
-        return ls.getAllLeads();
+        return Service.getAllLeads();
     }
 
     
@@ -43,7 +60,7 @@ public class LeadController {
     public Lead getLeadById(
             @PathVariable UUID id) {
 
-        return ls.getLeadById(id);
+        return Service.getLeadById(id);
     }
 
     
@@ -52,7 +69,7 @@ public class LeadController {
             @PathVariable UUID id,
             @RequestBody Lead l) {
 
-        return ls.updateLead(id, l);
+        return Service.updateLead(id, l);
     }
 
     
@@ -60,7 +77,7 @@ public class LeadController {
     public String deleteCustomer(
             @PathVariable UUID id) {
 
-        return ls.deleteLead(id);
+        return Service.deleteLead(id);
     }
 	
 

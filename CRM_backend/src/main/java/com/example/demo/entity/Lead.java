@@ -33,8 +33,8 @@ public class Lead {
 	private String name;
 	@Column
 	private String email;
-	@Column
-	private String mobile_no;
+	@Column(name="mobile_no")
+	private String mobileNo;
 	@Column
 	private String location;
 	@Enumerated(EnumType.STRING)
@@ -43,6 +43,9 @@ public class Lead {
 	private String property_type;
 	@Column
 	private double budget;
+	private UUID assignedAgentId;
+
+	private String assignedAgentName;
 	@Column(length = 1000)
 	private String Additional_requirement;
 	
