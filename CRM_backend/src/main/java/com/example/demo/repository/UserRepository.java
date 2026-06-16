@@ -1,13 +1,16 @@
 
+
 package com.example.demo.repository;
 
 import java.util.List;
 import java.util.Optional;
+
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.User;
+
 import com.example.demo.entity.enums.UserRole;
 
 public interface UserRepository extends JpaRepository<User, UUID> {
@@ -29,3 +32,4 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     Optional<User> findByMobile(
             String mobile);
 }
+

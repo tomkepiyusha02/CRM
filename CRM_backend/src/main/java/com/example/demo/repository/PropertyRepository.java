@@ -1,11 +1,13 @@
 package com.example.demo.repository;
 
+
 import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.demo.entity.Property;
+
 import com.example.demo.entity.enums.PropertyStatus;
 import com.example.demo.entity.enums.PropertyType;
 
@@ -26,3 +28,4 @@ public interface PropertyRepository
     
    
 }
+

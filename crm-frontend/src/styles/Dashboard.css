@@ -519,3 +519,66 @@ body {
     }
 
 }
+.chart-card {
+
+    background: white;
+
+    border-radius: 25px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.08);
+
+    transition: .3s;
+}
+
+.chart-card:hover {
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.12);
+}
+
+.chart-card h5 {
+
+    font-weight: 700;
+
+    margin-bottom: 20px;
+
+    color: #1e293b;
+}
+
+.dashboard-highlight {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #6366f1
+        );
+
+    color: white;
+
+    padding: 25px;
+
+    border-radius: 20px;
+
+    margin-top: 25px;
+
+    margin-bottom: 25px;
+}
+
+.dashboard-highlight ul {
+
+    margin-top: 15px;
+
+    margin-bottom: 0;
+}
+
+.dashboard-highlight li {
+
+    margin-bottom: 10px;
+}

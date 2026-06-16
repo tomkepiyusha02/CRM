@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+
+
 import java.util.List;
 import java.util.UUID;
 
@@ -98,3 +100,4 @@ public class PropertyController {
         return ps.deleteProperty(id);
     }
 }
+

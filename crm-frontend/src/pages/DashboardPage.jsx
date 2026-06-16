@@ -5,8 +5,10 @@ import "../styles/Dashboard.css";
 
 import LogoutService from "../services/LogoutService";
 import Swal from "sweetalert2";
+import { useState } from "react";
 
 function DashboardPage() {
+  const[activeTab,setActiveTab] = useState("dashboard");
 
   const handleLogout = () => {
 
@@ -39,7 +41,9 @@ function DashboardPage() {
 
         <div className="col-md-2 p-0">
 
-          <Sidebar />
+          <Sidebar 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab} />
 
         </div>
 
@@ -67,7 +71,9 @@ function DashboardPage() {
 
           </div>
 
-          <ManagerDashboard />
+          <ManagerDashboard 
+          activeTab={activeTab}
+          />
 
         </div>
 

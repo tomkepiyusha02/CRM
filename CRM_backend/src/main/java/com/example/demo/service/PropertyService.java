@@ -33,3 +33,4 @@ public interface PropertyService {
     List<Property> getPropertiesByBuilder(
             String builderName);
 }
+

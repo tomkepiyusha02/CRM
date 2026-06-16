@@ -34,15 +34,19 @@ const [selectedAgent,
 
     useEffect(() => {
 
-        if (lead) {
+    if (lead) {
 
-            setStatus(
-                lead.status
-            );
+        setStatus(
+            lead.status
+        );
 
-        }
+        setSelectedAgent(
+            lead.assignedAgentId || ""
+        );
 
-    }, [lead]);
+    }
+
+}, [lead]);
 
     if (!lead) {
 
@@ -186,9 +190,9 @@ const [selectedAgent,
             };
 
             await LeadService.updateLead(
-                lead.leadid,
-                updatedLead
-            );
+    lead.leadid || lead.Leadid,
+    updatedLead
+);
 
             toast.success(
                 `Lead Assigned To ${agent.name}`

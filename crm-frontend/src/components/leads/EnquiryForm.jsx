@@ -355,8 +355,13 @@ function EnquiryForm() {
 
             </div>
 
-        </div>
-    );
+
+   
+
+
+</div>
+  );
+
 }
 
 export default EnquiryForm;
