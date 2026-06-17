@@ -12,4 +12,7 @@ public class LoginResponse {
     private String role;
 
     private String name;
+    private String userId;
+
+    private String assignedCity;
 }

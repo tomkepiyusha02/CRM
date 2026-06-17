@@ -58,12 +58,13 @@ public class AuthController {
                 jwtUtil.generateToken(
                         user.getEmail(),
                         user.getRole().name());
-
         return new LoginResponse(
-                token,
-                user.getRole().name(),
-                user.getName()
-        );
+                                token,
+                                user.getRole().name(),
+                                user.getName(),
+                                user.getUserId().toString(),
+                                user.getAssignedCity()
+                        );
     }
     @PostMapping("/send-otp")
     public String sendOtp(
@@ -120,7 +121,9 @@ public class AuthController {
         return new LoginResponse(
                 token,
                 user.getRole().name(),
-                user.getName()
+                user.getName(),
+                user.getUserId().toString(),
+                user.getAssignedCity()
         );
     }
     

@@ -582,3 +582,81 @@ body {
 
     margin-bottom: 10px;
 }
+
+.hero-banner{
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #6366f1
+    );
+
+    color:white;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:25px;
+}
+
+.city-badge{
+    background:rgba(255,255,255,.15);
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    font-weight:600;
+}
+
+.kpi-card{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:20px;
+
+    box-shadow:
+    0 10px 30px rgba(0,0,0,.08);
+
+    text-align:center;
+}
+
+.kpi-card h3{
+
+    font-size:38px;
+
+    font-weight:700;
+}
+
+.kpi-card p{
+
+    margin:0;
+
+    color:#64748b;
+}
+
+.kpi-card.danger{
+
+    border-top:
+    5px solid #ef4444;
+}
+
+.kpi-card.success{
+
+    border-top:
+    5px solid #10b981;
+}
+
+.kpi-card.warning{
+
+    border-top:
+    5px solid #f59e0b;
+}

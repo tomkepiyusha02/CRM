@@ -14,5 +14,8 @@ public interface LeadService  {
 	Lead getLeadById(UUID id);
 	Lead updateLead(UUID id,Lead l);
 	String deleteLead(UUID id);
+	List<Lead> getLeadsByCity(
+		    String city
+		);
 	
 }

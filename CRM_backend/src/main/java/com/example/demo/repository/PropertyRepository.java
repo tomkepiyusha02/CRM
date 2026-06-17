@@ -11,8 +11,7 @@ import com.example.demo.entity.Property;
 import com.example.demo.entity.enums.PropertyStatus;
 import com.example.demo.entity.enums.PropertyType;
 
-public interface PropertyRepository
-        extends JpaRepository<Property, UUID> {
+public interface PropertyRepository extends JpaRepository<Property, UUID> {
 
     Property findByName(String name);
 

@@ -63,7 +63,7 @@ function LoginPage() {
                 await AuthService.login(
                     loginData
                 );
-
+console.log(response.data);
             localStorage.setItem(
                 "token",
                 response.data.token
@@ -78,6 +78,15 @@ function LoginPage() {
                 "name",
                 response.data.name
             );
+            localStorage.setItem(
+    "userId",
+    response.data.userId
+);
+
+localStorage.setItem(
+    "assignedCity",
+    response.data.assignedCity
+);
 
             Swal.fire({
                 icon: "success",

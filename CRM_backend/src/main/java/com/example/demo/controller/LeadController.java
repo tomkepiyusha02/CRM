@@ -79,6 +79,15 @@ public class LeadController {
 
         return Service.deleteLead(id);
     }
+    @GetMapping("/city/{city}")
+    public List<Lead> getLeadsByCity(
+            @PathVariable String city
+    ) {
+
+        return Service.getLeadsByCity(
+                city
+        );
+    }
 	
 
 }

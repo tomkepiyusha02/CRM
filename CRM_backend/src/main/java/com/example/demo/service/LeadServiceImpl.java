@@ -79,5 +79,13 @@ public class LeadServiceImpl implements LeadService {
 		
 		return leadRepo.findById(id).orElse(null);
 	}
+	@Override
+	public List<Lead> getLeadsByCity(
+	        String city
+	) {
 
+	    return leadRepo.findByLocation(
+	            city
+	    );
+	}
 }

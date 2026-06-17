@@ -41,7 +41,6 @@ getLeadsByCity(city){
     return api.get(
         `${API_URL}/city/${city}`
     );
-
 }
 }
 

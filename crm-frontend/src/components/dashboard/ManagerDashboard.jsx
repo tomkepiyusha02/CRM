@@ -58,8 +58,12 @@ function ManagerDashboard({
     }, []);
 
     const loadLeads = () => {
+const city =
+    localStorage.getItem(
+        "assignedCity"
+    );
 
-        LeadService.getAllLeads()
+LeadService.getLeadsByCity(city)
             .then((res) => {
 
                 const allLeads =
@@ -239,163 +243,264 @@ const locationData =
             {
                 activeTab ===
                 "dashboard" && (
+<>
+    {/* Hero Banner */}
 
-                    <>
+    <div className="hero-banner">
 
-                        <div
-                            className="manager-header"
+        <div>
+
+            <h2>
+                👋 Welcome,
+                {" "}
+                {localStorage.getItem("name")}
+            </h2>
+
+            <p>
+                Here's what's happening
+                in your area today.
+            </p>
+
+        </div>
+
+        <div className="city-badge">
+
+            📍
+            {localStorage.getItem(
+                "assignedCity"
+            )}
+
+        </div>
+
+    </div>
+
+    {/* KPI CARDS */}
+
+    <div className="row mb-4">
+
+        <div className="col-md-3">
+
+            <div className="kpi-card">
+
+                <h3>{leads.length}</h3>
+
+                <p>Total Leads</p>
+
+            </div>
+
+        </div>
+
+        <div className="col-md-3">
+
+            <div className="kpi-card danger">
+
+                <h3>{newLeadCount}</h3>
+
+                <p>New Leads</p>
+
+            </div>
+
+        </div>
+
+        <div className="col-md-3">
+
+            <div className="kpi-card success">
+
+                <h3>{interestedCount}</h3>
+
+                <p>Interested</p>
+
+            </div>
+
+        </div>
+
+        <div className="col-md-3">
+
+            <div className="kpi-card warning">
+
+                <h3>{bookingCount}</h3>
+
+                <p>Bookings</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {/* CHARTS */}
+
+    <div className="row">
+
+        <div className="col-lg-8 mb-4">
+
+            <div className="chart-card">
+
+                <h5>
+                    Lead Trend
+                </h5>
+
+                <ResponsiveContainer
+                    width="100%"
+                    height={300}
+                >
+
+                    <LineChart
+                        data={chartData}
+                    >
+
+                        <XAxis
+                            dataKey="name"
+                        />
+
+                        <YAxis />
+
+                        <Tooltip />
+
+                        <Line
+                            type="monotone"
+                            dataKey="value"
+                            stroke="#4f46e5"
+                            strokeWidth={4}
+                        />
+
+                    </LineChart>
+
+                </ResponsiveContainer>
+
+            </div>
+
+        </div>
+
+        <div className="col-lg-4 mb-4">
+
+            <div className="chart-card">
+
+                <h5>
+                    Lead Status
+                </h5>
+
+                <ResponsiveContainer
+                    width="100%"
+                    height={300}
+                >
+
+                    <PieChart>
+
+                        <Pie
+                            data={chartData}
+                            dataKey="value"
+                            outerRadius={90}
                         >
 
-                            <h2>
+                            {
+                                chartData.map(
+                                    (
+                                        entry,
+                                        index
+                                    ) => (
 
-                                👋 Welcome,
-                                {" "}
-                                {
-                                    localStorage.getItem(
-                                        "name"
+                                        <Cell
+                                            key={index}
+                                            fill={
+                                                COLORS[index]
+                                            }
+                                        />
+
                                     )
+                                )
+                            }
+
+                        </Pie>
+
+                        <Tooltip />
+
+                    </PieChart>
+
+                </ResponsiveContainer>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {/* RECENT LEADS */}
+
+    <div className="chart-card">
+
+        <h5>
+            Recent Leads
+        </h5>
+
+        <table className="table">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Location</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {
+                    leads
+                    .slice(0,5)
+                    .map(
+                        lead => (
+
+                            <tr
+                                key={
+                                    lead.leadid
                                 }
+                            >
 
-                            </h2>
+                                <td>
+                                    {lead.name}
+                                </td>
 
-                            <p>
+                                <td>
+                                    {
+                                        lead.location
+                                    }
+                                </td>
 
-                                Manage Leads,
-                                Follow-ups &
-                                Customer Conversion
+                                <td>
 
-                            </p>
-
-                        </div>
-
-                        <div className="row">
-
-                            <div className="col-md-3">
-
-                                <div
-                                    className="manager-stat total"
-                                >
-
-                                    <h2>
-                                        {leads.length}
-                                    </h2>
-
-                                    <p>
-                                        Total Leads
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <div className="col-md-3">
-
-                                <div
-                                    className="manager-stat new"
-                                >
-
-                                    <h2>
-                                        {newLeadCount}
-                                    </h2>
-
-                                    <p>
-                                        New Leads
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <div className="col-md-3">
-
-                                <div
-                                    className="manager-stat interested"
-                                >
-
-                                    <h2>
-                                        {
-                                            interestedCount
+                                    <span
+                                        className={
+                                            `badge bg-primary`
                                         }
-                                    </h2>
+                                    >
 
-                                    <p>
-                                        Interested
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-                            <div className="col-md-3">
-
-                                <div
-                                    className="manager-stat booking"
-                                >
-
-                                    <h2>
                                         {
-                                            bookingCount
+                                            lead.status
                                         }
-                                    </h2>
 
-                                    <p>
-                                        Booking
-                                    </p>
+                                    </span>
 
-                                </div>
+                                </td>
 
-                            </div>
+                            </tr>
 
-                        </div>
+                        )
+                    )
+                }
 
-                        <div
-                            className="dashboard-highlight"
-                        >
+            </tbody>
 
-                            <h4>
-                                📢 Today's Highlights
-                            </h4>
+        </table>
 
-                            <ul>
-
-                                <li>
-                                    {
-                                        newLeadCount
-                                    }
-                                    {" "}
-                                    New Leads waiting
-                                    for action
-                                </li>
-
-                                <li>
-                                    {
-                                        contactedCount
-                                    }
-                                    {" "}
-                                    Leads contacted
-                                </li>
-
-                                <li>
-                                    {
-                                        interestedCount
-                                    }
-                                    {" "}
-                                    Interested prospects
-                                </li>
-
-                                <li>
-                                    {
-                                        bookingCount
-                                    }
-                                    {" "}
-                                    Booking opportunities
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-                    </>
+    </div>
+</>
 
                 )
             }
