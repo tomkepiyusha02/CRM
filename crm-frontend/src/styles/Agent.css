@@ -63,3 +63,146 @@
 
     border-radius:6px;
 }
+
+.lead-card{
+    background:#fff;
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:15px;
+    cursor:pointer;
+    transition:.3s;
+    border:1px solid #eee;
+}
+
+.lead-card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.chart-card{
+    background:white;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.details-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.empty-details{
+    min-height:500px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.empty-icon{
+    font-size:60px;
+    color:#4f46e5;
+}
+
+.requirement-box{
+    background:#eef2ff;
+    padding:20px;
+    border-radius:15px;
+    margin-top:25px;
+}
+
+.lead-status-badge{
+    padding:6px 12px;
+    border-radius:20px;
+    color:white;
+    font-size:12px;
+    font-weight:600;
+}
+
+.lead-status-badge.CONTACTED{
+    background:#3b82f6;
+}
+
+.lead-status-badge.INTERESTED{
+    background:#10b981;
+}
+
+.lead-status-badge.BOOKING{
+    background:#f59e0b;
+}
+
+.lead-status-badge.CLOSED{
+    background:#dc2626;
+}
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.modern-card{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    text-align:center;
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+}
+
+.modern-card h3{
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+.agent-layout{
+    display:flex;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+.agent-main{
+    flex:1;
+    margin-left:280px;
+    padding:25px;
+    overflow-x:hidden;
+}
+
+.dashboard-layout{
+    display:flex;
+    min-height:100vh;
+    background:#f8fafc;
+}
+
+.dashboard-content{
+    flex:1;
+    margin-left:280px;
+    padding:25px;
+    overflow-x:hidden;
+}
+
+.chart-card{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.06);
+
+    min-height:380px;
+}
+@media(max-width:992px){
+
+    .dashboard-content{
+        margin-left:0;
+        padding:15px;
+    }
+
+    .dashboard-cards{
+        grid-template-columns:1fr;
+    }
+
+}

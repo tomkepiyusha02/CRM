@@ -1,19 +1,32 @@
+import React, { useState } from "react";
+
+import AgentSidebar from "../components/agent/AgentSidebar";
+import AgentDashboard from "../components/agent/AgentDashboard";
+
 function AgentDashboardPage() {
+
+    const [activeTab, setActiveTab] =
+        useState("dashboard");
 
     return (
 
-        <div
-        className="p-5">
+        <div className="dashboard-layout">
 
-            <h2>
-                Agent Dashboard
-            </h2>
+            <AgentSidebar
+                activeTab={activeTab}
+                setActiveTab={setActiveTab}
+            />
 
-            <p>
-                Coming Soon...
-            </p>
+            <div className="dashboard-content">
+
+                <AgentDashboard
+                    activeTab={activeTab}
+                />
+
+            </div>
 
         </div>
+
     );
 }
 

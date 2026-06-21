@@ -42,6 +42,14 @@ getLeadsByCity(city){
         `${API_URL}/city/${city}`
     );
 }
+
+getAssignedLeads(userId){
+
+  return api.get(
+      `${API_URL}/assigned/${userId}`
+  );
+
+}
 }
 
 export default new LeadService();

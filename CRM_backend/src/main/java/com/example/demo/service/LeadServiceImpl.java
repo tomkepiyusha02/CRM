@@ -88,4 +88,12 @@ public class LeadServiceImpl implements LeadService {
 	            city
 	    );
 	}
+	@Override
+	public List<Lead> getAssignedLeads(
+	        UUID userId) {
+
+	    return leadRepo
+	            .findByAssignedAgentId(
+	                    userId);
+	}
 }

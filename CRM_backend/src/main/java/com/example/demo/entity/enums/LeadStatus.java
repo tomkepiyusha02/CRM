@@ -3,7 +3,9 @@ package com.example.demo.entity.enums;
 public enum LeadStatus {
 
 	NEW,
-    CONTACTED,
+	CONTACTED,
 	INTERESTED,
-	BOOKING
+	SITE_VISIT,
+	BOOKING,
+	CLOSED
 }

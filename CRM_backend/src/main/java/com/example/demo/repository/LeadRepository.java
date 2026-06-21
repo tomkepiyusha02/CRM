@@ -16,5 +16,8 @@ public interface LeadRepository extends JpaRepository<Lead, UUID> {
 	 List<Lead> findByLocation(
 			    String location
 			);
+	 
+	 List<Lead> findByAssignedAgentId(
+		        UUID assignedAgentId);
 	
 }

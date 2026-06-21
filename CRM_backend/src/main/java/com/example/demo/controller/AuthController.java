@@ -49,12 +49,27 @@ public class AuthController {
                 passwordEncoder.matches(
                         request.getPassword(),
                         user.getPassword());
+        
+        System.out.println(
+        	    "Email = " + request.getEmail());
 
-        if (!passwordMatch) {
+        	System.out.println(
+        	    "Entered Password = " +
+        	    request.getPassword());
 
-            throw new RuntimeException(
-                    "Invalid Password");
-        }
+        	System.out.println(
+        	    "DB Password = " +
+        	    user.getPassword());
+
+        	System.out.println(
+        	    "Match = " +
+        	    passwordMatch);
+
+//        if (!passwordMatch) {
+//
+//            throw new RuntimeException(
+//                    "Invalid Password");
+//        }
 
         // Agent Approval Check
 

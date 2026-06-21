@@ -17,5 +17,7 @@ public interface LeadService  {
 	List<Lead> getLeadsByCity(
 		    String city
 		);
+	List<Lead> getAssignedLeads(
+	        UUID userId);
 	
 }

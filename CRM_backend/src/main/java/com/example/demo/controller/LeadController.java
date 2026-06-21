@@ -88,6 +88,15 @@ public class LeadController {
                 city
         );
     }
+    
+    @GetMapping("/assigned/{userId}")
+    public ResponseEntity<List<Lead>> getAssignedLeads(
+            @PathVariable UUID userId) {
+
+        return ResponseEntity.ok(
+                Service
+                .getAssignedLeads(userId));
+    }
 	
 
 }

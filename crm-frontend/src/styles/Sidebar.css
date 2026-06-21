@@ -241,3 +241,13 @@
 
     font-size: 13px;
 }
+
+.dashboard-layout{
+    display:flex;
+}
+
+.dashboard-content{
+    margin-left:280px;
+    width:calc(100% - 280px);
+    padding:25px;
+}
