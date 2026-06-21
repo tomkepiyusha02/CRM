@@ -7,8 +7,7 @@ from "react";
 import AdminLayout
 from "../components/admin/AdminLayout";
 
-import AgentForm
-from "../components/admin/AgentForm";
+
 
 import AgentTable
 from "../components/admin/AgentTable";
@@ -37,12 +36,7 @@ function AgentsPage() {
 
 </div>
 
-<button
-    className="add-btn"
-    onClick={() => setShowForm(true)}
->
-    + Add Agent
-</button>
+
 
 </div>
 
@@ -79,7 +73,7 @@ function AgentsPage() {
 
                             </div>
 
-                            <AgentForm />
+                        
 
                         </div>
 

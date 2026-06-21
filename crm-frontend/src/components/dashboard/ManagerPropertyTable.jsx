@@ -1,5 +1,4 @@
-import React,
-{
+import React, {
     useEffect,
     useState
 }
@@ -8,10 +7,12 @@ from "react";
 import PropertyService
 from "../../services/PropertyService";
 
+import "../../styles/Property.css";
+
 import Swal
 from "sweetalert2";
 
-function PropertyTable() {
+function ManagerPropertyTable() {
 
     const [properties,
         setProperties] =
@@ -20,8 +21,6 @@ function PropertyTable() {
     const [search,
         setSearch] =
         useState("");
-
-        
 
     useEffect(() => {
 
@@ -38,8 +37,19 @@ function PropertyTable() {
                     await PropertyService
                         .getAllProperties();
 
+                const city =
+                    localStorage.getItem(
+                        "assignedCity"
+                    );
+
+                const cityProperties =
+                    response.data.filter(
+                        property =>
+                            property.location === city
+                    );
+
                 setProperties(
-                    response.data
+                    cityProperties
                 );
 
             }
@@ -48,45 +58,6 @@ function PropertyTable() {
 
                 console.log(error);
             }
-        };
-
-    const deleteProperty =
-        async (id) => {
-
-            Swal.fire({
-
-                title:
-                    "Delete Property?",
-
-                icon:
-                    "warning",
-
-                showCancelButton:
-                    true,
-
-                confirmButtonColor:
-                    "#dc3545"
-
-            }).then(
-                async(result)=>{
-
-                    if(
-                        result.isConfirmed
-                    ){
-
-                        await PropertyService
-                            .deleteProperty(id);
-
-                        Swal.fire(
-                            "Deleted!",
-                            "Property Removed",
-                            "success"
-                        );
-
-                        loadProperties();
-                    }
-                }
-            );
         };
 
     const viewProperty =
@@ -140,19 +111,17 @@ function PropertyTable() {
 
                 `,
 
-                width: 700
+                width:700
             });
         };
 
     const viewImage =
         (property) => {
 
-            if(
-                !property.imageUrl
-            ){
+            if(!property.imageUrl){
 
                 Swal.fire(
-                    "No Image Found"
+                    "No Image Available"
                 );
 
                 return;
@@ -167,10 +136,7 @@ function PropertyTable() {
                     property.imageUrl,
 
                 imageWidth:
-                    700,
-
-                imageAlt:
-                    "Property Image"
+                    700
 
             });
         };
@@ -188,57 +154,51 @@ function PropertyTable() {
                     `https://www.google.com/maps?q=${property.latitude},${property.longitude}`,
 
                     "_blank"
-
                 );
 
             }else{
 
-                Swal.fire({
-
-                    icon:
-                        "warning",
-
-                    title:
-                        "Location Not Available"
-
-                });
+                Swal.fire(
+                    "Location Not Available"
+                );
             }
         };
 
-        const updatePropertyStatus =
-async (propertyId, status) => {
-
-    try {
-
-        await PropertyService
-            .updatePropertyStatus(
-                propertyId,
-                status
-            );
-
-        Swal.fire({
-            icon: "success",
-            title: "Updated",
-            text: "Property status updated"
-        });
-
-        loadProperties();
-
-    } catch (error) {
-
-        Swal.fire({
-            icon: "error",
-            title: "Failed",
-            text: "Unable to update property status"
-        });
-
-    }
-
-};
+        const updatePropertyStatus = async (
+            propertyId,
+            status
+        ) => {
+        
+            try {
+        
+                await PropertyService.updatePropertyStatus(
+                    propertyId,
+                    status
+                );
+        
+                Swal.fire({
+                    icon: "success",
+                    title: "Success",
+                    text: "Property status updated"
+                });
+        
+                loadProperties();
+        
+            } catch (error) {
+        
+                Swal.fire({
+                    icon: "error",
+                    title: "Failed",
+                    text: "Unable to update property status"
+                });
+        
+            }
+        
+        };
 
     const filteredProperties =
         properties.filter(
-            (property)=>{
+            property => {
 
                 const txt =
                     search.toLowerCase();
@@ -271,34 +231,38 @@ async (propertyId, status) => {
             }
         );
 
-        const totalCount =
-    filteredProperties.length;
-
-const availableCount =
-    filteredProperties.filter(
-        p => p.propertyStatus === "AVAILABLE"
-    ).length;
-
-const bookedCount =
-    filteredProperties.filter(
-        p => p.propertyStatus === "BOOKED"
-    ).length;
-
-const soldCount =
-    filteredProperties.filter(
-        p => p.propertyStatus === "SOLD"
-    ).length;
-
-const underConstructionCount =
-    filteredProperties.filter(
-        p =>
-            p.propertyStatus ===
-            "UNDER_CONSTRUCTION"
-    ).length;
-
     return (
 
-        <div className="property-table-card">
+        <div className="manager-property-container">
+<div className="property-hero">
+
+<div className="hero-left">
+
+    <div className="hero-icon">
+        🏢
+    </div>
+
+    <div>
+
+        <h2 className="hero-title">
+            My City Properties
+        </h2>
+
+        <p className="hero-subtitle">
+            Manage all properties available in
+
+            <strong>
+                {" "}
+                {localStorage.getItem("assignedCity")}
+            </strong>
+
+        </p>
+
+    </div>
+
+</div>
+
+</div>
 
 <div className="property-stats-row">
 
@@ -310,7 +274,7 @@ const underConstructionCount =
 
     <div>
         <h6>Total</h6>
-        <h3>{totalCount}</h3>
+        <h3>{filteredProperties.length}</h3>
     </div>
 
 </div>
@@ -323,20 +287,14 @@ const underConstructionCount =
 
     <div>
         <h6>Available</h6>
-        <h3>{availableCount}</h3>
-    </div>
-
-</div>
-
-<div className="property-stat-card">
-
-    <div className="stat-icon orange">
-        <i className="bi bi-bookmark"></i>
-    </div>
-
-    <div>
-        <h6>Booked</h6>
-        <h3>{bookedCount}</h3>
+        <h3>
+            {
+                filteredProperties.filter(
+                    p =>
+                    p.propertyStatus === "AVAILABLE"
+                ).length
+            }
+        </h3>
     </div>
 
 </div>
@@ -349,52 +307,88 @@ const underConstructionCount =
 
     <div>
         <h6>Sold</h6>
-        <h3>{soldCount}</h3>
+        <h3>
+            {
+                filteredProperties.filter(
+                    p =>
+                    p.propertyStatus === "SOLD"
+                ).length
+            }
+        </h3>
     </div>
 
 </div>
 
 <div className="property-stat-card">
 
-    <div className="stat-icon dark">
+    <div className="stat-icon blue">
         <i className="bi bi-hammer"></i>
     </div>
 
     <div>
-        <h6>Under Construction</h6>
-        <h3>{underConstructionCount}</h3>
+
+        <h6>
+            Under Construction
+        </h6>
+
+        <h3>
+            {
+                filteredProperties.filter(
+                    p =>
+                    p.propertyStatus ===
+                    "UNDER_CONSTRUCTION"
+                ).length
+            }
+        </h3>
+
+    </div>
+
+</div>
+
+<div className="property-stat-card">
+
+    <div className="stat-icon orange">
+        <i className="bi bi-bookmark"></i>
+    </div>
+
+    <div>
+        <h6>Booked</h6>
+        <h3>
+            {
+                filteredProperties.filter(
+                    p =>
+                    p.propertyStatus === "Booked"
+                ).length
+            }
+        </h3>
     </div>
 
 </div>
 
 </div>
 
-            <div className="table-header">
+<div className="search-wrapper">
 
-                <h4>
-                    Properties
-                    (
-                    {filteredProperties.length}
-                    )
-                </h4>
+    <div className="search-box">
 
-                <input
-                    type="text"
-                    className="form-control property-search"
-                    placeholder="Search Property..."
-                    value={search}
-                    onChange={(e)=>
-                        setSearch(
-                            e.target.value
-                        )
-                    }
-                />
+        <i className="bi bi-search"></i>
 
-            </div>
+        <input
+            type="text"
+            placeholder="Search Property..."
+            value={search}
+            onChange={(e) =>
+                setSearch(e.target.value)
+            }
+        />
 
-            <div className="table-responsive">
+    </div>
 
-                <table className="table property-table">
+</div>
+
+            <div className="table-wrapper">
+
+<table className="table property-table">
 
                     <thead>
 
@@ -408,7 +402,7 @@ const underConstructionCount =
 
                             <th>Location</th>
 
-                            <th>Status</th>
+                            <th>Property Status</th>
 
                             <th>Actions</th>
 
@@ -420,7 +414,7 @@ const underConstructionCount =
 
                         {
                             filteredProperties.map(
-                                (property)=>(
+                                property => (
 
                                     <tr
                                         key={
@@ -443,63 +437,52 @@ const underConstructionCount =
                                         <td>
                                             {property.location}
                                         </td>
-
                                         <td>
 
-    <div className="status-wrapper">
+<div className="d-flex align-items-center gap-2">
 
-        <span
-            className={`status-pill
-                ${
-                    property.propertyStatus === "AVAILABLE"
-                        ? "available"
-                        : property.propertyStatus === "BOOKED"
-                        ? "booked"
-                        : property.propertyStatus === "SOLD"
-                        ? "sold"
-                        : "construction"
-                }
-            `}
-        >
-            {property.propertyStatus}
-        </span>
+<span
+className={`badge ${
+property.propertyStatus === "AVAILABLE"
+? "bg-success"
+: property.propertyStatus === "BOOKED"
+? "bg-warning"
+: property.propertyStatus === "SOLD"
+? "bg-danger"
+: "bg-primary"
+}`}
+>
+{property.propertyStatus}
+</span>
 
-        <select
-            className="status-select"
-            value={property.propertyStatus}
-            onChange={(e) =>
-                updatePropertyStatus(
-                    property.propertyId,
-                    e.target.value
-                )
-            }
-        >
-            <option value="AVAILABLE">
-                AVAILABLE
-            </option>
+<select
+className="form-select form-select-sm"
+style={{ width: "180px" }}
+value={property.propertyStatus}
+onChange={(e) =>
+updatePropertyStatus(
+property.propertyId,
+e.target.value
+)
+}
+>
+<option value="AVAILABLE">AVAILABLE</option>
+<option value="BOOKED">BOOKED</option>
+<option value="SOLD">SOLD</option>
+<option value="UNDER_CONSTRUCTION">
+UNDER CONSTRUCTION
+</option>
+</select>
 
-            <option value="BOOKED">
-                BOOKED
-            </option>
-
-            <option value="SOLD">
-                SOLD
-            </option>
-
-            <option value="UNDER_CONSTRUCTION">
-                UNDER CONSTRUCTION
-            </option>
-
-        </select>
-
-    </div>
+</div>
 
 </td>
+
                                         <td>
 
                                             <button
                                                 className="btn btn-info btn-sm me-2"
-                                                onClick={()=>
+                                                onClick={() =>
                                                     viewProperty(
                                                         property
                                                     )
@@ -510,7 +493,7 @@ const underConstructionCount =
 
                                             <button
                                                 className="btn btn-primary btn-sm me-2"
-                                                onClick={()=>
+                                                onClick={() =>
                                                     viewImage(
                                                         property
                                                     )
@@ -520,31 +503,14 @@ const underConstructionCount =
                                             </button>
 
                                             <button
-                                                className="btn btn-warning btn-sm me-2"
-                                            >
-                                                <i className="bi bi-pencil-square"></i>
-                                            </button>
-
-                                            <button
-                                                className="btn btn-success btn-sm me-2"
-                                                onClick={()=>
+                                                className="btn btn-success btn-sm"
+                                                onClick={() =>
                                                     openMap(
                                                         property
                                                     )
                                                 }
                                             >
                                                 <i className="bi bi-geo-alt-fill"></i>
-                                            </button>
-
-                                            <button
-                                                className="btn btn-danger btn-sm"
-                                                onClick={()=>
-                                                    deleteProperty(
-                                                        property.propertyId
-                                                    )
-                                                }
-                                            >
-                                                <i className="bi bi-trash"></i>
                                             </button>
 
                                         </td>
@@ -565,4 +531,4 @@ const underConstructionCount =
     );
 }
 
-export default PropertyTable;
+export default ManagerPropertyTable;

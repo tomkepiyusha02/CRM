@@ -6,7 +6,8 @@ import LeadService from "../../services/LeadService";
 function LeadDetails({
     lead,
     refreshLeads,
-    clearLead
+    clearLead,
+    mode
 }) {
  
     const [agents, setAgents] =
@@ -175,20 +176,21 @@ const [selectedAgent,
             );
 
         try {
-
             const updatedLead = {
 
                 ...lead,
-
-                status: "CONTACTED",
-
+            
                 assignedAgentId:
                     agent.userId,
-
+            
                 assignedAgentName:
-                    agent.name
+                    agent.name,
+            
+                assignedArea:
+                    agent.assignedArea,
+            
+                status: "CONTACTED"
             };
-
             await LeadService.updateLead(
     lead.leadid || lead.Leadid,
     updatedLead
@@ -400,9 +402,20 @@ const [selectedAgent,
                 </p>
 
             </div>
-            <div className="mt-4">
+           
 
-    <h5>
+          
+
+           
+
+            {/* NEW LEADS */}
+
+{
+mode === "new" && (
+
+<div className="mt-4">
+
+    <h5 className="mb-3">
         Assign Lead To Agent
     </h5>
 
@@ -421,28 +434,26 @@ const [selectedAgent,
         </option>
 
         {
-            agents.map(
-                agent => (
+            agents.map(agent => (
 
-                    <option
-                        key={agent.userId}
-                        value={agent.userId}
-                    >
+                <option
+                    key={agent.userId}
+                    value={agent.userId}
+                >
 
-                        {agent.name}
-                        {" - "}
-                        {agent.assignedArea}
+                    {agent.name}
+                    {" - "}
+                    {agent.assignedArea}
 
-                    </option>
+                </option>
 
-                )
-            )
+            ))
         }
 
     </select>
 
     <button
-        className="btn btn-warning mt-3"
+        className="btn btn-warning mt-3 me-2"
         onClick={assignLead}
     >
 
@@ -450,67 +461,81 @@ const [selectedAgent,
 
     </button>
 
+    <button
+        className="btn btn-danger mt-3"
+        onClick={deleteLead}
+    >
+
+        Delete Lead
+
+    </button>
+
 </div>
 
-            {/* STATUS */}
+)
+}
 
-            <div className="status-section mt-4">
+{/* ASSIGNED LEADS */}
 
-                <label className="fw-bold mb-2">
+{
+mode === "assigned" && (
 
-                    Lead Status
+<div className="mt-4">
 
-                </label>
+    <h5 className="mb-3">
+        Update Lead Status
+    </h5>
 
-                <select
-                    className="form-select"
-                    value={status}
-                    onChange={(e) =>
-                        setStatus(
-                            e.target.value
-                        )
-                    }
-                >
+    <select
+        className="form-select"
+        value={status}
+        onChange={(e)=>
+            setStatus(
+                e.target.value
+            )
+        }
+    >
 
-                    <option value="NEW">
-                        NEW
-                    </option>
+        <option value="CONTACTED">
+            CONTACTED
+        </option>
 
-                    <option value="CONTACTED">
-                        CONTACTED
-                    </option>
+        <option value="INTERESTED">
+            INTERESTED
+        </option>
 
-                    <option value="INTERESTED">
-                        INTERESTED
-                    </option>
+        <option value="BOOKING">
+            BOOKING
+        </option>
 
-                    <option value="BOOKING">
-                        BOOKING
-                    </option>
+        <option value="CLOSED">
+            CLOSED
+        </option>
 
-                </select>
+    </select>
 
-            </div>
+    <button
+        className="btn btn-primary mt-3 me-2"
+        onClick={updateStatus}
+    >
 
-            {/* BUTTONS */}
+        Update Status
 
-            <div className="mt-4">
+    </button>
 
-                <button
-                    className="btn btn-primary me-2"
-                    onClick={updateStatus}
-                >
-                    Update Status
-                </button>
+    <button
+        className="btn btn-danger mt-3"
+        onClick={deleteLead}
+    >
 
-                <button
-                    className="btn btn-danger"
-                    onClick={deleteLead}
-                >
-                    Delete Lead
-                </button>
+        Delete Lead
 
-            </div>
+    </button>
+
+</div>
+
+)
+}
 
         </div>
     );

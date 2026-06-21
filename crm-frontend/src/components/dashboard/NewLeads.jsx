@@ -2,44 +2,79 @@ import LeadCard from "../leads/LeadCard";
 
 function NewLeads({ leads, onSelect }) {
 
-  const newLeads = leads.filter(
-    (lead) => lead.status === "NEW"
-  );
+    const newLeads = leads.filter(
+        (lead) =>
+            !lead.assignedAgentId &&
+            !lead.assignedAgentName
+    );
 
-  return (
+    return (
 
-    <>
+        <div className="lead-list-container">
 
-      <h5 className="section-heading">
+            <div className="lead-list-header">
 
-        New Leads
+                <div>
 
-      </h5>
+                    <h4>
+                        New Leads
+                    </h4>
 
-      {
-        newLeads.length === 0 ?
+                    <p>
+                        Incoming leads waiting for assignment
+                    </p>
 
-        (
-          <p>No New Leads</p>
-        )
+                </div>
 
-        :
+                <div className="lead-count-badge">
 
-        (
-          newLeads.map((lead) => (
+                    {newLeads.length}
 
-            <LeadCard
-              key={lead.leadid}
-              lead={lead}
-              onSelect={onSelect}
-            />
+                </div>
 
-          ))
-        )
-      }
+            </div>
 
-    </>
-  );
+            {
+                newLeads.length === 0 ? (
+
+                    <div className="empty-state">
+
+                        <i className="bi bi-inbox"></i>
+
+                        <h5>
+                            No New Leads
+                        </h5>
+
+                        <p>
+                            All leads have been assigned.
+                        </p>
+
+                    </div>
+
+                ) : (
+
+                    <div className="lead-card-wrapper">
+
+                        {
+                            newLeads.map((lead) => (
+
+                                <LeadCard
+                                    key={lead.leadid}
+                                    lead={lead}
+                                    onSelect={onSelect}
+                                />
+
+                            ))
+                        }
+
+                    </div>
+
+                )
+            }
+
+        </div>
+
+    );
 }
 
 export default NewLeads;

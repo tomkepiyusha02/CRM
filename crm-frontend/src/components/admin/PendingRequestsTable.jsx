@@ -172,16 +172,24 @@ function PendingRequestsTable() {
                                         Select Manager
                                     </option>
 
-                                    {managers.map((manager) => (
+                                    {
+    managers
+        .filter(
+            manager =>
+                manager.assignedCity ===
+                agent.assignedCity
+        )
+        .map(manager => (
 
-                                        <option
-                                            key={manager.userId}
-                                            value={manager.userId}
-                                        >
-                                            {manager.name}
-                                        </option>
+            <option
+                key={manager.userId}
+                value={manager.userId}
+            >
+                {manager.name}
+            </option>
 
-                                    ))}
+        ))
+}
 
                                 </select>
 

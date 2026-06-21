@@ -52,6 +52,7 @@ function PropertiesPage() {
                 <PropertyForm />
             }
 
+
 <div className="table-card">
 
 <PropertyTable />

@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.Property;
+import com.example.demo.entity.enums.PropertyStatus;
+import com.example.demo.repository.PropertyRepository;
 import com.example.demo.service.PropertyService;
 
 @RestController
@@ -18,6 +21,9 @@ public class PropertyController {
 
     @Autowired
     PropertyService ps;
+    
+    @Autowired
+    private PropertyRepository propertyRepository;
 
     @PostMapping("/add")
     public Property addProperty(
@@ -98,6 +104,25 @@ public class PropertyController {
             @PathVariable UUID id) {
 
         return ps.deleteProperty(id);
+    }
+    
+    @PutMapping("/{id}/status")
+    public ResponseEntity<?> updateStatus(
+            @PathVariable UUID id,
+            @RequestParam PropertyStatus status) {
+
+        Property property =
+                propertyRepository
+                        .findById(id)
+                        .orElseThrow();
+
+        property.setPropertyStatus(status);
+
+        propertyRepository.save(property);
+
+        return ResponseEntity.ok(
+                "Property Status Updated"
+        );
     }
 }
 

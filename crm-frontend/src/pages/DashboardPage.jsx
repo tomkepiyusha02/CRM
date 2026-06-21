@@ -53,21 +53,9 @@ function DashboardPage() {
 
           <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
 
-          <div>
+          
 
-<h4 className="mb-0">
-  Manager Dashboard
-</h4>
-
-</div>
-
-            <button
-              className="btn btn-danger"
-              onClick={handleLogout}
-            >
-              <i className="bi bi-box-arrow-right me-2"></i>
-              Logout
-            </button>
+            
 
           </div>
 

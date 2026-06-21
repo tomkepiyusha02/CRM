@@ -32,6 +32,17 @@ class PropertyService {
     getByType(type) {
         return api.get(`${BASE_URL}/type/${type}`);
     }
+
+    updatePropertyStatus(
+        propertyId,
+        status
+    ) {
+    
+        return api.put(
+            `${BASE_URL}/${propertyId}/status?status=${status}`
+        );
+    
+    }
 }
 
 export default new PropertyService();

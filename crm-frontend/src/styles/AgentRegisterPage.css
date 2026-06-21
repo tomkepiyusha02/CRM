@@ -1,0 +1,79 @@
+.agent-register-page{
+    min-height:100vh;
+    background:#f1f5f9;
+    padding:50px 20px;
+}
+
+.agent-form-card{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    border-radius:25px;
+    padding:40px;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.agent-register-header{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:30px;
+    padding:25px;
+    border-radius:20px;
+    background:linear-gradient(
+        135deg,
+        #0f172a,
+        #312e81
+    );
+    color:white;
+}
+
+.agent-register-icon{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(255,255,255,.15);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:32px;
+}
+
+.agent-register-header h2{
+    margin:0;
+    font-weight:700;
+    font-size:34px;
+}
+
+.agent-register-header p{
+    margin-top:5px;
+    opacity:.8;
+}
+
+.agent-form-card .form-control,
+.agent-form-card .form-select{
+    height:55px;
+    border-radius:12px;
+    border:1px solid #dbe2ea;
+}
+
+.agent-btn{
+    width:100%;
+    height:55px;
+    border:none;
+    border-radius:12px;
+    margin-top:10px;
+    font-size:18px;
+    font-weight:600;
+    color:white;
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #4f46e5
+    );
+    transition:.3s;
+}
+
+.agent-btn:hover{
+    transform:translateY(-2px);
+}

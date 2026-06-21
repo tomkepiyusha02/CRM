@@ -1,21 +1,21 @@
-/* ===========================
-   SIDEBAR
-=========================== */
-
 .sidebar {
 
-    min-height: 100vh;
+    height:100vh;
+
+    overflow:hidden;
+
+    position:sticky;
+
+    top:0;
 
     background:
         linear-gradient(
             180deg,
-            #111827,
-            #1e293b
+            #081120,
+            #18263d
         );
 
-    padding: 25px 15px;
-
-    color: white;
+    padding: 18px;
 
     display: flex;
 
@@ -23,28 +23,27 @@
 
     justify-content: space-between;
 
-    box-shadow:
-        5px 0 25px rgba(0,0,0,.15);
+    overflow: hidden;
 }
 
-/* ===========================
-   HEADER
-=========================== */
+/* HEADER */
 
 .sidebar-header {
 
     text-align: center;
 
-    margin-bottom: 40px;
+    margin-bottom: 25px;
 }
 
 .sidebar-logo {
 
-    width: 70px;
+    width: 90px;
 
-    height: 70px;
+    height: 90px;
 
     margin: auto;
+
+    border-radius: 28px;
 
     display: flex;
 
@@ -52,9 +51,7 @@
 
     justify-content: center;
 
-    font-size: 32px;
-
-    border-radius: 20px;
+    font-size: 40px;
 
     background:
         linear-gradient(
@@ -63,19 +60,18 @@
             #7c3aed
         );
 
-    box-shadow:
-        0 10px 25px rgba(124,58,237,.35);
-
     margin-bottom: 15px;
 }
 
 .sidebar-title {
 
-    margin-bottom: 5px;
+    color: white;
+
+    font-size: 18px;
 
     font-weight: 700;
 
-    color: white;
+    margin-bottom: 5px;
 }
 
 .sidebar-subtitle {
@@ -85,9 +81,56 @@
     font-size: 13px;
 }
 
-/* ===========================
-   MENU
-=========================== */
+/* PROFILE */
+
+.manager-profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    padding: 12px;
+
+    border-radius: 16px;
+
+    margin-bottom: 20px;
+}
+
+.manager-avatar {
+
+    width: 45px;
+
+    height: 45px;
+
+    border-radius: 50%;
+
+    flex-shrink: 0;
+}
+
+.manager-profile h6 {
+
+    color: white;
+
+    margin: 0;
+
+    font-size: 15px;
+
+    font-weight: 600;
+}
+
+.manager-profile small {
+
+    color: #94a3b8;
+
+    font-size: 12px;
+}
+
+/* MENU */
 
 .sidebar-menu {
 
@@ -95,54 +138,49 @@
 
     flex-direction: column;
 
-    gap: 12px;
+    gap: 10px;
 }
 
 .sidebar-link {
 
-    width: 100%;
-
     border: none;
 
-    background: transparent;
-
-    color: #cbd5e1;
-
-    text-align: left;
-
-    padding: 14px 18px;
-
-    border-radius: 14px;
-
-    transition: all .3s ease;
-
-    font-size: 15px;
-
-    font-weight: 600;
+    width: 100%;
 
     display: flex;
 
     align-items: center;
 
-    cursor: pointer;
+    gap: 12px;
+
+    padding: 13px 15px;
+
+    border-radius: 14px;
+
+    background: transparent;
+
+    color: #e2e8f0;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition: .3s;
 }
 
 .sidebar-link i {
 
     font-size: 18px;
 
-    margin-right: 10px;
+    width: 20px;
 }
 
 .sidebar-link:hover {
 
     background:
-        rgba(79,70,229,.20);
+        rgba(79,70,229,.15);
 
     color: white;
-
-    transform:
-        translateX(5px);
 }
 
 .sidebar-link.active {
@@ -160,91 +198,46 @@
         0 8px 20px rgba(79,70,229,.35);
 }
 
-/* ===========================
-   PROFILE CARD
-=========================== */
+/* FOOTER */
 
 .sidebar-footer {
 
-    margin-top: 40px;
+    margin-top: 10px;
 }
 
-.manager-profile {
+.logout-btn {
+
+    width: 100%;
+
+    border: none;
+
+    padding: 10px;
+
+    border-radius: 12px;
 
     background:
-        rgba(255,255,255,.08);
-
-    backdrop-filter: blur(10px);
-
-    border-radius: 18px;
-
-    padding: 15px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-    border:
-        1px solid rgba(255,255,255,.08);
-}
-
-.manager-avatar {
-
-    width: 50px;
-
-    height: 50px;
-
-    border-radius: 50%;
-
-    border: 3px solid rgba(255,255,255,.15);
-}
-
-.manager-profile h6 {
-
-    margin: 0;
+        linear-gradient(
+            135deg,
+            #ef4444,
+            #dc2626
+        );
 
     color: white;
 
+    font-size: 13px;
+
     font-weight: 600;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 8px;
 }
 
-.manager-profile small {
+.logout-btn i {
 
-    color: #94a3b8;
-}
-
-/* ===========================
-   SCROLLBAR
-=========================== */
-
-.sidebar::-webkit-scrollbar {
-
-    width: 5px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-
-    background: #475569;
-
-    border-radius: 20px;
-}
-
-/* ===========================
-   MOBILE
-=========================== */
-
-@media(max-width:768px){
-
-    .sidebar {
-
-        min-height: auto;
-    }
-
-    .sidebar-footer {
-
-        display: none;
-    }
-
+    font-size: 13px;
 }

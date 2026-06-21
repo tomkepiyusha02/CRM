@@ -1,45 +1,63 @@
 import LeadCard from "../leads/LeadCard";
 
-function AssignedLeads({ leads, onSelect }) {
+function AssignedLeads({
+    leads,
+    onSelect
+}) {
 
-  const assigned = leads.filter(
-    (lead) => lead.status !== "NEW"
-  );
+    const assignedLeads =
+        leads.filter(
+            lead =>
+                lead.assignedAgentId ||
+                lead.assignedAgentName
+        );
 
-  return (
+    return (
 
-    <>
+        <div className="lead-list-container">
 
-      <h5 className="section-heading mt-4">
+            <div className="lead-list-header">
 
-        Assigned Leads
+                <h4>
+                    Assigned Leads
+                </h4>
 
-      </h5>
+                <div className="lead-count-badge">
 
-      {
-        assigned.length === 0 ?
+                    {assignedLeads.length}
 
-        (
-          <p>No Assigned Leads</p>
-        )
+                </div>
 
-        :
+            </div>
 
-        (
-          assigned.map((lead) => (
+            {
+                assignedLeads.length === 0 ?
 
-            <LeadCard
-              key={lead.leadid}
-              lead={lead}
-              onSelect={onSelect}
-            />
+                (
+                    <p>
+                        No Assigned Leads
+                    </p>
+                )
 
-          ))
-        )
-      }
+                :
 
-    </>
-  );
+                (
+                    assignedLeads.map(
+                        (lead) => (
+
+                            <LeadCard
+                                key={lead.leadid}
+                                lead={lead}
+                                onSelect={onSelect}
+                            />
+
+                        )
+                    )
+                )
+            }
+
+        </div>
+    );
 }
 
 export default AssignedLeads;

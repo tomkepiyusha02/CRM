@@ -1,14 +1,14 @@
-
 import React, { useState } from "react";
 import UserService from "../../services/UserService";
 import Swal from "sweetalert2";
 
-import { cities }
-from "../../data/cities";
+import { locationMap }
+from "../../data/locationMap";
 
 function ManagerForm({ loadManagers }) {
 
     const [manager, setManager] = useState({
+
         name: "",
         email: "",
         mobile: "",
@@ -16,13 +16,17 @@ function ManagerForm({ loadManagers }) {
         location: "",
         assignedCity: "",
         role: "MANAGER"
+
     });
 
     const handleChange = (e) => {
 
         setManager({
+
             ...manager,
+
             [e.target.name]: e.target.value
+
         });
     };
 
@@ -37,19 +41,19 @@ function ManagerForm({ loadManagers }) {
             Swal.fire({
 
                 icon: "success",
-            
+
                 title: "Success",
-            
-                text:
-                "Manager Added Successfully",
-            
+
+                text: "Manager Added Successfully",
+
                 timer: 1500,
-            
+
                 showConfirmButton: false
-            
+
             });
 
             setManager({
+
                 name: "",
                 email: "",
                 mobile: "",
@@ -57,10 +61,13 @@ function ManagerForm({ loadManagers }) {
                 location: "",
                 assignedCity: "",
                 role: "MANAGER"
+
             });
 
             if (loadManagers) {
+
                 loadManagers();
+
             }
 
         } catch (error) {
@@ -68,31 +75,34 @@ function ManagerForm({ loadManagers }) {
             Swal.fire({
 
                 icon: "error",
-            
+
                 title: "Error",
-            
+
                 text:
-                error.response?.data
-                || "Something Went Wrong"
-            
+                    error.response?.data ||
+                    "Something Went Wrong"
+
             });
         }
     };
 
     return (
 
-
         <div className="manager-form-card">
 
             <h4>Add Manager</h4>
-            
 
-            <form onSubmit={handleSubmit}
-            autoComplete="off">
+            <form
+                onSubmit={handleSubmit}
+                autoComplete="off"
+            >
 
                 <div className="row">
 
+                    {/* Name */}
+
                     <div className="col-md-6 mb-3">
+
                         <input
                             type="text"
                             name="name"
@@ -102,9 +112,13 @@ function ManagerForm({ loadManagers }) {
                             onChange={handleChange}
                             required
                         />
+
                     </div>
 
+                    {/* Email */}
+
                     <div className="col-md-6 mb-3">
+
                         <input
                             type="email"
                             name="email"
@@ -115,21 +129,29 @@ function ManagerForm({ loadManagers }) {
                             autoComplete="off"
                             required
                         />
+
                     </div>
 
+                    {/* Mobile */}
+
                     <div className="col-md-6 mb-3">
+
                         <input
                             type="text"
                             name="mobile"
-                            placeholder="Mobile"
+                            placeholder="Mobile Number"
                             className="form-control"
                             value={manager.mobile}
                             onChange={handleChange}
                             required
                         />
+
                     </div>
 
+                    {/* Password */}
+
                     <div className="col-md-6 mb-3">
+
                         <input
                             type="password"
                             name="password"
@@ -140,45 +162,91 @@ function ManagerForm({ loadManagers }) {
                             autoComplete="new-password"
                             required
                         />
+
                     </div>
 
+                    {/* State */}
+
                     <div className="col-md-6 mb-3">
-                        <input
-                            type="text"
+
+                        <select
                             name="location"
-                            placeholder="Location"
-                            className="form-control"
+                            className="form-select"
                             value={manager.location}
-                            onChange={handleChange}
-                        />
+                            onChange={(e) => {
+
+                                setManager({
+
+                                    ...manager,
+
+                                    location:
+                                        e.target.value,
+
+                                    assignedCity: ""
+
+                                });
+
+                            }}
+                            required
+                        >
+
+                            <option value="">
+                                Select State
+                            </option>
+
+                            {
+                                Object.keys(locationMap)
+                                    .map(state => (
+
+                                        <option
+                                            key={state}
+                                            value={state}
+                                        >
+                                            {state}
+                                        </option>
+
+                                    ))
+                            }
+
+                        </select>
+
                     </div>
 
+                    {/* City */}
+
                     <div className="col-md-6 mb-3">
-                    <select
-    name="assignedCity"
-    className="form-select"
-    value={manager.assignedCity}
-    onChange={handleChange}
->
 
-    <option value="">
-        Select City
-    </option>
+                        <select
+                            name="assignedCity"
+                            className="form-select"
+                            value={manager.assignedCity}
+                            onChange={handleChange}
+                            required
+                        >
 
-    {
-        cities.map(city => (
+                            <option value="">
+                                Select City
+                            </option>
 
-            <option
-                key={city}
-                value={city}
-            >
-                {city}
-            </option>
+                            {
+                                manager.location &&
 
-        ))
-    }
+                                locationMap[
+                                    manager.location
+                                ]?.map(city => (
 
-</select>
+                                    <option
+                                        key={city}
+                                        value={city}
+                                    >
+                                        {city}
+                                    </option>
+
+                                ))
+                            }
+
+                        </select>
+
                     </div>
 
                 </div>

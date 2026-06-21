@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+
 import {
     PieChart,
     Pie,
@@ -21,6 +22,9 @@ import LeadService from "../../services/LeadService";
 import NewLeads from "./NewLeads";
 import AssignedLeads from "./AssignedLeads";
 import LeadDetails from "../leads/LeadDetails";
+
+import ManagerPropertyTable from "../dashboard/ManagerPropertyTable";
+import ManagerAgentTable from "./ManagerAgentTable";
 
 function ManagerDashboard({
     activeTab
@@ -234,6 +238,66 @@ const locationData =
         })
     );
 
+    const agentMap = {};
+
+leads.forEach((lead) => {
+
+    const agent =
+        lead.assignedAgentName ||
+        "Unassigned";
+
+    agentMap[agent] =
+        (agentMap[agent] || 0) + 1;
+});
+
+const agentData =
+Object.keys(agentMap).map(
+    (agent) => ({
+        agent,
+        leads: agentMap[agent]
+    })
+);
+
+const propertyMap = {};
+
+leads.forEach((lead) => {
+
+    const type =
+        lead.property_type ||
+        "Unknown";
+
+    propertyMap[type] =
+        (propertyMap[type] || 0) + 1;
+});
+
+const propertyData =
+Object.keys(propertyMap).map(
+    (type) => ({
+        type,
+        count: propertyMap[type]
+    })
+);
+
+const areaMap = {};
+
+leads.forEach((lead) => {
+
+    const area =
+        lead.assignedArea ||
+        "Unknown";
+
+    areaMap[area] =
+        (areaMap[area] || 0) + 1;
+});
+
+const areaData =
+Object.keys(areaMap).map(
+    (area) => ({
+        area,
+        leads: areaMap[area]
+    })
+);
+
     return (
 
         <div className="container-fluid manager-dashboard">
@@ -246,192 +310,115 @@ const locationData =
 <>
     {/* Hero Banner */}
 
-    <div className="hero-banner">
+    <div className="lead-page-header dashboard-header">
 
-        <div>
+    <div>
 
-            <h2>
-                👋 Welcome,
-                {" "}
-                {localStorage.getItem("name")}
-            </h2>
+        <h2>
+            👋 Welcome,
+            {" "}
+            {localStorage.getItem("name")}
+        </h2>
 
-            <p>
-                Here's what's happening
-                in your area today.
-            </p>
-
-        </div>
-
-        <div className="city-badge">
-
-            📍
-            {localStorage.getItem(
-                "assignedCity"
-            )}
-
-        </div>
+        <p>
+            Here's what's happening in your area today.
+        </p>
 
     </div>
+
+    <div className="city-badge">
+
+        📍 {localStorage.getItem("assignedCity")}
+
+    </div>
+
+</div>
 
     {/* KPI CARDS */}
 
-    <div className="row mb-4">
+    <div className="dashboard-cards">
 
-        <div className="col-md-3">
+    <div className="modern-card total">
 
-            <div className="kpi-card">
-
-                <h3>{leads.length}</h3>
-
-                <p>Total Leads</p>
-
-            </div>
-
+        <div className="card-icon purple">
+            <i className="bi bi-people-fill"></i>
         </div>
 
-        <div className="col-md-3">
+        <div>
 
-            <div className="kpi-card danger">
+            <h3>{leads.length}</h3>
 
-                <h3>{newLeadCount}</h3>
-
-                <p>New Leads</p>
-
-            </div>
-
-        </div>
-
-        <div className="col-md-3">
-
-            <div className="kpi-card success">
-
-                <h3>{interestedCount}</h3>
-
-                <p>Interested</p>
-
-            </div>
-
-        </div>
-
-        <div className="col-md-3">
-
-            <div className="kpi-card warning">
-
-                <h3>{bookingCount}</h3>
-
-                <p>Bookings</p>
-
-            </div>
+            <p>Total Leads</p>
 
         </div>
 
     </div>
 
-    {/* CHARTS */}
+    <div className="modern-card new">
 
-    <div className="row">
-
-        <div className="col-lg-8 mb-4">
-
-            <div className="chart-card">
-
-                <h5>
-                    Lead Trend
-                </h5>
-
-                <ResponsiveContainer
-                    width="100%"
-                    height={300}
-                >
-
-                    <LineChart
-                        data={chartData}
-                    >
-
-                        <XAxis
-                            dataKey="name"
-                        />
-
-                        <YAxis />
-
-                        <Tooltip />
-
-                        <Line
-                            type="monotone"
-                            dataKey="value"
-                            stroke="#4f46e5"
-                            strokeWidth={4}
-                        />
-
-                    </LineChart>
-
-                </ResponsiveContainer>
-
-            </div>
-
+        <div className="card-icon red">
+            <i className="bi bi-person-plus-fill"></i>
         </div>
 
-        <div className="col-lg-4 mb-4">
+        <div>
 
-            <div className="chart-card">
+            <h3>{newLeadCount}</h3>
 
-                <h5>
-                    Lead Status
-                </h5>
-
-                <ResponsiveContainer
-                    width="100%"
-                    height={300}
-                >
-
-                    <PieChart>
-
-                        <Pie
-                            data={chartData}
-                            dataKey="value"
-                            outerRadius={90}
-                        >
-
-                            {
-                                chartData.map(
-                                    (
-                                        entry,
-                                        index
-                                    ) => (
-
-                                        <Cell
-                                            key={index}
-                                            fill={
-                                                COLORS[index]
-                                            }
-                                        />
-
-                                    )
-                                )
-                            }
-
-                        </Pie>
-
-                        <Tooltip />
-
-                    </PieChart>
-
-                </ResponsiveContainer>
-
-            </div>
+            <p>New Leads</p>
 
         </div>
 
     </div>
+
+    <div className="modern-card interested">
+
+        <div className="card-icon green">
+            <i className="bi bi-hand-thumbs-up-fill"></i>
+        </div>
+
+        <div>
+
+            <h3>{interestedCount}</h3>
+
+            <p>Interested</p>
+
+        </div>
+
+    </div>
+
+    <div className="modern-card booking">
+
+        <div className="card-icon orange">
+            <i className="bi bi-calendar-check-fill"></i>
+        </div>
+
+        <div>
+
+            <h3>{bookingCount}</h3>
+
+            <p>Bookings</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+    
 
     {/* RECENT LEADS */}
 
     <div className="chart-card">
 
-        <h5>
-            Recent Leads
-        </h5>
+    <div className="table-title">
+
+<i className="bi bi-file-earmark-text"></i>
+
+<h5>
+    Recent Leads
+</h5>
+
+</div>
 
         <table className="table">
 
@@ -508,155 +495,245 @@ const locationData =
             {/* NEW LEADS */}
 
             {
-                activeTab ===
-                "new" && (
+activeTab === "new" && (
 
-                    <>
+<>
+    {/* HEADER */}
 
-                        <div
-                            className="mb-3"
-                        >
+    <div className="lead-page-header">
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search New Lead..."
-                                value={search}
-                                onChange={(e) =>
-                                    setSearch(
-                                        e.target.value
-                                    )
-                                }
-                            />
+        <div>
 
-                        </div>
+            <h2>
+                🔔 New Leads
+            </h2>
 
-                        <div className="row">
+            <p>
+                Manage incoming leads waiting for assignment
+            </p>
 
-                            <div className="col-lg-4">
+        </div>
 
-                                <div
-                                    className="lead-sidebar"
-                                >
+        <div className="city-badge">
 
-                                    <NewLeads
-                                        leads={
-                                            filteredLeads
-                                        }
-                                        onSelect={
-                                            setSelectedLead
-                                        }
-                                    />
+            📍 {localStorage.getItem("assignedCity")}
 
-                                </div>
+        </div>
 
-                            </div>
+    </div>
 
-                            <div className="col-lg-8">
+    {/* SEARCH */}
 
-                                <LeadDetails
-                                    lead={
-                                        selectedLead
-                                    }
-                                    refreshLeads={
-                                        loadLeads
-                                    }
-                                    clearLead={() =>
-                                        setSelectedLead(
-                                            null
-                                        )
-                                    }
-                                />
+    <div className="search-container">
 
-                            </div>
+        <i className="bi bi-search"></i>
 
-                        </div>
-
-                    </>
-
-                )
+        <input
+            type="text"
+            className="search-input"
+            placeholder="Search New Lead..."
+            value={search}
+            onChange={(e)=>
+                setSearch(e.target.value)
             }
+        />
+
+    </div>
+
+    <div className="row">
+
+        <div className="col-lg-4">
+
+            <div className="lead-sidebar">
+
+                <NewLeads
+                    leads={filteredLeads}
+                    onSelect={setSelectedLead}
+                />
+
+            </div>
+
+        </div>
+
+        <div className="col-lg-8">
+
+        <LeadDetails
+    lead={selectedLead}
+    refreshLeads={loadLeads}
+    clearLead={() =>
+        setSelectedLead(null)
+    }
+    mode="new"
+/>
+
+        </div>
+
+    </div>
+
+</>
+
+)
+}
 
             {/* ASSIGNED LEADS */}
-
             {
-                activeTab ===
-                "assigned" && (
+activeTab === "assigned" && (
 
-                    <>
+<>
+    <div className="lead-page-header">
 
-                        <div
-                            className="mb-3"
-                        >
+        <div>
 
-                            <input
-                                type="text"
-                                className="form-control"
-                                placeholder="Search Assigned Lead..."
-                                value={search}
-                                onChange={(e) =>
-                                    setSearch(
-                                        e.target.value
-                                    )
-                                }
-                            />
+            <h2>
+                👨‍💼 Assigned Leads
+            </h2>
 
-                        </div>
+            <p>
+                View and manage assigned customer leads
+            </p>
 
-                        <div className="row">
+        </div>
 
-                            <div className="col-lg-4">
+        <div className="city-badge">
 
-                                <div
-                                    className="lead-sidebar"
-                                >
+            📍 {localStorage.getItem("assignedCity")}
 
-                                    <AssignedLeads
-                                        leads={
-                                            filteredLeads
-                                        }
-                                        onSelect={
-                                            setSelectedLead
-                                        }
-                                    />
+        </div>
 
-                                </div>
+    </div>
 
-                            </div>
+    <div className="search-container">
 
-                            <div className="col-lg-8">
+        <i className="bi bi-search"></i>
 
-                                <LeadDetails
-                                    lead={
-                                        selectedLead
-                                    }
-                                    refreshLeads={
-                                        loadLeads
-                                    }
-                                    clearLead={() =>
-                                        setSelectedLead(
-                                            null
-                                        )
-                                    }
-                                />
-
-                            </div>
-
-                        </div>
-
-                    </>
-
-                )
+        <input
+            type="text"
+            className="search-input"
+            placeholder="Search Assigned Lead..."
+            value={search}
+            onChange={(e)=>
+                setSearch(e.target.value)
             }
+        />
+
+    </div>
+
+    <div className="row">
+
+        <div className="col-lg-4">
+
+            <div className="lead-sidebar">
+
+                <AssignedLeads
+                    leads={filteredLeads}
+                    onSelect={setSelectedLead}
+                />
+
+            </div>
+
+        </div>
+
+        <div className="col-lg-8">
+
+        <LeadDetails
+    lead={selectedLead}
+    refreshLeads={loadLeads}
+    clearLead={() =>
+        setSelectedLead(null)
+    }
+    mode="assigned"
+/>
+
+        </div>
+
+    </div>
+
+</>
+
+)
+}
+
+            {/* PROPERTIES */}
+
+{
+    activeTab === "properties" && (
+
+        <ManagerPropertyTable />
+
+    )
+}
+
+{
+    activeTab === "agents" && (
+
+        <>
+
+            <div className="lead-page-header">
+
+                <div>
+
+                    <h2>
+                        👨‍💼 Agents
+                    </h2>
+
+                    <p>
+                        Agent performance and workload
+                    </p>
+
+                </div>
+
+                <div className="city-badge">
+
+                    📍
+                    {localStorage.getItem(
+                        "assignedCity"
+                    )}
+
+                </div>
+
+            </div>
+
+            <ManagerAgentTable />
+
+        </>
+
+    )
+}
 
     {/* STATISTICS */}
+
+   {/* STATISTICS */}
 
 {
 activeTab === "stats" && (
 
+<>
+
+<div className="lead-page-header">
+
+    <div>
+
+        <h2>
+            📊 CRM Analytics Dashboard
+        </h2>
+
+        <p>
+            Performance, Lead Flow & Agent Insights
+        </p>
+
+    </div>
+
+    <div className="city-badge">
+
+        📍 {localStorage.getItem("assignedCity")}
+
+    </div>
+
+</div>
+
 <div className="row">
 
-    {/* PIE */}
+    {/* Lead Status */}
 
     <div className="col-lg-6 mb-4">
 
@@ -682,16 +759,11 @@ activeTab === "stats" && (
 
                         {
                             chartData.map(
-                                (
-                                    entry,
-                                    index
-                                ) => (
+                                (entry,index) => (
 
                                     <Cell
                                         key={index}
-                                        fill={
-                                            COLORS[index]
-                                        }
+                                        fill={COLORS[index]}
                                     />
 
                                 )
@@ -712,89 +784,7 @@ activeTab === "stats" && (
 
     </div>
 
-    {/* STATUS BAR */}
-
-    <div className="col-lg-6 mb-4">
-
-        <div className="chart-card">
-
-            <h5>
-                Lead Pipeline
-            </h5>
-
-            <ResponsiveContainer
-                width="100%"
-                height={320}
-            >
-
-                <BarChart
-                    data={chartData}
-                >
-
-                    <XAxis
-                        dataKey="name"
-                    />
-
-                    <YAxis />
-
-                    <Tooltip />
-
-                    <Bar
-                        dataKey="value"
-                        fill="#4f46e5"
-                        radius={[10,10,0,0]}
-                    />
-
-                </BarChart>
-
-            </ResponsiveContainer>
-
-        </div>
-
-    </div>
-
-    {/* BUDGET */}
-
-    <div className="col-lg-6 mb-4">
-
-        <div className="chart-card">
-
-            <h5>
-                Budget Distribution
-            </h5>
-
-            <ResponsiveContainer
-                width="100%"
-                height={320}
-            >
-
-                <BarChart
-                    data={budgetData}
-                >
-
-                    <XAxis
-                        dataKey="range"
-                    />
-
-                    <YAxis />
-
-                    <Tooltip />
-
-                    <Bar
-                        dataKey="count"
-                        fill="#10b981"
-                        radius={[10,10,0,0]}
-                    />
-
-                </BarChart>
-
-            </ResponsiveContainer>
-
-        </div>
-
-    </div>
-
-    {/* LOCATION */}
+    {/* Location */}
 
     <div className="col-lg-6 mb-4">
 
@@ -809,13 +799,9 @@ activeTab === "stats" && (
                 height={320}
             >
 
-                <BarChart
-                    data={locationData}
-                >
+                <BarChart data={locationData}>
 
-                    <XAxis
-                        dataKey="city"
-                    />
+                    <XAxis dataKey="city" />
 
                     <YAxis />
 
@@ -835,43 +821,36 @@ activeTab === "stats" && (
 
     </div>
 
-    {/* TREND */}
+    {/* Budget */}
 
-    <div className="col-lg-12">
+    <div className="col-lg-6 mb-4">
 
         <div className="chart-card">
 
             <h5>
-                Lead Conversion Trend
+                Budget Distribution
             </h5>
 
             <ResponsiveContainer
                 width="100%"
-                height={350}
+                height={320}
             >
 
-                <LineChart
-                    data={chartData}
-                >
+                <BarChart data={budgetData}>
 
-                    <XAxis
-                        dataKey="name"
-                    />
+                    <XAxis dataKey="range" />
 
                     <YAxis />
 
                     <Tooltip />
 
-                    <Legend />
-
-                    <Line
-                        type="monotone"
-                        dataKey="value"
-                        stroke="#4f46e5"
-                        strokeWidth={4}
+                    <Bar
+                        dataKey="count"
+                        fill="#10b981"
+                        radius={[10,10,0,0]}
                     />
 
-                </LineChart>
+                </BarChart>
 
             </ResponsiveContainer>
 
@@ -879,12 +858,163 @@ activeTab === "stats" && (
 
     </div>
 
+    {/* Agent Performance */}
+
+    <div className="col-lg-6 mb-4">
+
+        <div className="chart-card">
+
+            <h5>
+                Agent Performance
+            </h5>
+
+            <ResponsiveContainer
+                width="100%"
+                height={320}
+            >
+
+                <BarChart data={agentData}>
+
+                    <XAxis dataKey="agent" />
+
+                    <YAxis />
+
+                    <Tooltip />
+
+                    <Bar
+                        dataKey="leads"
+                        fill="#6366f1"
+                        radius={[10,10,0,0]}
+                    />
+
+                </BarChart>
+
+            </ResponsiveContainer>
+
+        </div>
+
+    </div>
+
+    {/* Property Type */}
+
+    <div className="col-lg-6 mb-4">
+
+        <div className="chart-card">
+
+            <h5>
+                Property Type Interest
+            </h5>
+
+            <ResponsiveContainer
+                width="100%"
+                height={320}
+            >
+
+                <PieChart>
+
+                    <Pie
+                        data={propertyData}
+                        dataKey="count"
+                        nameKey="type"
+                        outerRadius={120}
+                        label
+                    />
+
+                    <Tooltip />
+
+                    <Legend />
+
+                </PieChart>
+
+            </ResponsiveContainer>
+
+        </div>
+
+    </div>
+
+    {/* Conversion */}
+
+    <div className="col-lg-6 mb-4">
+
+        <div className="chart-card">
+
+            <h5>
+                Lead Conversion Funnel
+            </h5>
+
+            <ResponsiveContainer
+                width="100%"
+                height={320}
+            >
+
+                <BarChart data={chartData}>
+
+                    <XAxis dataKey="name" />
+
+                    <YAxis />
+
+                    <Tooltip />
+
+                    <Bar
+                        dataKey="value"
+                        fill="#4f46e5"
+                        radius={[10,10,0,0]}
+                    />
+
+                </BarChart>
+
+            </ResponsiveContainer>
+
+        </div>
+
+    </div>
+
+    {/* Area Wise */}
+
+    <div className="col-lg-12">
+
+        <div className="chart-card">
+
+            <h5>
+                Area Wise Lead Distribution
+            </h5>
+
+            <ResponsiveContainer
+                width="100%"
+                height={350}
+            >
+
+                <BarChart data={areaData}>
+
+                    <XAxis dataKey="area" />
+
+                    <YAxis />
+
+                    <Tooltip />
+
+                    <Bar
+                        dataKey="leads"
+                        fill="#8b5cf6"
+                        radius={[10,10,0,0]}
+                    />
+
+                </BarChart>
+
+            </ResponsiveContainer>
+
+        </div>
+
+    </div>
+
+
 </div>
+
+</>
 
 )
 }
 
-        </div>
+</div>
     );
 }
 
