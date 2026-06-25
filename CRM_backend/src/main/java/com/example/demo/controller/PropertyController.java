@@ -124,5 +124,12 @@ public class PropertyController {
                 "Property Status Updated"
         );
     }
+    
+    @GetMapping("/agent/{agentId}")
+    public List<Property> getAssignedProperties(
+            @PathVariable UUID agentId){
+
+        return ps.getAssignedProperties(agentId);
+    }
 }
 

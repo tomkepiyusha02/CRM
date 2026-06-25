@@ -1284,3 +1284,131 @@ PROPERTY TABLE CARD
 
     margin-bottom:10px;
 }
+
+/* ===========================================
+   Premium Action Buttons
+=========================================== */
+
+.manager-btn,
+.property-btn {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 14px 28px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    color: white;
+
+    cursor: pointer;
+
+    transition: all .35s ease;
+
+    box-shadow: 0 10px 25px rgba(0,0,0,.15);
+
+}
+
+/* Manager Button */
+
+.manager-btn {
+
+    background: linear-gradient(
+        135deg,
+        #7C3AED,
+        #5B4CFF
+    );
+
+}
+
+.manager-btn:hover {
+
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        135deg,
+        #6D28D9,
+        #4B3DF5
+    );
+
+    box-shadow: 0 18px 35px rgba(91,76,255,.45);
+
+}
+
+/* Property Button */
+
+.property-btn {
+
+    background: linear-gradient(
+        135deg,
+        #2563EB,
+        #4F46E5
+    );
+
+}
+
+.property-btn:hover {
+
+    transform: translateY(-3px);
+
+    background: linear-gradient(
+        135deg,
+        #1D4ED8,
+        #4338CA
+    );
+
+    box-shadow: 0 18px 35px rgba(37,99,235,.45);
+
+}
+
+.manager-btn i,
+.property-btn i {
+
+    font-size: 18px;
+
+}
+
+/* Manager Dropdown */
+
+.manager-column{
+    width:170px;
+    text-align:center;
+}
+
+.manager-select{
+
+    width:160px;
+
+    height:38px;
+
+    padding:8px 12px;
+
+    border:1px solid #dcdfe6;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    font-size:14px;
+
+    outline:none;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.manager-select:focus{
+
+    border-color:#6C63FF;
+
+    box-shadow:0 0 0 3px rgba(108,99,255,.15);
+
+}

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.dto.FollowUpRequestDto;
 import com.example.demo.entity.FollowUp;
 import com.example.demo.service.FollowUpService;
 
@@ -20,10 +21,10 @@ public class FollowUpController {
 
     @PostMapping("/add")
     public ResponseEntity<FollowUp> addFollowUp(
-            @RequestBody FollowUp followUp) {
+            @RequestBody FollowUpRequestDto dto) {
 
         return ResponseEntity.ok(
-                service.addFollowUp(followUp));
+                service.addFollowUp(dto));
     }
 
     @GetMapping("/all")

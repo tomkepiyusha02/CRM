@@ -32,5 +32,7 @@ public interface PropertyService {
 
     List<Property> getPropertiesByBuilder(
             String builderName);
+    
+    List<Property> getAssignedProperties(UUID agentId);
 }
 

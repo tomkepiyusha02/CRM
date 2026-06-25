@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.dto.SiteVisitRequestDto;
 import com.example.demo.entity.SiteVisit;
 import com.example.demo.service.SiteVisitService;
 
@@ -20,10 +21,10 @@ public class SiteVisitController {
 
     @PostMapping("/add")
     public ResponseEntity<SiteVisit> addVisit(
-            @RequestBody SiteVisit siteVisit) {
+            @RequestBody SiteVisitRequestDto dto) {
 
         return ResponseEntity.ok(
-                service.addSiteVisit(siteVisit));
+                service.addSiteVisit(dto));
     }
 
     @GetMapping("/all")

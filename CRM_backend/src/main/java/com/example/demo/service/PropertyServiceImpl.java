@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
+import com.example.demo.entity.AgentProperty;
 import com.example.demo.entity.Property;
 import com.example.demo.entity.enums.PropertyStatus;
 import com.example.demo.entity.enums.PropertyType;
+import com.example.demo.repository.AgentPropertyRepository;
 import com.example.demo.repository.PropertyRepository;
 
 @Service
@@ -20,6 +22,8 @@ public class PropertyServiceImpl
     @Autowired
     PropertyRepository propertyRepo;
     
+    @Autowired
+    private AgentPropertyRepository agentPropertyRepository;
  
     
 
@@ -143,6 +147,16 @@ public class PropertyServiceImpl
 
         return propertyRepo.findByBuilderName(
                 builderName);
+    }
+    
+    @Override
+    public List<Property> getAssignedProperties(UUID agentId){
+
+        return agentPropertyRepository
+                .findByAgent_UserId(agentId)
+                .stream()
+                .map(AgentProperty::getProperty)
+                .toList();
     }
 }
 

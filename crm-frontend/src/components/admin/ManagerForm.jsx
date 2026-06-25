@@ -250,14 +250,13 @@ function ManagerForm({ loadManagers }) {
                     </div>
 
                 </div>
-
-                <button
-                    className="manager-btn"
-                    type="submit"
-                >
-                    Add Manager
-                </button>
-
+<button
+    type="submit"
+    className="manager-btn"
+>
+    <i className="bi bi-person-plus-fill"></i>
+    <span>Add Manager</span>
+</button>
             </form>
 
         </div>

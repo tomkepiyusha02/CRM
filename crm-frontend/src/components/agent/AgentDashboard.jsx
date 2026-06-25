@@ -381,7 +381,7 @@ function AgentDashboard() {
 
                                                 <td>
                                                     {
-                                                        followUp.followUpDate
+                                                        followUp.followupDate
                                                     }
                                                 </td>
 

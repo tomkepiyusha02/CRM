@@ -3,13 +3,13 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.demo.dto.SiteVisitRequestDto;
 import com.example.demo.entity.SiteVisit;
 
 public interface SiteVisitService {
 
-    SiteVisit addSiteVisit(
-        SiteVisit siteVisit
-    );
+	SiteVisit addSiteVisit(
+	        SiteVisitRequestDto dto);
 
     List<SiteVisit> getAllSiteVisits();
 

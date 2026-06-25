@@ -149,51 +149,51 @@ function PendingRequestsTable() {
                             <td>{agent.assignedCity}</td>
 
                             <td>{agent.assignedArea}</td>
+<td className="manager-column">
 
-                            <td>
+    <div className="manager-select-wrapper">
 
-                                <select
-                                    className="form-select"
-                                    value={
-                                        selectedManagers[
-                                            agent.userId
-                                        ] || ""
-                                    }
-                                    onChange={(e) =>
-                                        setSelectedManagers({
-                                            ...selectedManagers,
-                                            [agent.userId]:
-                                                e.target.value
-                                        })
-                                    }
-                                >
+       <select
+    className="manager-select"
+    value={
+        selectedManagers[agent.userId] || ""
+    }
+    onChange={(e) =>
+        setSelectedManagers({
+            ...selectedManagers,
+            [agent.userId]: e.target.value
+        })
+    }
+>
 
-                                    <option value="">
-                                        Select Manager
-                                    </option>
-
-                                    {
-    managers
-        .filter(
-            manager =>
-                manager.assignedCity ===
-                agent.assignedCity
-        )
-        .map(manager => (
-
-            <option
-                key={manager.userId}
-                value={manager.userId}
-            >
-                {manager.name}
+            <option value="">
+                Select Manager
             </option>
 
-        ))
-}
+            {
+                managers
+                    .filter(
+                        manager =>
+                            manager.assignedCity ===
+                            agent.assignedCity
+                    )
+                    .map(manager => (
 
-                                </select>
+                        <option
+                            key={manager.userId}
+                            value={manager.userId}
+                        >
+                            {manager.name}
+                        </option>
 
-                            </td>
+                    ))
+            }
+
+        </select>
+
+    </div>
+
+</td>
 
                             <td>
 

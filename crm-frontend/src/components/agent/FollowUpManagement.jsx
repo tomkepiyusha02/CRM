@@ -16,28 +16,22 @@ from "react-toastify";
 
 function FollowUpManagement() {
 
-    const [followUps,
-        setFollowUps] =
+    const [followUps,setFollowUps] =
         useState([]);
 
-    const [leads,
-        setLeads] =
+    const [leads,setLeads] =
         useState([]);
 
-    const [leadId,
-        setLeadId] =
+    const [leadId,setLeadId] =
         useState("");
 
-    const [followupDate,
-        setFollowupDate] =
+    const [followupDate,setFollowupDate] =
         useState("");
 
-    const [followupTime,
-        setFollowupTime] =
+    const [followupTime,setFollowupTime] =
         useState("");
 
-    const [remarks,
-        setRemarks] =
+    const [remarks,setRemarks] =
         useState("");
 
     useEffect(() => {
@@ -46,43 +40,38 @@ function FollowUpManagement() {
 
     }, []);
 
-    const loadData =
-        async () => {
+    const loadData = async () => {
 
-            try {
+    try {
 
-                const userId =
-                    localStorage.getItem(
-                        "userId"
-                    );
+        const userId =
+            localStorage.getItem("userId");
 
-                const followResponse =
-                    await FollowUpService
-                        .getAll(userId);
+        const followResponse =
+            await FollowUpService.getByAgent(
+                userId
+            );
 
-                setFollowUps(
-                    followResponse.data
-                );
+        setFollowUps(
+            followResponse.data
+        );
 
-                const leadResponse =
-                    await LeadService
-                        .getAssignedLeads(
-                            userId
-                        );
+        const leadResponse =
+            await LeadService.getAssignedLeads(
+                userId
+            );
 
-                setLeads(
-                    leadResponse.data
-                );
+        setLeads(
+            leadResponse.data
+        );
 
-            }
+    }
+    catch(error){
 
-            catch(error){
+        console.log(error);
 
-                console.log(error);
-
-            }
-        };
-
+    }
+};
     const addFollowUp =
         async () => {
 
@@ -102,28 +91,25 @@ function FollowUpManagement() {
 
                 const data = {
 
-                    followupDate,
+    leadId,
 
-                    followupTime,
+    agentId:
+        localStorage.getItem(
+            "userId"
+        ),
 
-                    remarks,
+    followupDate,
 
-                    status:
-                        "PENDING",
+    followupTime,
 
-                    lead: {
-                        leadid:
-                            leadId
-                    },
+    notes: remarks,
 
-                    agent: {
-                        userId:
-                            localStorage.getItem(
-                                "userId"
-                            )
-                    }
+    status: "SCHEDULED",
 
-                };
+    reminderType: "CALL"
+
+
+};
 
                 await FollowUpService
                     .addFollowUp(
@@ -135,21 +121,19 @@ function FollowUpManagement() {
                 );
 
                 setLeadId("");
-
                 setFollowupDate("");
-
                 setFollowupTime("");
-
                 setRemarks("");
 
                 loadData();
 
             }
-
             catch(error){
 
+                console.log(error);
+
                 toast.error(
-                    "Failed"
+                    "Failed To Schedule Follow Up"
                 );
 
             }
@@ -160,24 +144,52 @@ function FollowUpManagement() {
 
             try {
 
-                await FollowUpService
-                    .update(
-                        followup.followupId,
-                        {
-                            ...followup,
-                            status:
+                await FollowUpService.update(
+                    followup.followupId,
+                    {
+                        ...followup,
+                        status:
                             "COMPLETED"
-                        }
-                    );
+                    }
+                );
 
                 toast.success(
-                    "Completed"
+                    "Follow Up Completed"
                 );
 
                 loadData();
 
             }
+            catch(error){
 
+                toast.error(
+                    "Update Failed"
+                );
+
+            }
+        };
+
+    const markMissed =
+        async (followup) => {
+
+            try {
+
+                await FollowUpService.update(
+                    followup.followupId,
+                    {
+                        ...followup,
+                        status:
+                            "MISSED"
+                    }
+                );
+
+                toast.success(
+                    "Marked As Missed"
+                );
+
+                loadData();
+
+            }
             catch(error){
 
                 toast.error(
@@ -189,9 +201,7 @@ function FollowUpManagement() {
 
     return (
 
-        <div
-            className="chart-card"
-        >
+        <div className="chart-card">
 
             <h4>
                 📞 Follow Up Management
@@ -227,9 +237,7 @@ function FollowUpManagement() {
                                             lead.leadid
                                         }
                                     >
-                                        {
-                                            lead.name
-                                        }
+                                        {lead.name}
                                     </option>
 
                                 )
@@ -245,9 +253,7 @@ function FollowUpManagement() {
                     <input
                         type="date"
                         className="form-control"
-                        value={
-                            followupDate
-                        }
+                        value={followupDate}
                         onChange={(e)=>
                             setFollowupDate(
                                 e.target.value
@@ -262,9 +268,7 @@ function FollowUpManagement() {
                     <input
                         type="time"
                         className="form-control"
-                        value={
-                            followupTime
-                        }
+                        value={followupTime}
                         onChange={(e)=>
                             setFollowupTime(
                                 e.target.value
@@ -305,41 +309,20 @@ function FollowUpManagement() {
 
             </div>
 
-            <div
-                className="table-responsive mt-4"
-            >
+            <div className="table-responsive mt-4">
 
-                <table
-                    className="table"
-                >
+                <table className="table">
 
                     <thead>
 
                         <tr>
 
-                            <th>
-                                Lead
-                            </th>
-
-                            <th>
-                                Date
-                            </th>
-
-                            <th>
-                                Time
-                            </th>
-
-                            <th>
-                                Remarks
-                            </th>
-
-                            <th>
-                                Status
-                            </th>
-
-                            <th>
-                                Action
-                            </th>
+                            <th>Lead</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Remarks</th>
+                            <th>Status</th>
+                            <th>Action</th>
 
                         </tr>
 
@@ -347,75 +330,104 @@ function FollowUpManagement() {
 
                     <tbody>
 
-                        {
-                            followUps.map(
-                                item => (
-
-                                    <tr
-                                        key={
-                                            item.followupId
-                                        }
-                                    >
-
-                                        <td>
-                                            {
-                                                item.lead?.name
-                                            }
-                                        </td>
-
-                                        <td>
-                                            {
-                                                item.followupDate
-                                            }
-                                        </td>
-
-                                        <td>
-                                            {
-                                                item.followupTime
-                                            }
-                                        </td>
-
-                                        <td>
-                                            {
-                                                item.remarks
-                                            }
-                                        </td>
-
-                                        <td>
-                                            {
-                                                item.status
-                                            }
-                                        </td>
-
-                                        <td>
-
 {
-item.status ===
-"PENDING" && (
+    followUps.length > 0 ?
 
-<button
-className="btn btn-success btn-sm"
-onClick={() =>
-markCompleted(
-item
-)
+    followUps.map((item) => (
+
+        <tr
+            key={item.followupId}
+        >
+
+            <td>
+                {
+                    item.lead?.name ||
+                    "N/A"
+                }
+            </td>
+
+            <td>
+                {
+                    item.followupDate
+                }
+            </td>
+
+            <td>
+                {
+                    item.followupTime
+                }
+            </td>
+
+            <td>
+                {
+                    item.notes ||
+                    "-"
+                }
+            </td>
+
+            <td>
+
+                <span
+                    className={`badge ${
+                        item.status === "COMPLETED"
+                        ? "bg-success"
+                        : item.status === "MISSED"
+                        ? "bg-danger"
+                        : "bg-warning"
+                    }`}
+                >
+                    {item.status}
+                </span>
+
+            </td>
+
+            <td>
+
+                {
+                    item.status ===
+                    "SCHEDULED" && (
+
+                        <>
+                            <button
+                                className="btn btn-success btn-sm me-2"
+                                onClick={() =>
+                                    markCompleted(item)
+                                }
+                            >
+                                Complete
+                            </button>
+
+                            <button
+                                className="btn btn-danger btn-sm"
+                                onClick={() =>
+                                    markMissed(item)
+                                }
+                            >
+                                Missed
+                            </button>
+                        </>
+                    )
+                }
+
+            </td>
+
+        </tr>
+
+    ))
+
+    :
+
+    <tr>
+        <td
+            colSpan="6"
+            className="text-center"
+        >
+            No Follow Ups Found
+        </td>
+    </tr>
 }
->
-Complete
-</button>
 
-)
-}
-
-                                        </td>
-
-                                    </tr>
-
-                                )
-                            )
-                        }
-
-                    </tbody>
+</tbody>
 
                 </table>
 

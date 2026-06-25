@@ -67,13 +67,6 @@ class UserService {
         );
     }
 
-    getAgentsByManager(managerId) {
-
-        return api.get(
-            `${BASE_URL}/manager/${managerId}`
-        );
-    }
-
     // ======================
     // PENDING REQUESTS
     // ======================
@@ -110,6 +103,14 @@ class UserService {
             agent
         );
     }
+
+    getAgentsByManager(managerId) {
+
+    return api.get(
+        `${BASE_URL}/manager/${managerId}`
+    );
+
+}
     
 }
 

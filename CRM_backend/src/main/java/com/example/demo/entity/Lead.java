@@ -42,12 +42,16 @@ public class Lead {
 	@Column
 	private String property_type;
 	@Column
-	private double budget;
+	private Double budget;
 	private UUID assignedAgentId;
 
 	private String assignedAgentName;
 	@Column(length = 1000)
 	private String Additional_requirement;
+	
+	private UUID propertyId;
+
+	private String propertyName;
 	
 	 private LocalDateTime createdAt;
 	 @PrePersist

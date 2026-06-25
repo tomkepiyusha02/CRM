@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+
 import UserService from "../../services/UserService";
 import LeadService from "../../services/LeadService";
+import PropertyService from "../../services/PropertyService";
 
 function LeadDetails({
     lead,
@@ -9,45 +11,120 @@ function LeadDetails({
     clearLead,
     mode
 }) {
- 
-    const [agents, setAgents] =
-    useState([]);
 
-const [selectedAgent,
-    setSelectedAgent] =
-    useState("");
+    const [agents, setAgents] = useState([]);
+
+    const [properties, setProperties] = useState([]);
+
+    const [selectedAgent, setSelectedAgent] =
+        useState("");
+
+    const [selectedProperty, setSelectedProperty] =
+        useState("");
+
 
     const [status, setStatus] =
         useState("");
 
-        useEffect(() => {
-
-            UserService.getAgents()
-                .then((res) => {
-        
-                    setAgents(
-                        res.data
-                    );
-        
-                });
-        
-        }, []);
+    /* -------------------- LOAD AGENTS -------------------- */
 
     useEffect(() => {
 
-    if (lead) {
+        loadAgents();
 
-        setStatus(
-            lead.status
-        );
+    }, []);
 
-        setSelectedAgent(
-            lead.assignedAgentId || ""
+    const loadAgents = async () => {
+
+    try {
+
+        const managerId =
+            localStorage.getItem("userId");
+
+        const res =
+            await UserService.getAgentsByManager(
+                managerId
+            );
+
+        setAgents(res.data);
+
+    }
+    catch (err) {
+
+        console.log(err);
+
+    }
+
+};
+
+    /* -------------------- LOAD PROPERTIES WHEN AGENT CHANGES -------------------- */
+
+    useEffect(() => {
+
+    if (selectedAgent && lead) {
+
+        loadAvailableProperties();
+
+    }
+
+}, [selectedAgent]);
+
+const loadAvailableProperties = async () => {
+
+    try {
+
+        let response;
+
+        // Load properties based on lead location
+        response =
+            await PropertyService.getByLocation(
+                lead.location
+            );
+
+        // Show only AVAILABLE properties
+        const availableProperties =
+            response.data.filter(
+                property =>
+                    property.propertyStatus ===
+                    "AVAILABLE"
+            );
+
+        setProperties(
+            availableProperties
         );
 
     }
 
-}, [lead]);
+    catch (err) {
+
+        console.log(err);
+
+    }
+
+};
+
+
+    /* -------------------- LOAD SELECTED LEAD -------------------- */
+
+    useEffect(() => {
+
+        if (lead) {
+
+            setStatus(
+                lead.status
+            );
+
+            setSelectedAgent(
+                lead.assignedAgentId || ""
+            );
+
+            setSelectedProperty("");
+
+            
+
+        }
+
+    }, [lead]);
 
     if (!lead) {
 
@@ -64,9 +141,8 @@ const [selectedAgent,
                     </h3>
 
                     <p>
-                        Click any lead from
-                        the left panel to
-                        view complete details.
+                        Click any lead from the left panel
+                        to view complete details.
                     </p>
 
                 </div>
@@ -74,16 +150,117 @@ const [selectedAgent,
             </div>
 
         );
+
     }
+
+ 
+
+    /* -------------------- ASSIGN LEAD -------------------- */
+
+const assignLead = async () => {
+
+    if (!selectedAgent) {
+
+        toast.error(
+            "Please Select Agent"
+        );
+
+        return;
+
+    }
+
+    if (!selectedProperty) {
+
+        toast.error(
+            "Please Select Property"
+        );
+
+        return;
+
+    }
+
+    const agent =
+        agents.find(
+            a =>
+                a.userId ===
+                selectedAgent
+        );
+
+    try {
+
+        // 1. Assign Property To Agent
+
+        await PropertyService.assignProperty({
+
+            agentId:
+                selectedAgent,
+
+            propertyId:
+                selectedProperty
+
+        });
+
+       
+        // 3. Assign Lead
+
+        const updatedLead = {
+
+            ...lead,
+
+            assignedAgentId:
+                agent.userId,
+
+            assignedAgentName:
+                agent.name,
+
+            assignedArea:
+                agent.assignedArea,
+
+            status:
+                "CONTACTED"
+
+        };
+
+        await LeadService.updateLead(
+
+            lead.leadid,
+
+            updatedLead
+
+        );
+
+        toast.success(
+            "Lead Assigned Successfully"
+        );
+
+        refreshLeads();
+
+        if (clearLead) {
+
+            clearLead();
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.log(error);
+
+        toast.error(
+            "Assignment Failed"
+        );
+
+    }
+
+};
+
+    /* -------------------- UPDATE STATUS -------------------- */
 
     const updateStatus =
         async () => {
 
             try {
-
-                const leadId =
-                    lead.leadid ||
-                    lead.Leadid;
 
                 const updatedLead = {
 
@@ -93,47 +270,58 @@ const [selectedAgent,
 
                 };
 
-                await LeadService.updateLead(
-                    leadId,
-                    updatedLead
-                );
+                await LeadService
+                    .updateLead(
+
+                        lead.leadid,
+
+                        updatedLead
+
+                    );
 
                 toast.success(
-                    "Lead Status Updated"
+                    "Status Updated"
                 );
 
                 refreshLeads();
 
-            } catch (error) {
+            }
 
-                console.log(error);
+            catch (error) {
 
                 toast.error(
                     "Update Failed"
                 );
+
             }
+
         };
+
+    /* -------------------- DELETE LEAD -------------------- */
 
     const deleteLead =
         async () => {
 
-            const leadId =
-                lead.leadid ||
-                lead.Leadid;
-
             if (
+
                 !window.confirm(
-                    "Delete this Lead?"
+                    "Delete Lead ?"
                 )
+
             ) {
+
                 return;
+
             }
 
             try {
 
-                await LeadService.deleteLead(
-                    leadId
-                );
+                await LeadService
+                    .deleteLead(
+
+                        lead.leadid
+
+                    );
 
                 toast.success(
                     "Lead Deleted"
@@ -147,398 +335,436 @@ const [selectedAgent,
 
                 }
 
-            } catch (error) {
+            }
 
-                console.log(error);
+            catch (error) {
 
                 toast.error(
                     "Delete Failed"
                 );
+
             }
+
         };
-        const assignLead =
-    async () => {
-
-        if(!selectedAgent){
-
-            toast.error(
-                "Select Agent"
-            );
-
-            return;
-        }
-
-        const agent =
-            agents.find(
-                a =>
-                a.userId ===
-                selectedAgent
-            );
-
-        try {
-            const updatedLead = {
-
-                ...lead,
-            
-                assignedAgentId:
-                    agent.userId,
-            
-                assignedAgentName:
-                    agent.name,
-            
-                assignedArea:
-                    agent.assignedArea,
-            
-                status: "CONTACTED"
-            };
-            await LeadService.updateLead(
-    lead.leadid || lead.Leadid,
-    updatedLead
-);
-
-            toast.success(
-                `Lead Assigned To ${agent.name}`
-            );
-
-            refreshLeads();
-
-        }
-
-        catch(error){
-
-            toast.error(
-                "Assignment Failed"
-            );
-        }
-    };
 
     return (
 
-        <div className="details-card">
+<div className="details-card">
 
-            {/* HEADER */}
+    {/* HEADER */}
 
-            <div className="lead-profile-header">
+    <div className="lead-profile-header">
 
-                <img
-                    src={`https://ui-avatars.com/api/?name=${lead.name}&background=4f46e5&color=fff&size=150`}
-                    alt=""
-                    className="lead-avatar"
-                />
+        <img
+            src={`https://ui-avatars.com/api/?name=${lead.name}&background=4f46e5&color=fff&size=150`}
+            alt=""
+            className="lead-avatar"
+        />
 
-                <div>
+        <div>
 
-                    <h2>
-                        {lead.name}
-                    </h2>
+            <h2>
+                {lead.name}
+            </h2>
 
-                    <span
-                        className={`lead-status-badge ${lead.status}`}
-                    >
-                        {lead.status}
-                    </span>
+            <span
+                className={`lead-status-badge ${lead.status}`}
+            >
+                {lead.status}
+            </span>
 
-                </div>
+        </div>
+
+    </div>
+
+    <hr />
+
+    {/* DETAILS */}
+
+    <div className="row">
+
+        <div className="col-md-6">
+
+            <div className="detail-item">
+
+                <label>Email</label>
+
+                <p>{lead.email}</p>
 
             </div>
 
-            <hr />
+        </div>
 
-            
+        <div className="col-md-6">
 
-            
+            <div className="detail-item">
 
-            {/* DETAILS */}
+                <label>Mobile</label>
 
-            <div className="row">
+                <p>{lead.mobileNo}</p>
 
-                <div className="col-md-6">
+            </div>
 
-                    <div className="detail-item">
+        </div>
 
-                        <label>
-                            Email
-                        </label>
+        <div className="col-md-6">
 
-                        <p>
-                            {lead.email}
-                        </p>
+            <div className="detail-item">
 
-                    </div>
+                <label>Location</label>
 
-                </div>
+                <p>{lead.location}</p>
 
-                <div className="col-md-6">
+            </div>
 
-                    <div className="detail-item">
+        </div>
 
-                        <label>
-                            Mobile
-                        </label>
+        <div className="col-md-6">
 
-                        <p>
-                            {
-                                lead.mobileNo ||
-                                lead.mobile_no
-                            }
-                        </p>
+            <div className="detail-item">
 
-                    </div>
+                <label>Assigned Agent</label>
 
-                </div>
+                <p>
 
-                <div className="col-md-6">
+                    {
 
-                    <div className="detail-item">
+                        lead.assignedAgentName ||
 
-                        <label>
-                            Location
-                        </label>
+                        "Not Assigned"
 
-                        <p>
-                            {lead.location}
-                        </p>
+                    }
 
-                    </div>
+                </p>
 
-                </div>
-                <div className="col-md-6">
+            </div>
 
-    <div className="detail-item">
+        </div>
 
-        <label>
-            Assigned Agent
-        </label>
+        <div className="col-md-6">
+
+            <div className="detail-item">
+
+                <label>Property Type</label>
+
+                <p>{lead.property_type}</p>
+
+            </div>
+
+        </div>
+
+        <div className="col-md-6">
+
+            <div className="detail-item">
+
+                <label>Budget</label>
+
+                <p>
+
+                    ₹ {lead.budget?.toLocaleString()}
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div className="requirement-box mt-4">
+
+        <h5>
+
+            Additional Requirement
+
+        </h5>
 
         <p>
 
             {
-                lead.assignedAgentName
-                ||
-                "Not Assigned"
+
+                lead.Additional_requirement ||
+
+                "No Requirement"
+
             }
 
         </p>
 
     </div>
 
-</div>
+    {/* ========================= */}
 
-                <div className="col-md-6">
+    {/* NEW LEAD SECTION */}
 
-                    <div className="detail-item">
+    {/* ========================= */}
 
-                        <label>
-                            Property Type
-                        </label>
+    {
 
-                        <p>
-                            {
-                                lead.property_type
-                            }
-                        </p>
+        mode === "new" && (
 
-                    </div>
+            <>
+
+                <hr />
+
+                <h4>
+
+                    Assign Lead
+
+                </h4>
+
+                {/* Agent */}
+
+                <div className="mb-3">
+
+                    <label>
+
+                        Select Agent
+
+                    </label>
+
+                    <select
+
+                        className="form-select"
+
+                        value={selectedAgent}
+
+                        onChange={(e)=>
+
+                            setSelectedAgent(
+
+                                e.target.value
+
+                            )
+
+                        }
+
+                    >
+
+                        <option value="">
+
+                            Select Agent
+
+                        </option>
+
+                        {
+
+                            agents.map(agent=>(
+
+                                <option
+
+                                    key={agent.userId}
+
+                                    value={agent.userId}
+
+                                >
+
+                                    {agent.name}
+
+                                    {" - "}
+
+                                    {agent.assignedArea}
+
+                                </option>
+
+                            ))
+
+                        }
+
+                    </select>
 
                 </div>
 
-                <div className="col-md-6">
+                {/* Property */}
 
-                    <div className="detail-item">
+                <div className="mb-3">
 
-                        <label>
-                            Budget
-                        </label>
+                    <label>
 
-                        <p>
-                            ₹
-                            {" "}
-                            {lead.budget?.toLocaleString()}
-                        </p>
+                        Select Property
 
-                    </div>
+                    </label>
+
+                    <select
+
+                        className="form-select"
+
+                        value={selectedProperty}
+
+                        onChange={(e)=>
+
+                            setSelectedProperty(
+
+                                e.target.value
+
+                            )
+
+                        }
+
+                    >
+
+                        <option value="">
+
+                            Select Property
+
+                        </option>
+
+                        {
+
+                            properties.map(property=>(
+
+                                <option
+
+                                    key={property.propertyId}
+
+                                    value={property.propertyId}
+
+                                >
+
+                                    {property.name}
+
+                                    {" | "}
+
+                                    {property.location}
+
+                                    {" | ₹"}
+
+                                    {property.price}
+
+                                </option>
+
+                            ))
+
+                        }
+
+                    </select>
 
                 </div>
 
-                <div className="col-md-6">
-
-                    <div className="detail-item">
-
-                        <label>
-                            Created At
-                        </label>
-
-                        <p>
-                            {
-                                lead.createdAt
-                                    ?
-                                    new Date(
-                                        lead.createdAt
-                                    ).toLocaleDateString()
-                                    :
-                                    "-"
-                            }
-                        </p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            {/* REQUIREMENT */}
-
-            <div className="requirement-box">
-
-                <h5>
-                    Additional Requirement
-                </h5>
-
-                <p>
-                    {
-                        lead.Additional_requirement ||
-                        "No Requirement Provided"
-                    }
-                </p>
-
-            </div>
-           
-
-          
-
-           
-
-            {/* NEW LEADS */}
-
-{
-mode === "new" && (
-
-<div className="mt-4">
-
-    <h5 className="mb-3">
-        Assign Lead To Agent
-    </h5>
-
-    <select
-        className="form-select"
-        value={selectedAgent}
-        onChange={(e)=>
-            setSelectedAgent(
-                e.target.value
-            )
-        }
-    >
-
-        <option value="">
-            Select Agent
-        </option>
-
-        {
-            agents.map(agent => (
-
-                <option
-                    key={agent.userId}
-                    value={agent.userId}
-                >
-
-                    {agent.name}
-                    {" - "}
-                    {agent.assignedArea}
-
-                </option>
-
-            ))
-        }
-
-    </select>
+                <div className="d-flex gap-2">
 
     <button
-        className="btn btn-warning mt-3 me-2"
+        className="btn btn-success"
         onClick={assignLead}
     >
-
         Assign Lead
-
     </button>
 
     <button
-        className="btn btn-danger mt-3"
+        className="btn btn-danger"
         onClick={deleteLead}
     >
-
-        Delete Lead
-
+        Delete
     </button>
 
 </div>
 
-)
-}
+            </>
 
-{/* ASSIGNED LEADS */}
+        )
 
-{
-mode === "assigned" && (
+    }
 
-<div className="mt-4">
+    {/* ========================= */}
 
-    <h5 className="mb-3">
-        Update Lead Status
-    </h5>
+    {/* ASSIGNED LEADS */}
 
-    <select
-        className="form-select"
-        value={status}
-        onChange={(e)=>
-            setStatus(
-                e.target.value
-            )
-        }
-    >
+    {/* ========================= */}
 
-        <option value="CONTACTED">
-            CONTACTED
-        </option>
+    {
 
-        <option value="INTERESTED">
-            INTERESTED
-        </option>
+        mode === "assigned" && (
 
-        <option value="BOOKING">
-            BOOKING
-        </option>
+            <>
 
-        <option value="CLOSED">
-            CLOSED
-        </option>
+                <hr />
 
-    </select>
+                <h4>
 
-    <button
-        className="btn btn-primary mt-3 me-2"
-        onClick={updateStatus}
-    >
+                    Update Status
 
-        Update Status
+                </h4>
 
-    </button>
+                <select
 
-    <button
-        className="btn btn-danger mt-3"
-        onClick={deleteLead}
-    >
+                    className="form-select"
 
-        Delete Lead
+                    value={status}
 
-    </button>
+                    onChange={(e)=>
+
+                        setStatus(
+
+                            e.target.value
+
+                        )
+
+                    }
+
+                >
+
+                    <option value="CONTACTED">
+
+                        CONTACTED
+
+                    </option>
+
+                    <option value="INTERESTED">
+
+                        INTERESTED
+
+                    </option>
+
+                    <option value="BOOKING">
+
+                        BOOKING
+
+                    </option>
+
+                    <option value="CLOSED">
+
+                        CLOSED
+
+                    </option>
+
+                </select>
+
+                <div className="mt-3">
+
+                    <button
+
+                        className="btn btn-primary me-2"
+
+                        onClick={updateStatus}
+
+                    >
+
+                        Update Status
+
+                    </button>
+
+                    <button
+
+                        className="btn btn-danger"
+
+                        onClick={deleteLead}
+
+                    >
+
+                        Delete Lead
+
+                    </button>
+
+                </div>
+
+            </>
+
+        )
+
+    }
 
 </div>
 
-)
+);
 }
-
-        </div>
-    );
-}
-
 export default LeadDetails;

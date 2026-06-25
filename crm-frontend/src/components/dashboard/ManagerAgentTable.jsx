@@ -18,32 +18,43 @@ function ManagerAgentTable() {
 
     const loadData = async () => {
 
-        try {
+    try {
 
-            const agentRes =
-                await UserService.getAgents();
+        const managerId =
+            localStorage.getItem("userId");
 
-            const city =
-                localStorage.getItem(
-                    "assignedCity"
-                );
+        const city =
+            localStorage.getItem(
+                "assignedCity"
+            );
 
-            const leadRes =
-                await LeadService.getLeadsByCity(
-                    city
-                );
+        const agentRes =
+            await UserService.getAgentsByManager(
+                managerId
+            );
 
-            setAgents(agentRes.data);
+        const leadRes =
+            await LeadService.getLeadsByCity(
+                city
+            );
 
-            setLeads(leadRes.data);
+        setAgents(
+            agentRes.data
+        );
 
-        }
+        setLeads(
+            leadRes.data
+        );
 
-        catch(error){
+    }
 
-            console.log(error);
-        }
-    };
+    catch(error){
+
+        console.log(error);
+
+    }
+
+};
 
     const getLeadCount =
         (agentName) => {

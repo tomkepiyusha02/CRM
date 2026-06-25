@@ -376,13 +376,13 @@ function PropertyForm({ loadProperties }) {
 
                 </div>
 
-                <button
-                    type="submit"
-                    className="property-btn"
-                >
-                    <i className="bi bi-plus-circle me-2"></i>
-                    Add Property
-                </button>
+  <button
+    type="submit"
+    className="property-btn"
+>
+    <i className="bi bi-building-add"></i>
+    <span>Add Property</span>
+</button>
 
             </form>
 

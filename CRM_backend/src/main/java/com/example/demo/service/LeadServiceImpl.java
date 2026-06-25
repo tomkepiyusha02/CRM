@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Lead;
+import com.example.demo.repository.AgentPropertyRepository;
 import com.example.demo.repository.LeadRepository;
 
 @Service
@@ -14,6 +15,9 @@ public class LeadServiceImpl implements LeadService {
 
 	@Autowired
 	LeadRepository leadRepo;
+	
+	@Autowired
+	private AgentPropertyRepository agentPropertyRepository;
 	
 	@Override
 	public Lead addlead(Lead l) {
@@ -42,30 +46,50 @@ public class LeadServiceImpl implements LeadService {
 		return leadRepo.findAll();
 	}
 
-
 	@Override
-	
 	public Lead updateLead(UUID id, Lead l) {
 
 	    Lead oldLead =
 	            leadRepo.findById(id)
-	            .orElse(null);
+	                    .orElseThrow(() ->
+	                            new RuntimeException("Lead Not Found"));
 
-	    if(oldLead != null) {
+	    // Update Lead Status
+	    oldLead.setStatus(
+	            l.getStatus());
 
-	        oldLead.setStatus(
-	                l.getStatus());
+	    // Assign Agent
+	    oldLead.setAssignedAgentId(
+	            l.getAssignedAgentId());
 
-	        oldLead.setAssignedAgentId(
-	                l.getAssignedAgentId());
+	    oldLead.setAssignedAgentName(
+	            l.getAssignedAgentName());
 
-	        oldLead.setAssignedAgentName(
-	                l.getAssignedAgentName());
+	    // Assign Property
+	    oldLead.setPropertyId(
+	            l.getPropertyId());
 
-	        return leadRepo.save(oldLead);
+	    oldLead.setPropertyName(
+	            l.getPropertyName());
+
+	    // Validation
+	    if (l.getAssignedAgentId() != null &&
+	        l.getPropertyId() != null) {
+
+	        boolean assigned =
+	                agentPropertyRepository
+	                        .existsByAgent_UserIdAndProperty_PropertyId(
+	                                l.getAssignedAgentId(),
+	                                l.getPropertyId());
+
+	        if (!assigned) {
+
+	            throw new RuntimeException(
+	                    "Selected property is not assigned to this agent.");
+	        }
 	    }
 
-	    return null;
+	    return leadRepo.save(oldLead);
 	}
 
 	@Override

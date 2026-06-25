@@ -7,8 +7,13 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dto.FollowUpRequestDto;
 import com.example.demo.entity.FollowUp;
+import com.example.demo.entity.Lead;
+import com.example.demo.entity.User;
 import com.example.demo.repository.FollowUpRepository;
+import com.example.demo.repository.LeadRepository;
+import com.example.demo.repository.UserRepository;
 
 
 @Service
@@ -17,10 +22,53 @@ public class FollowUpServiceImpl
 
     @Autowired
     private FollowUpRepository repository;
+    @Autowired
+    private LeadRepository leadRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public FollowUp addFollowUp(
-            FollowUp followUp) {
+            FollowUpRequestDto dto) {
+
+        Lead lead =
+                leadRepository.findById(
+                        dto.getLeadId())
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Lead Not Found"));
+
+        User agent =
+                userRepository.findById(
+                        dto.getAgentId())
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Agent Not Found"));
+
+        FollowUp followUp =
+                new FollowUp();
+
+        followUp.setLead(
+                lead);
+
+        followUp.setAgent(
+                agent);
+
+        followUp.setFollowupDate(
+                dto.getFollowupDate());
+
+        followUp.setFollowupTime(
+                dto.getFollowupTime());
+
+        followUp.setNotes(
+                dto.getNotes());
+
+        followUp.setStatus(
+                dto.getStatus());
+
+        followUp.setReminderType(
+                dto.getReminderType());
 
         return repository.save(
                 followUp);

@@ -47,6 +47,14 @@ class FollowUpService {
             `${BASE_URL}/agent/${agentId}`
         );
     }
+  getAll() {
+    return api.get(`${BASE_URL}/all`);
+}
+
+getByAgent(agentId) {
+    return api.get(`${BASE_URL}/agent/${agentId}`);
+}
+
 }
 
 export default new FollowUpService();
